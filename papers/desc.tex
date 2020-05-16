@@ -1,0 +1,84 @@
+                                % Created 2020-05-16 Sat 18:35
+                                % Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.3 (Org mode 9.1.9)},
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\section{GENERATING A DRUM RHYTHM}
+\label{sec:org17a94f6}
+\subsection{Initial thought}
+\label{sec:org74fea72}
+\begin{itemize}
+\item maybe we can do some sort of hierarchical structure to handle
+different level of patterns (like general pattern against specific
+decoration pattern)
+\item ESN or LSTM ?
+maybe it's better to go for the ESN, simply because the LSTM's
+methods for generating music have been already explored
+\end{itemize}
+
+\subsection{Papers}
+\label{sec:orgdcea7bc}
+
+\begin{itemize}
+\item \href{./LSTM-generation-of-music.pdf}{./LSTM-generation-of-music.pdf} this paper show how to build
+an LSTM network to generate classical music (piano)
+\item \href{./2561\_Ivanchev2013.pdf}{./2561\(_{\text{Ivanchev2013.pdf}}\)} this paper used ESN for pattern
+generation in robotics (maybe it could be useful to look at how
+they design the network, etc)
+\item \href{./anticipation-RNN.pdf}{./anticipation-RNN.pdf} this paper introduce a "new" type of
+RNN architecture which generate music given some kind of "style"
+constraint. (can be useful for some inspiration on the structure
+of our NN)
+\item \href{./functional-taxonomy-of-music-gen-sys.pdf}{./functional-taxonomy-of-music-gen-sys.pdf} quite general paper
+about music generation. (the main point here can be how to
+measure performance)
+\item \href{./LSTM-music-generation-2020.pdf}{./LSTM-music-generation-2020.pdf} this paper show how to use LSTM
+to generate music, it tries different kind of RNN.(look at loss
+function and architecture)
+\item \href{./PracticalESN.pdf}{./PracticalESN.pdf} an introduction on how to use and apply
+Echo State Network (seems quite useful)
+\item \href{./ESN-levenberg-for-chaotic-time-series-prediction.pdf}{./ESN-levenberg-for-chaotic-time-series-prediction.pdf}
+\href{./ESN-levenberg-new-method.pdf}{./ESN-levenberg-new-method.pdf} these papers illustrate a
+different technique to learn the output weights which instead of
+using a simple linear regression uses the Levenberg-Marquardt
+algorithm, it seems quite complicated math for now so maybe it's
+better to go through when we have more knowledge.
+\item \href{./ESN-opt-binary-grey-wolf.pdf}{./ESN-opt-binary-grey-wolf.pdf} this paper illustrate an hybrid
+ESN network called BGWO-ESN which is based on the Grey wolf
+optimization algorithm, it also compare this GWO to other
+evolutionary algorithm like GA(genetic algorithm). it shows that
+this new hybrid network has better results compared to standard
+ESN and GA-ESN on financial prediction. (it seems interesting)
+\item \href{./ESNTutorialRev.pdf}{./ESNTutorialRev.pdf} just a tutorial on RNN by Jaeger.
+\item \href{./ESN-universal.pdf}{./ESN-universal.pdf} a proof of the universality of the ESN.
+\item \href{./hierarchicalesn\_techrep10.pdf}{./hierarchicalesn\(_{\text{techrep10.pdf}}\)} an example of how to do
+hierarchical ESN by Jaeger. we can get some ideas from there if
+we go for an hierarchical architecture.
+\item \href{./ESN-music-by-prediction.pdf}{./ESN-music-by-prediction.pdf} the bachelor thesis on nestor
+about ESN and music generation. I didnt read it but it seems useful.
+\end{itemize}
+\end{document}
