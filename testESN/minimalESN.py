@@ -83,7 +83,7 @@ plot( X[0:20,0:200].T )
 title('Some reservoir activations $\mathbf{x}(n)$')
 
 figure(3).clear()
-bar(range(1+inSize+resSize),Wout.T)
+# bar(range(1+inSize+resSize),Wout.T)
 title('Output weights $\mathbf{W}^{out}$')
 
 show()
