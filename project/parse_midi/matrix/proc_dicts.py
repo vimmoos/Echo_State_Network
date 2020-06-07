@@ -1,0 +1,15 @@
+import project.parse_midi.matrix.core as core
+import project.parse_midi.matrix.utils as u
+import project.parse_midi.matrix.converters as conv
+
+default_columns = ["track","time","event","channel","note","velocity","arg1","arg2"]
+default_drop = ["arg1","arg2","track","channel","event"]
+default_filter = ".*Note_on_c.*"
+
+example_proc_dict = {"column"  : default_columns,
+                     "midi" : "~/NN/resources/csv/34time13.csv",
+                     "n_note" : 6,
+                     "body_drop" : default_drop,
+                     "filter_event": default_filter,
+                     "agg_func" : u.agg_to_literal_arr,
+                     "convert_funcs": [conv.note_to_binary,conv.note_to_velocity]}
