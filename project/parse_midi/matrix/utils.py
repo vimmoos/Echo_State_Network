@@ -4,6 +4,8 @@ import functools as ft
 import math as m
 import numpy as np
 
+# General utils
+# They are self explanatory one-liners
 def spy (fun,payload):
     ret = fun ()
     print (ret,payload)
