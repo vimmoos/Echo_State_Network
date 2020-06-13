@@ -17,11 +17,15 @@ class ESN():
 
     def _runnner(self,desired,**kwargs):
         X1,last_state = run_extended(**kwargs,**self.params)
-        return self.params["trainer"](X1,desired,**self.params,**kwargs),last_state
+        self.Wout = self.params["trainer"](X1,desired,**self.params,**kwargs)
+        return last_state
+
+    def _generator(self,**kwargs):
+        return run_gen_mode(**self.params,**kwargs,**{"W_out":self.Wout})
 
     def __enter__(self):
         return (self._runnner,
-                lambda **kwargs:run_gen_mode(**self.params,**kwargs))
+                self._generator)
 
 
     def __exit__(self,err_t,err_v,traceback):
