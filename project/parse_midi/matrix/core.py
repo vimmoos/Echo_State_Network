@@ -4,7 +4,6 @@ import project.parse_midi.matrix.utils as u
 import project.parse_midi.matrix.converters as conv
 
 
-
 def assemble_proc_dict (proc_dict):
     """Takes a proc_dict which encode the information needed to perform
     the parsing and it returns another dict containing a prefiled flow
