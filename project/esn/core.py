@@ -12,21 +12,16 @@ class ESN():
                  **kwargs):
         super().__init__()
         np.random.seed(42)
-        self.Win = in_gen(res_size,in_out_size,**kwargs)
-        self.Wres = res_gen(res_size,**kwargs)
-        self.params = kwargs
+        self.params = {**kwargs,"W_in":in_gen(res_size,in_out_size,**kwargs),
+                       "W_res":res_gen(res_size,**kwargs)}
 
     def _runnner(self,desired,**kwargs):
-        X1,last_state = run_extended(**kwargs)
-        return self.params["trainer"](X1,desired,**kwargs),last_state
+        X1,last_state = run_extended(**kwargs,**self.params)
+        return self.params["trainer"](X1,desired,**self.params,**kwargs),last_state
 
     def __enter__(self):
-        return ({**self.params,
-                 "W_in":self.Win,
-                 "W_res":self.Wres},
-                self._runnner,
-                run_gen_mode)
-
+        return (self._runnner,
+                lambda **kwargs:run_gen_mode(**self.params,**kwargs))
 
 
     def __exit__(self,err_t,err_v,traceback):

@@ -114,20 +114,18 @@ def test_newDemo():
 
     test_dict = d.example_dict
 
-    with c.ESN(6,100,**test_dict) as (esn,runner,generator):
+    with c.ESN(6,100,**test_dict) as (runner,generator):
         print("run states")
         Wout,last_state = runner(Yt,**{"inputs":data[:trainLen],
                                        "init_len":initLen,
                                        "init_state":
-                                       np.array([0 for _ in range(100)]),
-                                       **esn})
+                                       np.array([0 for _ in range(100)])})
 
         print("run gen mode")
         Y1 = generator(**{"W_out":Wout,
                           "init_state":last_state,
                           "init_input":data[trainLen],
-                          "run_length":testLen,
-                          **esn})
+                          "run_length":testLen})
 
 
         print("calculate mse")
