@@ -1,20 +1,33 @@
 
 import numpy as np
-from scipy import sparse,linalg
+from scipy import sparse,stats,linalg
+from project.esn import updater as up
 
-def generate_smatrix(m,n,density=0.5,bound=0.5):
-    smatrix = sparse.rand(m,n,density=density,format="csr",random_state=42)
-    smatrix[np.where(smatrix>0)] -= bound
-    return smatrix
 
-def scale_spectral_smatrix(matrix,spectral_radius=0.95,in_place=False):
-    if not in_place:
-        return matrix * (spectral_radius /
-                         max(abs(linalg.eig(matrix)[0])))
-    matrix *= (spectral_radius /
-               max(abs(linalg.eig(matrix)[0])))
+def run_states(W_in,W_res,inputs,init_state):
+    states = np.zeros((len(inputs)+1,W_res.shape[0]))
+    states[0,:] = init_state
+    for (u,i) in zip(inputs,range(len(inputs))):
+        states[i+1,:] = up.apply_leak(states[i,:],
+                                 up.default_update(W_in,W_res,u,states[i,:]))
+    return  states[1:,:]
 
-def one_step_update(W_in,W_res,state,input,leaking_rate=0.3,non_linearity=np.tanh):
-    update = non_linearity(np.dot(W_in,input)
-                           + np.dot(W_res,state))
-    return (1-leaking_rate) * state  +  leaking_rate * update
+
+
+def build_extended_states(inputs,states,start_index=0):
+    return np.vstack((inputs.T[:,start_index:],
+                      states.T[:,start_index:])).T
+
+
+def run_gen_mode(W_in,W_res,W_out,init_input,init_state,run_length,
+                      fun = lambda x :x ):
+    state = init_state
+    input  = init_input
+
+    outputs = np.zeros((run_length,W_out.shape[0]))
+    for t in range(run_length-1):
+        state = up.apply_leak(state,
+                                 up.default_update(W_in,W_res,input,state))
+        outputs[t,:] = fun(W_out.dot(np.vstack((input,np.matrix(state).T))))
+        input = outputs[t,:]
+    return outputs
