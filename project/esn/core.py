@@ -43,11 +43,10 @@ def run_states(W_in,W_res,inputs,init_state,
 
 
 def run_gen_mode(W_in,W_res,W_out,init_input,init_state,run_length,
-                 fun = lambda x :x ,
-                 updater = up.leaking_update,
-                 output = up.default_output,
-                 transformer = lambda x : x,
-                 **kwargs):
+                      updater = up.leaking_update,
+                      output = up.default_output,
+                      transformer = lambda x : x,
+                      **kwargs):
     state = init_state
     input  = init_input
 
