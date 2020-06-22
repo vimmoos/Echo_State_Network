@@ -13,7 +13,7 @@ from scipy import linalg
 trainLen = 2000
 testLen = 2000
 initLen = 100
-data = np.loadtxt('MackeyGlass_t17.txt')
+data = np.loadtxt('/home/vimmoos/NN/testESN/MackeyGlass_t17.txt')
 
 # plot some of it
 figure(10).clear()
@@ -51,7 +51,7 @@ for t in range(trainLen):
 reg = 1e-8  # regularization coefficient
 X_T = X.T
 Wout = np.dot(np.dot(Yt,X_T), linalg.inv(np.dot(X,X_T) + \
-    reg*np.eye(1+inSize+resSize)))
+                                         reg*np.eye(1+inSize+resSize)))
 
 # run the trained ESN in a generative mode. no need to initialize here,
 # because x is initialized with training data and we continue from there.
