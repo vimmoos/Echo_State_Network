@@ -83,7 +83,7 @@ class My_generator():
         return self.generator
 
     def __exit__(self, err_t, err_v, traceback):
-        if not isinstance(err_t, StopIteration):
+        if not isinstance(err_v, StopIteration):
             raise ValueError(f"undefined error ${err_t} ${err_v} ${traceback}")
 
 
