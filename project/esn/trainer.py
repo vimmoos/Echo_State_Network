@@ -1,7 +1,8 @@
 import numpy as np
 from scipy import linalg
-import project.esn.utils as u
+
 import project.esn.matrix as m
+import project.esn.utils as u
 
 
 @u.mydataclass(init=True, repr=True)

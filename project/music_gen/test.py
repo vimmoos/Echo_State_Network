@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from project.music_gen.core import *
 from project.music_gen.data_types import *
 
@@ -64,8 +66,7 @@ test4 = test[2]
 
 len_ = 1
 
-ride = note_generator(Note(Tempo.QUARTER, Abs_note.FLOOR_TOM, Quarters.FOUR),
-                      len_)
+ride = note_generator(Note(Tempo.QUARTER, Abs_note.RIDE, Quarters.FOUR), len_)
 
 bass = note_generator(Note(Tempo.QUARTER, Abs_note.BASS_DRUM, Quarters.ONE),
                       len_)
@@ -74,4 +75,20 @@ charl = note_replicator(Tempo.EIGHTH, Abs_note.HI_HAT_CLOSE,
                         [Quarters.ONE, Quarters.THREE])
 
 ttest = bass + charl + ride
-pprint(list(~ttest))
+
+n0 = note_replicator(Tempo.QUARTER, Abs_note.MID_TOM, [Quarters.TWO])
+n1 = note_replicator(Tempo.QUARTER, Abs_note.CRASH, [Quarters.TWO])
+n2 = note_replicator(Tempo.QUARTER, Abs_note.HI_HAT_CLOSE,
+                     [Quarters.ONE, Quarters.THREE])
+
+add = n0 + n1 + n2
+
+n3 = note_replicator(Tempo.EIGHTH, Abs_note.SNARE, [Quarters.THREE])
+n4 = note_replicator(Tempo.EIGHTH, Abs_note.HIG_TOM, [Quarters.FOUR]) * 2
+n5 = note_replicator(Tempo.QUARTER, Abs_note.HI_HAT_OPEN, [Quarters.ONE]) * 2
+
+add1 = (n0 + n3 + n4) | (n5 + n1 + n2)
+
+test_patterns = [ttest, add, add1]
+
+# pprint(list((add1)()))

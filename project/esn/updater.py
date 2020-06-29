@@ -1,8 +1,10 @@
-import numpy as np
-from scipy import sparse, stats, linalg
-from project.esn import utils as u
-import project.esn.matrix as m
 from pprint import pprint as p
+
+import numpy as np
+from scipy import linalg, sparse, stats
+
+import project.esn.matrix as m
+from project.esn import utils as u
 
 
 def apply_leak(state, update, leaking_rate=0.3):

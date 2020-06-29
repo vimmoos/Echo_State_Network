@@ -1,19 +1,21 @@
+import itertools as it
+from math import inf
+from pprint import pprint
+
 import numpy as np
 from matplotlib.pyplot import *
 from scipy import linalg, sparse
-import project.esn.matrix as m
-import project.esn.updater as up
-import project.esn.trainer as tr
+
 import project.esn.core as c
+import project.esn.matrix as m
+import project.esn.teacher as te
+import project.esn.trainer as tr
 import project.esn.transformer as ta
+import project.esn.updater as up
 import project.music_gen.core as cgen
 import project.music_gen.test as tgen
-import project.parse_midi.matrix.proc_dicts as emidi
 import project.parse_midi.matrix.core as cmidi
-import project.esn.teacher as te
-import itertools as it
-
-from math import inf
+import project.parse_midi.matrix.proc_dicts as emidi
 
 
 def multiple__(times=10, thr=inf):
@@ -71,15 +73,13 @@ def test_randomMatrix():
         Y, mse = gen()
         return mse
 
+
 def test_midi():
     train_len = test_len = 970
     init_len = 100
-    music = it.repeat(cmidi.exec_proc_dict(emidi.example_proc_dict)["matrixs"][0],20)
-    data = c.Data(np.array(list(music)),
-                  None,
-                  init_len,
-                  train_len,
-                  test_len)
+    music = it.repeat(
+        cmidi.exec_proc_dict(emidi.example_proc_dict)["matrixs"][0], 20)
+    data = c.Data(np.array(list(music)), None, init_len, train_len, test_len)
     with c.Run(
             **{
                 "data": data,
@@ -94,17 +94,15 @@ def test_midi():
             }) as gen:
         return gen()
 
+
 def test_generated():
-    train_len = test_len = 1200
+    train_len = test_len = 800
     init_len = 100
 
-    music = (tgen.test * 200)
+    music = (tgen.test_patterns[2] * 300)
 
-    data = c.Data(np.array(list(~music)),
-                music.tempo,
-                init_len,
-                train_len,
-                test_len)
+    data = c.Data(np.array(list(~music)), music.tempo, init_len, train_len,
+                  test_len)
     with c.Run(
             **{
                 "data": data,
@@ -115,6 +113,14 @@ def test_generated():
                 "spectral_radius": 0.8,
                 "density": .5,
                 "reg": 1e-8,
-                "transformer": ta.user_threshold(0.3)
+                "transformer": ta.user_threshold(0.75)
             }) as gen:
         return gen()
+
+
+def run_multiple(times, func):
+    res_list = [func()[1] for _ in range(times)]
+    return np.mean(res_list), res_list
+
+
+# tot, ind = run_multiple(10, test_generated)
