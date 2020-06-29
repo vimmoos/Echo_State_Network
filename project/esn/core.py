@@ -107,17 +107,13 @@ class Run():
         return (output, self._mse_nd(output, ut.force_2dim(desired)))
 
     def _mse1d(self, output, desired):
-        from pprint import pprint
-
         return sum(
-            np.square(desired[:self.error_len, 0] -
-                      output[:self.error_len, 0])) / self.error_len
+            np.square(desired[:self.error_len] -
+                      output[:self.error_len])) / self.error_len
 
     def _mse_nd(self, output, desired):
         return [
-            sum(
-                np.square(desired[:self.error_len, x] -
-                          output[:self.error_len, x])) / self.error_len
+            self._mse1d(output[:,x],desired[:,x])
             for x in range(output.shape[1])
         ]
 

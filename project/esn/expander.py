@@ -2,6 +2,7 @@ from itertools import product, tee
 import pickle
 from project.esn.utils import *
 import project.esn.matrix as m
+import project.esn.core as c
 
 
 @mydataclass(init=True, repr=True, check=True)
@@ -13,9 +14,7 @@ class Expander():
         self._gen_cart = ({
             k: v
             for k, v in zip(self.gen_dict.keys(), elem)
-        } for elem in (x
-                       for x in product(*[v
-                                          for k, v in self.gen_dict.items()])))
+        } for elem in product(*[v for k, v in self.gen_dict.items()]))
 
     def __call__(self):
         self._gen_cart, copy = tee(self._gen_cart)
@@ -39,6 +38,13 @@ def gen_reservoir(spectral_radius=None,
                                                     size,
                                                     density=density),
                                  spectral_radius=spectral_radius)
+        for _ in range(repetition)
+    ]
+
+@d_expander
+def run_esn(kwargs):
+    return [
+        c.Run(**kwargs).__enter__()()
         for _ in range(repetition)
     ]
 
@@ -67,6 +73,10 @@ class Pickler():
 reservoir_pickler = lambda fun: lambda gen_dict, *args, **kwargs: Pickler(
     fun, gen_reservoir(gen_dict), *args, **kwargs)
 
+esn_pickler = lambda fun: lambda gen_dict,*args,**kwargs: Pickler(fun,run_esn(gen_dict),*args,**kwargs)
+
+
+
 
 @reservoir_pickler
 def vanilla_pickler(conf: dict):
@@ -76,9 +86,9 @@ def vanilla_pickler(conf: dict):
 
 
 reservoir_gen = {
-    "spectral_radius": ((x / 20) + 0.05 for x in range(12)),
-    "density": ((x / 25) + 0.04 for x in range(12)),
-    "size": ((x * 100) * 4 + 400 for x in range(12)),
+    "spectral_radius": ((x / 10) + 0.05 for x in range(12)),
+    "density": ((x / 12) + 0.04 for x in range(12)),
+    "size": (x for x in [100, 500, 1000, 1500, 2000, 3000, 5000, 10000]),
     "repetition": [10],
 }
 
