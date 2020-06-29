@@ -10,6 +10,7 @@ import project.music_gen.core as cgen
 import project.music_gen.test as tgen
 import project.parse_midi.matrix.proc_dicts as emidi
 import project.parse_midi.matrix.core as cmidi
+import project.esn.teacher as te
 import itertools as it
 
 from math import inf
@@ -114,6 +115,6 @@ def test_generated():
                 "spectral_radius": 0.8,
                 "density": .5,
                 "reg": 1e-8,
-                "transformer": ta.user_threshold(0.5),
+                "transformer": ta.user_threshold(0.3)
             }) as gen:
         return gen()

@@ -2,17 +2,14 @@ from pprint import pprint as p
 
 import numpy as np
 from scipy import linalg, sparse, stats
-
 import project.esn.transformer as tr
 from project.esn import matrix as m
 from project.esn import trainer as t
-<<<<<<< HEAD
 from project.esn import updater as up
 from project.esn import utils as ut
-=======
 from project.music_gen.data_types import Tempo
 import project.esn.transformer as tr
->>>>>>> 33aa2a9ef573aafb13a894a53a1a2aab368446c9
+from project.esn import teacher as te
 
 
 @ut.mydataclass(init=True, repr=True)
@@ -71,8 +68,6 @@ def run_gen_mode(r: Runner, ta: callable, input):
     return outputs
 
 
-
-
 @ut.mydataclass(init=True, repr=True, check=False)
 class ESN:
     _runner: Runner
@@ -123,24 +118,15 @@ class Run:
     density: float = 0.5
     reg: float = 1e-8
     transformer: callable = lambda x: x
+    evaluation: callable = te._mse_nd
 
     def __call__(self, input=None, desired=None):
         input = self.data.start_input() if input is None else input
         desired = self.data.test_data() if desired is None else desired
         output = self.esn >> input
-        return (output, self._mse_nd(output,
-                                     ut.force_2dim(desired)), self.data.tempo)
-
-    def _mse1d(self, output, desired):
-        return (sum(
-            np.square(desired[:self.error_len] - output[:self.error_len])) /
-                self.error_len)
-
-    def _mse_nd(self, output, desired):
-        return [
-            self._mse1d(output[:, x], desired[:, x])
-            for x in range(output.shape[1])
-        ]
+        return (output,
+                self.evaluation(output, ut.force_2dim(desired),
+                                self.error_len), self.data.tempo)
 
     def __enter__(self):
         self.init_len = self.data.init_len

@@ -1,18 +1,29 @@
 import numpy as np
 
 
-def n_softmax(n: int):
-    def inner(el: np.array):
-        norm_output = np.exp(el) / sum(np.exp(el))
-        highest_idx = np.argpartition(norm_output, -n)[-n:]
-        return np.array([
-            1 if idx in highest_idx else 0 for idx, _ in enumerate(norm_output)
-        ])
+''' not suitable for us!!
+'''
+# def n_softmax(n: int):
+#     def inner(el: np.array):
+#         norm_output = np.exp(el) / sum(np.exp(el))
+#         highest_idx = np.argpartition(norm_output, -n)[-n:]
+#         return np.array([
+#             1 if idx in highest_idx else 0 for idx, _ in enumerate(norm_output)
+#         ])
 
-    return inner
+#     return inner
 
 
 user_threshold = lambda t: np.vectorize(lambda el: 1 if el > t else 0)
+
+def user_max_n(n):
+    def inner(li):
+        print(li)
+        sort_li = np.sort(li)[::-1]
+        print(sort_li)
+        return [1 if x in sort_li[:n] else 0 for x in li]
+    return inner
+
 
 # test = np.array([1, 2, 3, 4, 0.67, 0.09, 78])
 

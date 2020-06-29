@@ -7,6 +7,10 @@ class AutoName(e.Enum):
         count += 2
         return 2**count
 
+class IndexName(e.Enum):
+    def _generate_next_value_(name,start,count,last_values):
+        return count
+
 
 @e.unique
 class Tempo(AutoName):
@@ -29,7 +33,7 @@ class Quarters(e.Enum):
 
 
 @e.unique
-class Abs_note(e.Enum):
+class Abs_note(IndexName):
     HI_HAT_CLOSE = e.auto()
     HI_HAT_OPEN = e.auto()
     BASS_DRUM = e.auto()
