@@ -70,13 +70,13 @@ def test_randomMatrix():
 def test_generated():
     train_len = test_len = 1200
 
-    music = cgen.note_sampler(tgen.test * 200)
+    music = (tgen.test * 200)
 
-    data = c.Data(np.array(list(music)),
+    data = c.Data(np.array(list(~music)),
                 music.tempo,
+                100,
                 train_len,
-                test_len,
-                100)
+                test_len)
     with c.Run(
             **{
                 "data": data,

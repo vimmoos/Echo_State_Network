@@ -145,11 +145,14 @@ class Run:
                 spectral_radius=self.spectral_radius,
                 density=self.density,
             ))
+
         updator = up.vanilla_updator(matrixs,
                                      np.zeros((self.reservoir, 1)),
                                      leaking_rate=self.leaking_rate)
+
         trainer = t.ridge_reg(param=self.reg)
-        self.esn = ESN(runner(updator, self.test_len), trainer,
+
+        self.esn = ESN(runner(updator, self.data.test_len), trainer,
                        self.transformer, self.init_len)
         self.activations = self.esn << (self.data.training_data(),
                                         self.data.desired())

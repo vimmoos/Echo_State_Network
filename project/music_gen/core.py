@@ -2,6 +2,7 @@ import project.esn.utils as ut
 from project.music_gen.data_types import *
 import numpy as np
 import itertools as it
+import functools as ft
 
 
 @ut.mydataclass(init=True, repr=True)
@@ -10,6 +11,7 @@ class gNote():
     _generator: callable
     pattern_len: int
     tempo: Tempo
+
 
     def __add__(self, other):
         return check_instance(other, gNote, lambda x: note_zipper(self, x),
@@ -26,6 +28,11 @@ class gNote():
     def __getitem__(self, key):
         return check_instance(key, int, lambda x: note_slice(self, x),
                               f"cannot slice with {key}")
+    def len(self):
+        return int((self.pattern_len*4) * (self.tempo.value/len(Quarters)))
+
+    def __invert__(self):
+        return note_sampler(self)
 
     def __call__(self):
         return self._generator(self.note, self.pattern_len)
@@ -77,6 +84,19 @@ def merge_tempos_f(tempo: Tempo):
 
     return merge_tempos
 
+def note_reduce(f:callable,notes:list):
+    return ft.reduce(f,notes)
+
+def reducer(fun):
+    setattr(fun,"reduce",lambda li:note_reduce(f,li))
+    return fun
+
+def note_map(f:callable,notes:list):
+    return map(f,notes)
+
+def mapper(fun):
+    setattr(fun,"map",lambda li:note_map(f,li))
+    return fun
 
 def note_slice(gnote: gNote, n: int):
     @gNote_(note="slice", pattern_len=n, tempo=gnote.tempo)
@@ -98,6 +118,8 @@ def note_replic(gnote: gNote, n: int):
     return greplic()
 
 
+@reducer
+@mapper
 def note_concat(gNote_0: gNote, gNote_1: gNote):
     max_tempo = max_tempos(gNote_0.tempo, gNote_1.tempo)
     merge_t = merge_tempos_f(max_tempo)
@@ -111,6 +133,8 @@ def note_concat(gNote_0: gNote, gNote_1: gNote):
     return gconcat()
 
 
+@reducer
+@mapper
 def note_zipper(gNote_0: gNote, gNote_1: gNote):
     max_tempo = max_tempos(gNote_0.tempo, gNote_1.tempo)
     merge_t = merge_tempos_f(max_tempo)
