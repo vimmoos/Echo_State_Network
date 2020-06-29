@@ -13,17 +13,28 @@ teacher = np.array([[0, 1, 1, 1, 0], [0, 1, 0, 0, 0], [1, 1, 1, 0, 0],
 out1 = np.array([0.5, 0.7, 0.99, 0.3, 0.786])
 teacher1 = np.array([0, 1, 0, 0, 1])
 
+
+def _mse1d(output, desired, error_len):
+    return (sum(np.square(desired[:error_len] - output[:error_len])) /
+            error_len)
+
+
+def _mse_nd(output, desired, error_len):
+    return [
+        _mse1d(output[:, x], desired[:, x],error_len)
+        for x in range(output.shape[1])
+    ]
+
+
 teacher_log = np.vectorize(lambda out, teach: np.log(out)
                            if teach >= 1 else np.log(1 - out))
 
 
 def teacher_loss_1d(output,
                     teacher,
-                    precision_len,
-                    squeeze_func: callable = np.tanh):
-    norm_out = squeeze_func(output)
+                    precision_len):
     return sum([
-        teacher_log(out, teach) for out, teach in zip(norm_out[:precision_len],
+        teacher_log(out, teach) for out, teach in zip(output[:precision_len],
                                                       teacher[:precision_len])
     ]) / precision_len
 
