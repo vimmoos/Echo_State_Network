@@ -1,11 +1,18 @@
+from pprint import pprint as p
+
 import numpy as np
-from scipy import sparse, stats, linalg
-from project.esn import updater as up
-from project.esn import utils as ut
+from scipy import linalg, sparse, stats
+
+import project.esn.transformer as tr
 from project.esn import matrix as m
 from project.esn import trainer as t
+<<<<<<< HEAD
+from project.esn import updater as up
+from project.esn import utils as ut
+=======
 from project.music_gen.data_types import Tempo
 import project.esn.transformer as tr
+>>>>>>> 33aa2a9ef573aafb13a894a53a1a2aab368446c9
 
 
 @ut.mydataclass(init=True, repr=True)
@@ -64,7 +71,6 @@ def run_gen_mode(r: Runner, ta: callable, input):
     return outputs
 
 
-from pprint import pprint as p
 
 
 @ut.mydataclass(init=True, repr=True, check=False)
