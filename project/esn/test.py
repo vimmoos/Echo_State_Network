@@ -16,11 +16,11 @@ import itertools as it
 from math import inf
 
 
-def multiple__(times=10, thr=inf):
+def multiple__(times=10, thr=lambda x :True):
     def decorator(fun):
         def inner():
-            filt = [x for x in [fun() for _ in range(times)] if x < thr]
-            return (times, len(filt), np.mean(filt))
+            filt = [x for x in [fun()[1] for _ in range(times)] if thr(x)]
+            return (times, len(filt),[for x in filt[]] np.mean(filt),filt)
 
         return inner
 
@@ -43,8 +43,7 @@ def test():
                 "density": .5,
                 "reg": 1e-8
             }) as gen:
-        Y, mse = gen()
-        return mse
+        return gen()
 
 
 @multiple__()
@@ -68,8 +67,7 @@ def test_randomMatrix():
                 "density": .5,
                 "reg": 1e-8
             }) as gen:
-        Y, mse = gen()
-        return mse
+        return gen()
 
 def test_midi():
     train_len = test_len = 970
@@ -94,9 +92,10 @@ def test_midi():
             }) as gen:
         return gen()
 
+@multiple__(thr=lambda x : sum(x) > 4)
 def test_generated():
     train_len = test_len = 1200
-    init_len = 100
+    init_len = 200
 
     music = (tgen.test * 200)
 
@@ -109,12 +108,12 @@ def test_generated():
             **{
                 "data": data,
                 "in_out": 9,
-                "reservoir": 500,
+                "reservoir": 1000,
                 "error_len": 500,
                 "leaking_rate": 0.3,
                 "spectral_radius": 0.8,
-                "density": .5,
+                "density": 1,
                 "reg": 1e-8,
-                "transformer": ta.user_threshold(0.3)
+                "transformer": ta.user_sq_threshold(0.3)
             }) as gen:
         return gen()

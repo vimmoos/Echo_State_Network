@@ -52,3 +52,6 @@ class Esn_matrixs():
 esn_matrixs = lambda W_in, *args, **kwargs: Esn_matrixs(
     W_in, generate_smatrix(W_in.shape[0], W_in.shape[0], **kwargs), *args, **
     kwargs)
+
+read_matrix = lambda W_in,path,*args,**kwargs:Esn_matrixs(
+    W_in,

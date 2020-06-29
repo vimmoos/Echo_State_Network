@@ -16,6 +16,17 @@ import numpy as np
 
 user_threshold = lambda t: np.vectorize(lambda el: 1 if el > t else 0)
 
+
+def user_sq_threshold(t):
+    @np.vectorize
+    def inner(el):
+        return 1 if el>t else 0
+    def printer(li):
+        # print(li) print(1/(1 + np.exp(-li)))
+        # print(sum(1/(1 + np.exp(-li))))
+        return inner(1/(1+ np.exp(-li)))
+    return printer
+
 def user_max_n(n):
     def inner(li):
         sort_li = np.sort(li)[::-1]
