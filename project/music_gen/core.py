@@ -9,8 +9,8 @@ import functools as ft
 class gNote():
     note: Note
     _generator: callable
-    pattern_len: int
     tempo: Tempo
+    pattern_len: int = 1
 
 
     def __add__(self, other):
@@ -62,6 +62,9 @@ def note_sampler(note: gNote):
         for el in x:
             yield el
 
+def note_replicator(tempo:Tempo,note:Abs_note,quarters:list,pattern_len = 1):
+    return note_zipper.reduce([note_generator(Note(tempo,note,x),pattern_len) for x in quarters])
+
 
 ''' implementation of gNote operators
 '''
@@ -88,14 +91,14 @@ def note_reduce(f:callable,notes:list):
     return ft.reduce(f,notes)
 
 def reducer(fun):
-    setattr(fun,"reduce",lambda li:note_reduce(f,li))
+    setattr(fun,"reduce",lambda li:note_reduce(fun,li))
     return fun
 
 def note_map(f:callable,notes:list):
     return map(f,notes)
 
 def mapper(fun):
-    setattr(fun,"map",lambda li:note_map(f,li))
+    setattr(fun,"map",lambda li:note_map(fun,li))
     return fun
 
 def note_slice(gnote: gNote, n: int):

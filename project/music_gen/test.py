@@ -3,26 +3,16 @@ from project.music_gen.data_types import *
 
 t_len = 3
 
-hit0 = note_generator(Note(Tempo.QUARTER, Abs_note.HI_HAT_CLOSE, Quarters.ONE),
-                      t_len)
-hit1 = note_generator(Note(Tempo.QUARTER, Abs_note.HI_HAT_CLOSE, Quarters.TWO),
-                      t_len)
-hit2 = note_generator(
-    Note(Tempo.QUARTER, Abs_note.HI_HAT_CLOSE, Quarters.THREE), t_len)
-hit3 = note_generator(
-    Note(Tempo.QUARTER, Abs_note.HI_HAT_CLOSE, Quarters.FOUR), t_len)
+hit_quarter = note_replicator(Tempo.QUARTER, Abs_note.HI_HAT_CLOSE, list(Quarters))
 
-hit_quarter = hit0 + hit1 + hit2 + hit3
+snares = note_replicator(Tempo.QUARTER,Abs_note.SNARE,[Quarters.TWO,Quarters.FOUR])
 
-snare1 = note_generator(Note(Tempo.QUARTER, Abs_note.SNARE, Quarters.TWO),
-                        t_len)
-snare3 = note_generator(Note(Tempo.QUARTER, Abs_note.SNARE, Quarters.FOUR),
-                        t_len)
+basses =  note_replicator(Tempo.QUARTER,Abs_note.BASS_DRUM,[Quarters.ONE,Quarters.THREE])
 
-snares = snare1 + snare3
+std_groove = hit_quarter + snares + basses
 
 bass0 = note_generator(Note(Tempo.QUARTER, Abs_note.BASS_DRUM, Quarters.ONE),
-                       t_len)
+                           t_len)
 bass2 = note_generator(
     Note(Tempo.EIGHTH, Abs_note.BASS_DRUM, Quarters.THREE, 0.5), t_len)
 
