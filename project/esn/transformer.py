@@ -17,11 +17,14 @@ user_threshold = lambda t: np.vectorize(lambda el: 1 if el > t else 0)
 
 def user_max_n(n):
     def inner(li):
-        print(li)
         sort_li = np.sort(li)[::-1]
+<<<<<<< HEAD
         print(sort_li)
         return [1 if x in sort_li[:n] else 0 for x in li]
 
+=======
+        return np.array([1 if x in sort_li[:n] else 0 for x in li])
+>>>>>>> c8c756563bd2a47d2db249f0a2c657cde1cbcd4f
     return inner
 
 
