@@ -69,15 +69,19 @@ def test_randomMatrix():
 
 def test_generated():
     train_len = test_len = 1200
-    data = np.array(list(cgen.note_sampler(tgen.test * 200)))
+
+    music = cgen.note_sampler(tgen.test * 200)
+
+    data = c.Data(np.array(list(music)),
+                music.tempo,
+                train_len,
+                test_len,
+                100)
     with c.Run(
             **{
                 "data": data,
                 "in_out": 9,
                 "reservoir": 500,
-                "train_len": train_len,
-                "test_len": test_len,
-                "init_len": 100,
                 "error_len": 500,
                 "leaking_rate": 0.3,
                 "spectral_radius": 0.8,
