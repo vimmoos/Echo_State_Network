@@ -3,16 +3,19 @@ from project.music_gen.data_types import *
 
 t_len = 3
 
-hit_quarter = note_replicator(Tempo.QUARTER, Abs_note.HI_HAT_CLOSE, list(Quarters))
+hit_quarter = note_replicator(Tempo.QUARTER, Abs_note.HI_HAT_CLOSE,
+                              list(Quarters))
 
-snares = note_replicator(Tempo.QUARTER,Abs_note.SNARE,[Quarters.TWO,Quarters.FOUR])
+snares = note_replicator(Tempo.QUARTER, Abs_note.SNARE,
+                         [Quarters.TWO, Quarters.FOUR])
 
-basses =  note_replicator(Tempo.QUARTER,Abs_note.BASS_DRUM,[Quarters.ONE,Quarters.THREE])
+basses = note_replicator(Tempo.QUARTER, Abs_note.BASS_DRUM,
+                         [Quarters.ONE, Quarters.THREE])
 
 std_groove = hit_quarter + snares + basses
 
 bass0 = note_generator(Note(Tempo.QUARTER, Abs_note.BASS_DRUM, Quarters.ONE),
-                           t_len)
+                       t_len)
 bass2 = note_generator(
     Note(Tempo.EIGHTH, Abs_note.BASS_DRUM, Quarters.THREE, 0.5), t_len)
 
@@ -58,3 +61,17 @@ test4 = test[2]
 # def test():
 #     for i in (1, 2, 3):
 #         yield str(i) + "base"
+
+len_ = 1
+
+ride = note_generator(Note(Tempo.QUARTER, Abs_note.FLOOR_TOM, Quarters.FOUR),
+                      len_)
+
+bass = note_generator(Note(Tempo.QUARTER, Abs_note.BASS_DRUM, Quarters.ONE),
+                      len_)
+
+charl = note_replicator(Tempo.EIGHTH, Abs_note.HI_HAT_CLOSE,
+                        [Quarters.ONE, Quarters.THREE])
+
+ttest = bass + charl + ride
+pprint(list(~ttest))
