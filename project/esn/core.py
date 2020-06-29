@@ -1,10 +1,13 @@
+from pprint import pprint as p
+
 import numpy as np
-from scipy import sparse, stats, linalg
-from project.esn import updater as up
-from project.esn import utils as ut
+from scipy import linalg, sparse, stats
+
+import project.esn.transformer as tr
 from project.esn import matrix as m
 from project.esn import trainer as t
-import project.esn.transformer as tr
+from project.esn import updater as up
+from project.esn import utils as ut
 
 
 @ut.mydataclass(init=True, repr=True)
@@ -63,7 +66,6 @@ def run_gen_mode(r: Runner, ta: callable, input):
     return outputs
 
 
-from pprint import pprint as p
 
 
 @ut.mydataclass(init=True, repr=True, check=False)
@@ -113,7 +115,7 @@ class Run():
 
     def _mse_nd(self, output, desired):
         return [
-            self._mse1d(output[:,x],desired[:,x])
+            self._mse1d(output[:, x], desired[:, x])
             for x in range(output.shape[1])
         ]
 
