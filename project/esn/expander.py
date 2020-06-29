@@ -92,8 +92,15 @@ reservoir_gen = {
     "repetition": [10],
 }
 
+reservoir_gen_small = {
+    "spectral_radius": ((x / 20) + 0.05 for x in range(25)),
+    "density": ((x / 25) + 0.04 for x in range(24)),
+    "size": (x for x in [100, 500, 1000,2000]),
+    "repetition": [10],
+}
+
 if __name__ == "__main__":
-    p = vanilla_pickler(gen_dict=reservoir_gen,
+    p = vanilla_pickler(gen_dict=reservoir_gen_small,
                         path_to_dir="/home/vimmoos/NN/resources/reservoir/",
                         max_exp=True)
     p()
