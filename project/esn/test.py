@@ -123,4 +123,10 @@ def run_multiple(times, func):
     return np.mean(res_list), res_list
 
 
+def to_file():
+    with open("net_output.txt", "w") as fd:
+        res = test_generated()
+        fd.write(res)
+
+
 # tot, ind = run_multiple(10, test_generated)

@@ -2,15 +2,15 @@ from pprint import pprint as p
 
 import numpy as np
 from scipy import linalg, sparse, stats
+
 import project.esn.transformer as tr
 from project.esn import matrix as m
+from project.esn import runner as r
+from project.esn import teacher as te
 from project.esn import trainer as t
 from project.esn import updater as up
 from project.esn import utils as ut
 from project.music_gen.data_types import Tempo
-import project.esn.transformer as tr
-from project.esn import teacher as te
-from project.esn import runner as r
 
 
 @ut.mydataclass(init=True, repr=True, check=False)
