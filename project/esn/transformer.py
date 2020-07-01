@@ -1,43 +1,80 @@
 import numpy as np
+from random import uniform
+import project.esn.utils as u
+from aenum import Enum,extend_enum
+
+sigmoid = lambda x: 1 / (1 + np.exp(-x))
+
+enhanced_sigm = lambda x,a: 1/ (1+np.exp(-(x*a)))
+
+my_sigm = lambda x: enhanced_sigm(x-0.5,8)
+
+squeezed_tanh = lambda x : (np.tanh(x) + 1)/2
+
+choose_prob = lambda x: uniform(0, 1) <= x
 
 
-''' not suitable for us!!
-'''
-# def n_softmax(n: int):
-#     def inner(el: np.array):
-#         norm_output = np.exp(el) / sum(np.exp(el))
-#         highest_idx = np.argpartition(norm_output, -n)[-n:]
-#         return np.array([
-#             1 if idx in highest_idx else 0 for idx, _ in enumerate(norm_output)
-#         ])
+@np.vectorize
+def trim(x):
+    x = x if x > 0. else 0.
+    return 1. if x > 1. else x
 
-#     return inner
+class Transformers(Enum):
+    pass
 
 
-user_threshold = lambda t: np.vectorize(lambda el: 1 if el > t else 0)
+@u.mydataclass(init=True, repr=True,frozen=True)
+class Transformer():
+    _transformer: callable
+    param: float = 0.0
+    squeeze_f: callable = lambda x: x
 
+    def __call__(self, sig):
+        sig = u.comp(trim, self.squeeze_f)(sig)
+        if isinstance(self._transformer, np.vectorize):
+            return self._transformer(sig, self.param)
+        else:
+            return np.array([
+                self._transformer(el, self.param) for el in sig
+            ])
 
-def user_sq_threshold(t):
-    @np.vectorize
-    def inner(el):
-        return 1 if el>t else 0
-    def printer(li):
-        # print(li) print(1/(1 + np.exp(-li)))
-        # print(sum(1/(1 + np.exp(-li))))
-        return inner(1/(1+ np.exp(-li)))
-    return printer
+def add_transformer(fun):
+    inner = lambda *args, **kwargs: Transformer(
+        fun, *args, **kwargs)
+    name = fun.pyfunc.__name__ if isinstance(fun, np.vectorize) else fun.__name__
 
-def user_max_n(n):
-    def inner(li):
-        sort_li = np.sort(li)[::-1]
-        return np.array([1 if x in sort_li[:n] else 0 for x in li])
+    extend_enum(Transformers,name,inner)
     return inner
 
 
-# test = np.array([1, 2, 3, 4, 0.67, 0.09, 78])
 
-# func = user_threshold(0.78)
-# print(func(test))
 
-# f = n_softmax(4)
-# print(f(test))
+# @add_transformer
+# def softmax(li, alpha):
+#     return np.array([
+#         1 if choose_prob(x**alpha) else 0
+#         for x in (np.exp(li) / sum(np.exp(li)))
+#     ])
+
+@add_transformer
+@np.vectorize
+def identity(x,param):
+    return x
+
+
+@add_transformer
+@np.vectorize
+def threshold(x, t):
+    return 1 if x > t else 0
+
+
+@add_transformer
+@np.vectorize
+def pow_prob(x, alpha):
+    return 1 if choose_prob(x**alpha) else 0
+
+
+@add_transformer
+@np.vectorize
+def sig_prob(x, alpha):
+    return 1 if choose_prob((x - 0.5) * alpha) else 0

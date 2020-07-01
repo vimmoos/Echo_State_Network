@@ -1,5 +1,4 @@
 import numpy as np
-from scipy import sparse, stats, linalg
 from project.esn import utils as u
 import project.esn.matrix as m
 from pprint import pprint as p
@@ -35,6 +34,7 @@ class Updator():
             self.weights.W_out,
             self.state,
             other,
+            self.squeeze_f
         )
 
 
@@ -66,10 +66,7 @@ def feedback_updator(weights: m.Esn_matrixs, state, tuple):
             (weights.W_feb * output))
 
 
-''' TODO rewrite better !!!
-'''
-
-
+@u.pre_proc_args({"input": u.force_2dim, "state": u.force_2dim})
 def default_output(W_out, state, input, output_f=lambda x: x):
-    z_n = m.build_extended_states(u.force_2dim(input).T, state.T).T
+    z_n = m.build_extended_states(input.T, state.T).T
     return output_f(W_out.dot(z_n)).reshape(-1)
