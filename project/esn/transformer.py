@@ -6,7 +6,6 @@ from aenum import Enum,extend_enum
 sigmoid = lambda x: 1 / (1 + np.exp(-x))
 
 enhanced_sigm = lambda x,a: 1/ (1+np.exp(-(x*a)))
-
 my_sigm = lambda x: enhanced_sigm(x-0.5,8)
 
 squeezed_tanh = lambda x : (np.tanh(x) + 1)/2
@@ -44,7 +43,6 @@ def add_transformer(fun):
     name = fun.pyfunc.__name__ if isinstance(fun, np.vectorize) else fun.__name__
 
     extend_enum(Transformers,name,inner)
-    return inner
 
 
 
