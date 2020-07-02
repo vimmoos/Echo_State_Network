@@ -1,13 +1,15 @@
 from pprint import pprint as p
 
 import numpy as np
+
 import project.esn.transformer as tr
 from project.esn import matrix as m
+from project.esn import runner as r
+from project.esn import teacher as te
 from project.esn import trainer as t
 from project.esn import updater as up
 from project.esn import utils as ut
 from project.music_gen.data_types import Tempo
-from project.esn import runner as r
 
 
 @ut.mydataclass(init=True, repr=True, check=False, frozen=True)
@@ -72,10 +74,9 @@ class Run:
     def to_dict(self, kwargs={}):
         return {
             **{
-                k: _get_val(getattr(self,k))
-                for k,_ in self.__class__.__dict__["__dataclass_fields__"].items() if k not in [
-                    "data", "in_out", "reservoir"
-                ]
+                k: _get_val(getattr(self, k))
+                for k, _ in self.__class__.__dict__["__dataclass_fields__"].items(
+                ) if k not in ["data", "in_out", "reservoir"]
             },
             **kwargs
         }
@@ -123,7 +124,7 @@ class Run:
                                      squeeze_o = self.squeeze_o)
 
         trainer = t.ridge_reg(param=self.reg)
-        transformer = self.transformer.value(self.t_param,self.t_squeeze)
+        transformer = self.transformer.value(self.t_param, self.t_squeeze)
 
         self.esn = ESN(r.runner(updator, self.data.test_len), trainer,
                        transformer, self.init_len)
