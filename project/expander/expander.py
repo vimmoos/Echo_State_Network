@@ -3,10 +3,8 @@ import pickle
 from project.esn.utils import *
 import project.esn.matrix as m
 import project.esn.core as c
+import project.esn.transformer as t
 import signal
-import sys
-import time
-import copy
 
 
 @mydataclass(init=True, repr=True, check=True)
@@ -46,7 +44,9 @@ def res_name(conf: dict):
 
 
 def esn_name(conf: dict):
-    return str(reduce(lambda x,y: hash(str(hash(str(y))) + str(hash(str(x)))),conf.values()))
+    return str(
+        reduce(lambda x, y: hash(str(hash(str(y))) + str(hash(str(x)))),
+               conf.values()))
 
 
 @d_expander(lambda x: "_".join(res_name(x)))
@@ -63,18 +63,25 @@ def gen_reservoir(spectral_radius=None,
     ]
 
 
+
+
 @d_expander(esn_name)
-def run_esn(repetition,matrix_path, idx, **kwargs):
-    return [c.Run(**kwargs).load(matrix_path,idx).__enter__()() for
-    _ in range(repetition)]
+def run_esn(repetition, matrix_path, idx, **kwargs):
+    return [
+        c.Run(**kwargs).load(matrix_path, idx).__enter__()()
+        for _ in range(repetition)
+    ] if kwargs["transformer"] != t.Transformers.threshold else [
+        c.Run(**kwargs).load(matrix_path, idx).__enter__()()
+    ]
 
 
 @mydataclass(init=True, repr=True, check=False)
 class Pickler():
     expander: Expander
     path_to_dir: str
-    _dumper:callable = lambda x :x
+    _dumper: callable = lambda x: x
     max_exp: lambda x: x is True or isinstance(x, int) = True
+    verbose: bool = None
 
     def __call__(self, max_exp=None):
         if not max_exp is None:
@@ -82,7 +89,7 @@ class Pickler():
         for i, conf in enumerate(self.expander()):
             if (not (self.max_exp is True)) and self.max_exp == i:
                 return self.path_to_dir
-            print(f"dump conf {i}")
+            print(f"dump conf {i}{self._dumper(conf)}" if self.verbose else f"dump conf {i}")
             with open(
                     self.path_to_dir + "_".join(self.expander._name_gen(conf)),
                     "wb") as f:
@@ -95,4 +102,4 @@ reservoir_pickler = lambda gen_dict, *args, **kwargs: Pickler(
     gen_reservoir(gen_dict), *args, **kwargs)
 
 esn_pickler = lambda gen_dict, *args, **kwargs: Pickler(
-    run_esn(gen_dict), *args,**kwargs,_dumper=lambda x : x["result"])
+    run_esn(gen_dict), *args, **kwargs, _dumper=lambda x: x["result"])

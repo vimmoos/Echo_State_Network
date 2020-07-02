@@ -1,14 +1,22 @@
 import numpy as np
 from random import uniform
 import project.esn.utils as u
-from aenum import Enum,extend_enum
+from aenum import Enum, extend_enum
+
+_identity = lambda x : x
+_identity.__name__ = "identity"
 
 sigmoid = lambda x: 1 / (1 + np.exp(-x))
+sigmoid.__name__ = "sigmoid"
 
-enhanced_sigm = lambda x,a: 1/ (1+np.exp(-(x*a)))
-my_sigm = lambda x: enhanced_sigm(x-0.5,8)
+enhanced_sigm = lambda x, a: 1 / (1 + np.exp(-(x * a)))
+enhanced_sigm.__name__ = "enhanced_sigm"
 
-squeezed_tanh = lambda x : (np.tanh(x) + 1)/2
+my_sigm = lambda x: enhanced_sigm(x - 0.5, 8)
+my_sigm.__name__ = "my_sigm"
+
+squeezed_tanh = lambda x: (np.tanh(x) + 1) / 2
+squeezed_tanh.__name__ = "squeezed_tanh"
 
 choose_prob = lambda x: uniform(0, 1) <= x
 
@@ -18,11 +26,12 @@ def trim(x):
     x = x if x > 0. else 0.
     return 1. if x > 1. else x
 
+
 class Transformers(Enum):
     pass
 
 
-@u.mydataclass(init=True, repr=True,frozen=True)
+@u.mydataclass(init=True, repr=True, frozen=True)
 class Transformer():
     _transformer: callable
     param: float = 0.0
@@ -33,18 +42,15 @@ class Transformer():
         if isinstance(self._transformer, np.vectorize):
             return self._transformer(sig, self.param)
         else:
-            return np.array([
-                self._transformer(el, self.param) for el in sig
-            ])
+            return np.array([self._transformer(el, self.param) for el in sig])
+
 
 def add_transformer(fun):
-    inner = lambda *args, **kwargs: Transformer(
-        fun, *args, **kwargs)
-    name = fun.pyfunc.__name__ if isinstance(fun, np.vectorize) else fun.__name__
+    inner = lambda *args, **kwargs: Transformer(fun, *args, **kwargs)
+    name = fun.pyfunc.__name__ if isinstance(fun,
+                                             np.vectorize) else fun.__name__
 
-    extend_enum(Transformers,name,inner)
-
-
+    extend_enum(Transformers, name, inner)
 
 
 # @add_transformer
@@ -54,9 +60,10 @@ def add_transformer(fun):
 #         for x in (np.exp(li) / sum(np.exp(li)))
 #     ])
 
+
 @add_transformer
 @np.vectorize
-def identity(x,param):
+def identity(x, param):
     return x
 
 
@@ -75,4 +82,4 @@ def pow_prob(x, alpha):
 @add_transformer
 @np.vectorize
 def sig_prob(x, alpha):
-    return 1 if choose_prob((x - 0.5) * alpha) else 0
+    return 1 if choose_prob(sigmoid((x - 0.5) * ((alpha * 10) + 4))) else 0

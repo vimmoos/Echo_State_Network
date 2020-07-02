@@ -30,16 +30,10 @@ class gNote():
         return check_instance(key, int, lambda x: note_slice(self, x),
                               f"cannot slice with {key}")
 
-<<<<<<< HEAD
-=======
     def __floordiv__(self,other):
         return check_instance(other,tuple,lambda x: note_pattern(self,other),
                               f"cannote apply the patter {other}")
 
-
-    # def __sub__(self,other):
-    #     return check_instance(other,,lambda x: )
->>>>>>> c8c756563bd2a47d2db249f0a2c657cde1cbcd4f
     def len(self):
         return int((self.pattern_len * 4) * (self.tempo.value / len(Quarters)))
 

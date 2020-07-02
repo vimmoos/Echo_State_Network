@@ -1,4 +1,5 @@
-from project.esn.transformer import Transformers, sigmoid, my_sigm
+from project.esn.transformer import Transformers, sigmoid, my_sigm,_identity
+import project.esn.transformer as t
 from project.esn.utils import *
 import signal
 import numpy as np
@@ -23,25 +24,28 @@ import project.esn.core as c
 
 esn_gen = {
     "data":
-    [c.Data(np.array(list(~(data.test * 200))), (data.test * 200).tempo, 216,
-           3400, 3400)],
+    [c.Data(np.array(list(~(data.test * 100))), (data.test * 100).tempo, 960,
+            5500, 5500)],
     "in_out": [9],
-    "leaking_rate": (x / 10 for x in range(10)),
+    "leaking_rate": (((x * 2) / 10)+0.2 for x in range(5)),
     "reg": [1e-8],
-    "transformer": (x for x in list(Transformers)),
-    "t_param": ((x * 2) / 10 for x in range(5)),
+    "transformer": (x for x in [t.Transformers.sig_prob,t.Transformers.threshold]),
+    "t_param": (((x * 2) / 10)+0.2 for x in range(5)),
     "t_squeeze": (x for x in [np.tanh, sigmoid, my_sigm]),
     "noise": [0],
     "matrix_path":
     ("/".join(["/home", "vimmoos", "NN", "resources", "reservoir", x])
      for x in ~e.gen_reservoir(reservoir_gen_small)),
     "idx": (x for x in range(10)),
+    "squeeze_o":(x for x in [_identity, my_sigm]),
     "repetition": [10]
 }
+
 
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_hadler())
     p = e.esn_pickler(esn_gen,
-                      path_to_dir= "/home/vimmoos/NN/resources/esn/")
+                      path_to_dir= "/home/vimmoos/NN/resources/esn/",)
+    # verbose = True)
     p()
