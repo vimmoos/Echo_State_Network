@@ -13,16 +13,21 @@ import project.esn.trainer as tr
 import project.esn.transformer as ta
 import project.esn.updater as up
 import project.music_gen.core as cgen
+<<<<<<< HEAD:project/test/esn_t.py
+import project.test.music_test as tgen
+import project.parse_midi.matrix.proc_dicts as emidi
+=======
 import project.music_gen.test as tgen
+>>>>>>> b8569a607f5d7aac1cdb9b7ac5d893631de0ea92:project/esn/test.py
 import project.parse_midi.matrix.core as cmidi
 import project.parse_midi.matrix.proc_dicts as emidi
 
 
-def multiple__(times=10, thr=inf):
+def multiple__(times=10, thr=lambda x :True):
     def decorator(fun):
         def inner():
-            filt = [x for x in [fun() for _ in range(times)] if x < thr]
-            return (times, len(filt), np.mean(filt))
+            filt = [x for x in [fun()[1] for _ in range(times)] if thr(x)]
+            return (times, len(filt), np.mean(filt),filt)
 
         return inner
 
@@ -45,8 +50,7 @@ def test():
                 "density": .5,
                 "reg": 1e-8
             }) as gen:
-        Y, mse = gen()
-        return mse
+        return gen()
 
 
 @multiple__()
@@ -70,8 +74,7 @@ def test_randomMatrix():
                 "density": .5,
                 "reg": 1e-8
             }) as gen:
-        Y, mse = gen()
-        return mse
+        return gen()
 
 
 def test_midi():
@@ -94,10 +97,17 @@ def test_midi():
             }) as gen:
         return gen()
 
+<<<<<<< HEAD:project/test/esn_t.py
+# @multiple__(thr=lambda x : sum(x) > 4)
+def test_generated():
+    train_len = test_len = 1200
+    init_len = 200
+=======
 
 def test_generated():
     train_len = test_len = 800
     init_len = 100
+>>>>>>> b8569a607f5d7aac1cdb9b7ac5d893631de0ea92:project/esn/test.py
 
     music = (tgen.test_patterns[2] * 300)
 
@@ -107,14 +117,17 @@ def test_generated():
             **{
                 "data": data,
                 "in_out": 9,
-                "reservoir": 500,
-                "error_len": 500,
                 "leaking_rate": 0.3,
-                "spectral_radius": 0.8,
-                "density": .5,
                 "reg": 1e-8,
+<<<<<<< HEAD:project/test/esn_t.py
+                "transformer": ta.Transformers.pow_prob,
+                "t_param": 1,
+                "t_squeeze": np.tanh,
+            }).load("/home/vimmoos/NN/resources/reservoir/0.18333333333333335_0.04_2000",0) as gen:
+=======
                 "transformer": ta.user_threshold(0.75)
             }) as gen:
+>>>>>>> b8569a607f5d7aac1cdb9b7ac5d893631de0ea92:project/esn/test.py
         return gen()
 
 

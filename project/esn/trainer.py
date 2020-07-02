@@ -1,22 +1,18 @@
 import numpy as np
 from scipy import linalg
-
-import project.esn.matrix as m
 import project.esn.utils as u
 
 
-@u.mydataclass(init=True, repr=True)
+@u.mydataclass(init=True, repr=True,frozen=True)
 class Trainer():
     _trainer: callable
     ex_state: np.ndarray = np.zeros((0, 0))
     desired: np.ndarray = np.zeros((0, 0))
     param: float = 1e-8
 
-    def __lshift__(self, other):
-        (ex_state, desired) = other
-        self.ex_state = ex_state
-        self.desired = desired
-        return self._trainer(self.ex_state, desired, self.param)
+    def __call__(self,other=None):
+        ex_state,desired = (self.ex_state,self.desired) if other is None else other
+        return self._trainer(ex_state,desired,self.param)
 
 
 d_trainer = lambda fun: lambda *args, **kwargs: Trainer(fun, *args, **kwargs)

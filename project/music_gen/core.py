@@ -178,11 +178,10 @@ def note_zipper(gNote_0: gNote, gNote_1: gNote):
 
     @gNote_(note="zipped", pattern_len=gNote_0.pattern_len, tempo=max_tempo)
     def gzipped(note: Note, pattern_len: int):
-        for (x,
-             y) in it.zip_longest(*merge_t([gNote_0, gNote_1]),
-                                  fillvalue=np.zeros(
-                                      (len(Abs_note),
-                                       int(max_tempo.value / len(Quarters))))):
+        for (x, y) in it.zip_longest(*merge_t([gNote_0, gNote_1]),
+                                     fillvalue=np.zeros(
+                                         (int(max_tempo.value / len(Quarters)),
+                                          len(Abs_note)))):
             yield x + y
 
     return gzipped()

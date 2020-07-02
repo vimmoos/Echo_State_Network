@@ -2,6 +2,7 @@ from pprint import pprint
 
 from project.music_gen.core import *
 from project.music_gen.data_types import *
+from pprint import pprint as p
 
 t_len = 3
 
@@ -19,13 +20,16 @@ std_groove = hit_quarter + snares + basses
 bass0 = note_generator(Note(Tempo.QUARTER, Abs_note.BASS_DRUM, Quarters.ONE),
                        t_len)
 bass2 = note_generator(
-    Note(Tempo.EIGHTH, Abs_note.BASS_DRUM, Quarters.THREE, 0.5), t_len)
+    Note(Tempo.EIGHTH, Abs_note.BASS_DRUM, Quarters.THREE, 1), t_len) // (3,[0,1])
 
 basss = bass0 + bass2
 
-test = hit_quarter + snares + basss
+classic =  (hit_quarter*3)+ (snares*3) + basss
 
-test_g = hit_quarter[1] | test * 2 | ((hit_quarter + basss) * 2)[3]
+
+test_g = hit_quarter[1] | classic * 2 | ((hit_quarter + basss) * 2)[3]
+
+test = classic | std_groove * 2 | test_g
 
 test3 = test * 2
 

@@ -1,9 +1,9 @@
 import numpy as np
-import typing as ty
 from dataclasses import dataclass
 from functools import reduce
-from collections.abc import Generator
 from functools import wraps
+import sys
+import time
 
 comp = lambda *fs: reduce(
     lambda f, g: lambda *args, **kwargs: f(g(*args, **kwargs)), fs)
@@ -62,19 +62,6 @@ def register_methods(kwargs):
 
     return decorator
 
-
-@mydataclass(repr=True, init=True, check=False)
-class My_generator():
-    generator: Generator  # solve this !!
-
-    def __enter__(self):
-        return self.generator
-
-    def __exit__(self, err_t, err_v, traceback):
-        if not isinstance(err_v, StopIteration):
-            raise ValueError(f"undefined error ${err_t} ${err_v} ${traceback}")
-
-
 def force_2dim(np_arr: np.array):
     if np_arr is None: return
     try:
@@ -102,6 +89,23 @@ def pre_proc_args(kwargs):
         return wrapper
 
     return decorator
+
+
+def signal_hadler():
+    count = 0
+
+    def signal_hadler(sig, frame):
+        nonlocal count
+        count += 1
+        if count == 2:
+            sys.exit(0)
+        print("te volessi mazarme ah")
+        print("quanti secondi te me fa dormir?")
+        sys.stdout.flush()
+        time.sleep(int(input()))
+        count = 0
+
+    return signal_hadler
 
 
 ''' TODO '''

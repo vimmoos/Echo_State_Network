@@ -1,6 +1,7 @@
 import numpy as np
 from scipy import sparse, stats, linalg
 from project.esn.utils import mydataclass, pre_proc_args, force_2dim
+import pickle as pic
 ''' generator for scipy and np matrix '''
 
 
@@ -20,10 +21,15 @@ def generate_rmatrix(m, n, bound=0.5, **kwargs):
 def scale_spectral_smatrix(matrix: sparse.issparse,
                            spectral_radius=1.25,
                            in_place=False):
+    try:
+        eigs = sparse.linalg.eigs(matrix)[0]
+    except sparse.linalg.ArpackNoConvergence as e:
+        eigs = e.eigenvalues
+    finally:
+        spectral = (spectral_radius / max(abs(eigs)))
     if not in_place:
-        return matrix * (spectral_radius /
-                         max(abs(sparse.linalg.eigs(matrix)[0])))
-    matrix *= (spectral_radius / max(abs(sparse.linalg.eigs(matrix)[0])))
+        return matrix * spectral
+    matrix *= spectral
 
 
 from pprint import pprint
@@ -52,3 +58,14 @@ class Esn_matrixs():
 esn_matrixs = lambda W_in, *args, **kwargs: Esn_matrixs(
     W_in, generate_smatrix(W_in.shape[0], W_in.shape[0], **kwargs), *args, **
     kwargs)
+
+def load_smatrix(path, idx):
+    with open(path, "rb") as f:
+        dic = pic.load(f)
+        return {
+            k if k != "result" else "W_res": v if k != "result" else v[idx]
+            for k, v in dic.items() if not k in ["repetition", "size"]
+        }
+
+read_matrix = lambda W_in, path, idx, *args, **kwargs: Esn_matrixs(
+    W_in, *args, **load_smatrix(path, idx), **kwargs)

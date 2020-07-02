@@ -3,11 +3,16 @@ import pickle
 from project.esn.utils import *
 import project.esn.matrix as m
 import project.esn.core as c
+import signal
+import sys
+import time
+import copy
 
 
 @mydataclass(init=True, repr=True, check=True)
 class Expander():
     _generator: callable
+    _name_gen: callable
     gen_dict: lambda x: True
 
     def __post_init__(self):
@@ -23,12 +28,28 @@ class Expander():
             "result": self._generator(**elem),
         } for elem in copy)
 
+    def __invert__(self):
+        self._gen_cart, copy = tee(self._gen_cart)
+        return (self._name_gen(elem) for elem in copy)
 
-d_expander = lambda fun: lambda gen_dict, *args, **kwargs: Expander(
-    fun, gen_dict, *args, **kwargs)
+
+def d_expander(inverter):
+    inner = lambda fun: lambda gen_dict, *args, **kwargs: Expander(
+        fun, inverter, gen_dict, *args, **kwargs)
+    return inner
 
 
-@d_expander
+def res_name(conf: dict):
+    return [
+        str(v) for k, v in conf.items() if not k in ["result", "repetition"]
+    ]
+
+
+def esn_name(conf: dict):
+    return str(reduce(lambda x,y: hash(str(hash(str(y))) + str(hash(str(x)))),conf.values()))
+
+
+@d_expander(lambda x: "_".join(res_name(x)))
 def gen_reservoir(spectral_radius=None,
                   density=None,
                   size=None,
@@ -41,19 +62,18 @@ def gen_reservoir(spectral_radius=None,
         for _ in range(repetition)
     ]
 
-@d_expander
-def run_esn(kwargs):
-    return [
-        c.Run(**kwargs).__enter__()()
-        for _ in range(repetition)
-    ]
+
+@d_expander(esn_name)
+def run_esn(repetition,matrix_path, idx, **kwargs):
+    return [c.Run(**kwargs).load(matrix_path,idx).__enter__()() for
+    _ in range(repetition)]
 
 
 @mydataclass(init=True, repr=True, check=False)
 class Pickler():
-    _name_gen: callable
     expander: Expander
     path_to_dir: str
+    _dumper:callable = lambda x :x
     max_exp: lambda x: x is True or isinstance(x, int) = True
 
     def __call__(self, max_exp=None):
@@ -62,45 +82,17 @@ class Pickler():
         for i, conf in enumerate(self.expander()):
             if (not (self.max_exp is True)) and self.max_exp == i:
                 return self.path_to_dir
-            print(f"dump conf {i}{conf}")
-            with open(self.path_to_dir + "_".join(self._name_gen(conf)),
-                      "wb") as f:
-                pickle.dump(conf, f)
+            print(f"dump conf {i}")
+            with open(
+                    self.path_to_dir + "_".join(self.expander._name_gen(conf)),
+                    "wb") as f:
+                pickle.dump(self._dumper(conf), f)
 
         return self.path_to_dir
 
 
-reservoir_pickler = lambda fun: lambda gen_dict, *args, **kwargs: Pickler(
-    fun, gen_reservoir(gen_dict), *args, **kwargs)
+reservoir_pickler = lambda gen_dict, *args, **kwargs: Pickler(
+    gen_reservoir(gen_dict), *args, **kwargs)
 
-esn_pickler = lambda fun: lambda gen_dict,*args,**kwargs: Pickler(fun,run_esn(gen_dict),*args,**kwargs)
-
-
-
-
-@reservoir_pickler
-def vanilla_pickler(conf: dict):
-    return [
-        str(v) for k, v in conf.items() if not k in ["result", "repetition"]
-    ]
-
-
-reservoir_gen = {
-    "spectral_radius": ((x / 10) + 0.05 for x in range(12)),
-    "density": ((x / 12) + 0.04 for x in range(12)),
-    "size": (x for x in [100, 500, 1000, 1500, 2000, 3000, 5000, 10000]),
-    "repetition": [10],
-}
-
-reservoir_gen_small = {
-    "spectral_radius": ((x / 20) + 0.05 for x in range(25)),
-    "density": ((x / 25) + 0.04 for x in range(24)),
-    "size": (x for x in [100, 500, 1000,2000]),
-    "repetition": [10],
-}
-
-if __name__ == "__main__":
-    p = vanilla_pickler(gen_dict=reservoir_gen_small,
-                        path_to_dir="/home/vimmoos/NN/resources/reservoir/",
-                        max_exp=True)
-    p()
+esn_pickler = lambda gen_dict, *args, **kwargs: Pickler(
+    run_esn(gen_dict), *args,**kwargs,_dumper=lambda x : x["result"])
