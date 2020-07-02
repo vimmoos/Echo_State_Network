@@ -1,4 +1,5 @@
 import enum as e
+
 import project.esn.utils as ut
 
 
@@ -7,8 +8,9 @@ class AutoName(e.Enum):
         count += 2
         return 2**count
 
+
 class IndexName(e.Enum):
-    def _generate_next_value_(name,start,count,last_values):
+    def _generate_next_value_(name, start, count, last_values):
         return count
 
 

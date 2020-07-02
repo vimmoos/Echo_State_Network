@@ -30,16 +30,11 @@ class gNote():
         return check_instance(key, int, lambda x: note_slice(self, x),
                               f"cannot slice with {key}")
 
-<<<<<<< HEAD
-=======
-    def __floordiv__(self,other):
-        return check_instance(other,tuple,lambda x: note_pattern(self,other),
+    def __floordiv__(self, other):
+        return check_instance(other, tuple,
+                              lambda x: note_pattern(self, other),
                               f"cannote apply the patter {other}")
 
-
-    # def __sub__(self,other):
-    #     return check_instance(other,,lambda x: )
->>>>>>> c8c756563bd2a47d2db249f0a2c657cde1cbcd4f
     def len(self):
         return int((self.pattern_len * 4) * (self.tempo.value / len(Quarters)))
 
@@ -72,8 +67,6 @@ def note_replicator(tempo: Tempo,
 
 ''' implementation of gNote operators
 '''
-
-
 
 
 def merge_tempos_f(tempo: Tempo):
@@ -145,22 +138,21 @@ def note_generator(note: Note, pattern_len: int):
             ])
 
 
-def note_pattern(gnote:gNote,qua_pat:tuple):
-    quarter,pattern = qua_pat
-    if not isinstance(quarter,Quarters):
+def note_pattern(gnote: gNote, qua_pat: tuple):
+    quarter, pattern = qua_pat
+    if not isinstance(quarter, Quarters):
         quarter = Quarters(quarter)
-    c_pattern = np.array([np.ones(len(Abs_note)) if x != 0 else np.zeros(len(Abs_note)) for x in pattern])
-    @gNote_(note="pattern",
-            pattern_len= gnote.pattern_len,
-            tempo=gnote.tempo)
-    def gpatter(note:Note,pattern_len:int):
-        for i,x in enumerate(gnote()):
-            yield x if (i%4) == quarter.value else x * c_pattern
+    c_pattern = np.array([
+        np.ones(len(Abs_note)) if x != 0 else np.zeros(len(Abs_note))
+        for x in pattern
+    ])
+
+    @gNote_(note="pattern", pattern_len=gnote.pattern_len, tempo=gnote.tempo)
+    def gpatter(note: Note, pattern_len: int):
+        for i, x in enumerate(gnote()):
+            yield x if (i % 4) == quarter.value else x * c_pattern
 
     return gpatter()
-
-
-
 
 
 @reducer
@@ -186,9 +178,11 @@ def note_zipper(gNote_0: gNote, gNote_1: gNote):
 
     @gNote_(note="zipped", pattern_len=gNote_0.pattern_len, tempo=max_tempo)
     def gzipped(note: Note, pattern_len: int):
-        for (x, y) in it.zip_longest(
-                *merge_t([gNote_0, gNote_1]),
-                fillvalue= np.zeros((len(Abs_note),int(max_tempo.value/len(Quarters))))):
+        for (x,
+             y) in it.zip_longest(*merge_t([gNote_0, gNote_1]),
+                                  fillvalue=np.zeros(
+                                      (len(Abs_note),
+                                       int(max_tempo.value / len(Quarters))))):
             yield x + y
 
     return gzipped()
