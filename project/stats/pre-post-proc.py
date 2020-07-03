@@ -15,7 +15,7 @@ def get_data():
     return [p.load(open(path + x, "rb")) for x in experiment]
 
 
-def process_data():
+def process_data(data):
     return [[{
         **{
             trans.name: [{
@@ -38,58 +38,71 @@ import matplotlib.pyplot as pl
 import scipy.signal as s
 import scipy.fft as f
 
+import random as r
 
-def show_output(
-                transformer,
-                leng,
-                ):
-    for i, x in enumerate(process_data):
-        if i >= 0:
+
+def _show(fun,data,data_len,max_len,transformer):
+    r.shuffle(data)
+    for i,x in enumerate(data):
+        if i >= max_len:
+            pl.show()
             return
         pl.figure(i)
-        pl.plot(x[0][transformer][0]["output"][:leng])
+        fun(x,data,data_len,transformer)
+        pl.legend(range(8))
+
+showable = lambda fun: lambda *args,**kwargs: _show(fun,*args,**kwargs)
+
+def get_title(current):
+    return " ".join([f"{k}={v}" for k,v in current.items() if k not in ["input","desired",*[x.name for x in list(t.Transformers)]]])
+
+@showable
+def output(
+           current,
+           data,
+           data_len,
+           transformer,
+           ):
+        pl.plot(current[0][transformer][0]["output"][:data_len])
+        pl.title(get_title(current[0]) + " output")
 
 
-def  test():
-    pl.figure(1)
-    pl.plot(process_data[0][0]["sig_prob"][3]["output"][:200, 2])
+@showable
+def correlation(current,data,data_len,transformer):
+    des = data[0][0]["desired"][:data_len]
+    out = current[0][transformer][0]["output"][:data_len]
+    pl.plot(s.correlate(out,des))
+    pl.title(get_title(current[0]) + " correlation")
 
-    pl.figure(0)
-    pl.plot(data[0][0]["desired"][:200, 2])
-    pl.show()
+@showable
+def fft(current,data,data_len,transformer):
+    pl.plot(f.fftn(current[0][transformer][0]["output"][:data_len]))
+    pl.title(get_title(current[0]) + " fft")
 
-    pl.plot(
-        s.correlate(process_data[0][0]["sig_prob"][3]["output"][:5000],
-                    process_data[0][0]["desired"][:5000]))
+# def  test():
+#     a = f.fftn(process_data[0][0]["pow_prob"][0]["output"][:500, 0])
+#     c = f.fftn(process_data[0][0]["sig_prob"][0]["output"][:500, 0])
+#     d = f.fftn(process_data[0][0]["threshold"][0]["output"][:500, 0])
+#     e = f.fftn(process_data[0][0]["identity"][0]["output"][:500, 0])
+#     b = f.fftn(process_data[0][0]["desired"][:500, 0])
 
-    pl.figure(1)
-    pl.plot(
-        s.correlate(process_data[0][0]["desired"], process_data[0][0]["desired"]))
-    pl.show()
+#     pl.figure(0)
+#     pl.plot(f.fftn(process_data[0][0]["desired"][:500]))
+#     pl.figure(1)
+#     pl.plot(f.fftn(process_data[0][0]["sig_prob"][0]["output"][:500]))
+#     pl.figure(2)
+#     pl.plot(f.fftn(process_data[0][0]["threshold"][0]["output"][:500]))
+#     pl.show()
 
-    a = f.fftn(process_data[0][0]["pow_prob"][0]["output"][:500, 0])
-    c = f.fftn(process_data[0][0]["sig_prob"][0]["output"][:500, 0])
-    d = f.fftn(process_data[0][0]["threshold"][0]["output"][:500, 0])
-    e = f.fftn(process_data[0][0]["identity"][0]["output"][:500, 0])
-    b = f.fftn(process_data[0][0]["desired"][:500, 0])
+#     pl.figure(0)
+#     pl.plot(np.log(np.abs(scipy.fft.fftshift(b))**2))
+#     pl.figure(1)
+#     pl.plot(np.log(np.abs(scipy.fft.fftshift(a))**2))
+#     pl.figure(2)
+#     pl.plot(np.log(np.abs(scipy.fft.fftshift(c))**2))
+#     pl.figure(3)
+#     pl.plot(np.log(np.abs(scipy.fft.fftshift(d))**2))
+#     pl.figure(4)
+#     pl.plot(np.log(np.abs(scipy.fft.fftshift(e))**2))
 
-    pl.figure(0)
-    pl.plot(f.fftn(process_data[0][0]["desired"][:500]))
-    pl.figure(1)
-    pl.plot(f.fftn(process_data[0][0]["sig_prob"][0]["output"][:500]))
-    pl.figure(2)
-    pl.plot(f.fftn(process_data[0][0]["threshold"][0]["output"][:500]))
-    pl.show()
-
-    pl.figure(0)
-    pl.plot(np.log(np.abs(scipy.fft.fftshift(b))**2))
-    pl.figure(1)
-    pl.plot(np.log(np.abs(scipy.fft.fftshift(a))**2))
-    pl.figure(2)
-    pl.plot(np.log(np.abs(scipy.fft.fftshift(c))**2))
-    pl.figure(3)
-    pl.plot(np.log(np.abs(scipy.fft.fftshift(d))**2))
-    pl.figure(4)
-    pl.plot(np.log(np.abs(scipy.fft.fftshift(e))**2))
-
-    pl.show()
+#     pl.show()
