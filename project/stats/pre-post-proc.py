@@ -1,8 +1,14 @@
 import pickle as p
+import random as r
+from collections import ChainMap
 from os import listdir
 from os.path import isfile, join
+
+import matplotlib.pyplot as pl
+import scipy.fft as f
+import scipy.signal as s
+
 import project.esn.transformer as t
-from collections import ChainMap
 
 path = "/home/vimmoos/NN/resources/esn/"
 
@@ -33,11 +39,7 @@ def process_data(data):
     } for y in x] for x in data]
 
 
-import matplotlib.pyplot as pl
-import scipy.signal as s
-import scipy.fft as f
 
-import random as r
 
 
 def _show(fun, data, data_len, max_len, transformer):
