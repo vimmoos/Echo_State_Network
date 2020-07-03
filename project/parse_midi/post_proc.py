@@ -7,6 +7,7 @@ import numpy as np
 # import project.esn.test as tesn
 import project.music_gen.data_types as dt
 
+
 # from pprint import pprint
 
 net_out = np.array([[0., 0., 0., 0., 0., 0., 0., 0., 0.],
