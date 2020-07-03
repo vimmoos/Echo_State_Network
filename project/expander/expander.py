@@ -70,7 +70,7 @@ def run_esn(repetition, matrix_path, idx, **kwargs):
     return [
         c.Run(**kwargs).load(matrix_path, idx).__enter__()()
         for _ in range(repetition)
-    ] if kwargs["transformer"] != t.Transformers.threshold else [
+    ] if kwargs["transformer"] not in [t.Transformers.threshold,t.Transformers.identity] else [
         c.Run(**kwargs).load(matrix_path, idx).__enter__()()
     ]
 

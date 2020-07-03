@@ -5,7 +5,6 @@ import numpy as np
 import project.esn.transformer as tr
 from project.esn import matrix as m
 from project.esn import runner as r
-from project.esn import teacher as te
 from project.esn import trainer as t
 from project.esn import updater as up
 from project.esn import utils as ut
@@ -76,7 +75,7 @@ class Run:
             **{
                 k: _get_val(getattr(self, k))
                 for k, _ in self.__class__.__dict__["__dataclass_fields__"].items(
-                ) if k not in ["data", "in_out", "reservoir"]
+                ) if k not in ["data", "in_out"]
             },
             **kwargs
         }
