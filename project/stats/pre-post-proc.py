@@ -33,7 +33,6 @@ def process_data(data):
     } for y in x] for x in data]
 
 
-
 import matplotlib.pyplot as pl
 import scipy.signal as s
 import scipy.fft as f
@@ -41,43 +40,51 @@ import scipy.fft as f
 import random as r
 
 
-def _show(fun,data,data_len,max_len,transformer):
+def _show(fun, data, data_len, max_len, transformer):
     r.shuffle(data)
-    for i,x in enumerate(data):
+    for i, x in enumerate(data):
         if i >= max_len:
             pl.show()
             return
         pl.figure(i)
-        fun(x,data,data_len,transformer)
+        fun(x, data, data_len, transformer)
         pl.legend(range(8))
 
-showable = lambda fun: lambda *args,**kwargs: _show(fun,*args,**kwargs)
+
+showable = lambda fun: lambda *args, **kwargs: _show(fun, *args, **kwargs)
+
 
 def get_title(current):
-    return " ".join([f"{k}={v}" for k,v in current.items() if k not in ["input","desired",*[x.name for x in list(t.Transformers)]]])
+    return " ".join([
+        f"{k}={v}" for k, v in current.items() if k not in
+        ["input", "desired", *[x.name for x in list(t.Transformers)]]
+    ])
+
 
 @showable
 def output(
-           current,
-           data,
-           data_len,
-           transformer,
-           ):
-        pl.plot(current[0][transformer][0]["output"][:data_len])
-        pl.title(get_title(current[0]) + " output")
+    current,
+    data,
+    data_len,
+    transformer,
+):
+    pl.plot(current[0][transformer][0]["output"][:data_len])
+    pl.title(get_title(current[0]) + " output")
 
 
 @showable
-def correlation(current,data,data_len,transformer):
+def correlation(current, data, data_len, transformer):
     des = data[0][0]["desired"][:data_len]
     out = current[0][transformer][0]["output"][:data_len]
-    pl.plot(s.correlate(out,des))
+    pl.plot(s.correlate(out, des))
     pl.title(get_title(current[0]) + " correlation")
 
+
 @showable
-def fft(current,data,data_len,transformer):
+def fft(current, data, data_len, transformer):
     pl.plot(f.fftn(current[0][transformer][0]["output"][:data_len]))
     pl.title(get_title(current[0]) + " fft")
+
 
 # def  test():
 #     a = f.fftn(process_data[0][0]["pow_prob"][0]["output"][:500, 0])
