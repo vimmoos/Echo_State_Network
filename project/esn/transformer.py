@@ -1,17 +1,24 @@
 from random import uniform
 
 import numpy as np
-
-import project.esn.utils as u
 from aenum import Enum, extend_enum
 
+import project.esn.utils as u
+
+_identity = lambda x: x
+_identity.__name__ = "identity"
+
 sigmoid = lambda x: 1 / (1 + np.exp(-x))
+sigmoid.__name__ = "sigmoid"
 
 enhanced_sigm = lambda x, a: 1 / (1 + np.exp(-(x * a)))
+enhanced_sigm.__name__ = "enhanced_sigm"
 
 my_sigm = lambda x: enhanced_sigm(x - 0.5, 8)
+my_sigm.__name__ = "my_sigm"
 
 squeezed_tanh = lambda x: (np.tanh(x) + 1) / 2
+squeezed_tanh.__name__ = "squeezed_tanh"
 
 choose_prob = lambda x: uniform(0, 1) <= x
 
@@ -77,4 +84,4 @@ def pow_prob(x, alpha):
 @add_transformer
 @np.vectorize
 def sig_prob(x, alpha):
-    return 1 if choose_prob((x - 0.5) * alpha) else 0
+    return 1 if choose_prob(sigmoid((x - 0.5) * ((alpha * 10) + 4))) else 0

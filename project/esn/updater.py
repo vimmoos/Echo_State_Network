@@ -15,6 +15,7 @@ class Updator():
     weights: m.Esn_matrixs
     state: np.ndarray
     squeeze_f: callable = np.tanh
+    squeeze_o : callable = lambda x : x
     leaking_rate: float = 0.3
     noise: float = 0.0
 
@@ -35,7 +36,10 @@ class Updator():
             self.weights.W_out,
             self.state,
             other,
-            self.squeeze_f
+            self.squeeze_o
+            # my_sigm
+            # sigmoid
+            # self.squeeze_f
         )
 
 
