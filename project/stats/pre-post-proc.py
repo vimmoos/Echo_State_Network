@@ -6,13 +6,13 @@ from collections import ChainMap
 
 path = "/home/vimmoos/NN/resources/esn/"
 
-experiment = (f for f in listdir(path) if isfile(join(path, f)))
+experiment = [f for f in listdir(path) if isfile(join(path, f))]
 
 # data = (pic.load(open(f).__enter__()) for f in experiment)
 
 
 def get_data():
-    return [p.load(open(path + x, "rb")) for x in experiment]
+    return [p.load(open(path + x, "rb")) for x in experiment[:20]]
 
 
 def process_data(data):
@@ -36,22 +36,30 @@ def process_data(data):
 import matplotlib.pyplot as pl
 import scipy.signal as s
 import scipy.fft as f
+import numpy as np
 
 import random as r
 
 
-def _show(fun, data, data_len, max_len, transformer):
+def _show(fun, data, data_len, max_len, transformer, desired=False):
     r.shuffle(data)
     for i, x in enumerate(data):
         if i >= max_len:
-            pl.show()
-            return
+            break
         pl.figure(i)
-        fun(x, data, data_len, transformer)
-        pl.legend(range(8))
+        pl.plot(fun(x, data, data_len, transformer))
+        pl.title(get_title(x[0]) + f" {fun.__name__}")
+        pl.legend(range(9))
+    if desired:
+        pl.figure(max_len)
+        pl.plot(fun(None, data, data_len, transformer))
+        pl.title("desired" + f" {fun.__name__}")
+        pl.legend(range(9))
+    pl.show()
 
 
-showable = lambda fun: lambda *args, **kwargs: _show(fun, *args, **kwargs)
+showable = lambda desired=False: lambda fun: lambda *args, **kwargs: _show(
+    fun, *args, **kwargs, desired=desired)
 
 
 def get_title(current):
@@ -61,55 +69,37 @@ def get_title(current):
     ])
 
 
-@showable
+@showable(True)
 def output(
-    current,
-    data,
-    data_len,
-    transformer,
-):
-    pl.plot(current[0][transformer][0]["output"][:data_len])
-    pl.title(get_title(current[0]) + " output")
+           current,
+           data,
+           data_len,
+           transformer,
+           ):
+    return current[0][transformer][0][
+        "output"][:data_len] if current is not None else data[0][0][
+            "desired"][:data_len]
 
 
-@showable
+@showable()
 def correlation(current, data, data_len, transformer):
     des = data[0][0]["desired"][:data_len]
-    out = current[0][transformer][0]["output"][:data_len]
-    pl.plot(s.correlate(out, des))
-    pl.title(get_title(current[0]) + " correlation")
+    out = current[0][transformer][0][
+        "output"][:data_len] if current is not None else des
+    return s.correlate(out, des)
 
 
-@showable
+@showable()
 def fft(current, data, data_len, transformer):
-    pl.plot(f.fftn(current[0][transformer][0]["output"][:data_len]))
-    pl.title(get_title(current[0]) + " fft")
+    current = current[0][transformer][0][
+        "output"][:data_len] if current is not None else data[0][0][
+            "desired"][:data_len]
+    return f.fftn(current)
 
 
-# def  test():
-#     a = f.fftn(process_data[0][0]["pow_prob"][0]["output"][:500, 0])
-#     c = f.fftn(process_data[0][0]["sig_prob"][0]["output"][:500, 0])
-#     d = f.fftn(process_data[0][0]["threshold"][0]["output"][:500, 0])
-#     e = f.fftn(process_data[0][0]["identity"][0]["output"][:500, 0])
-#     b = f.fftn(process_data[0][0]["desired"][:500, 0])
-
-#     pl.figure(0)
-#     pl.plot(f.fftn(process_data[0][0]["desired"][:500]))
-#     pl.figure(1)
-#     pl.plot(f.fftn(process_data[0][0]["sig_prob"][0]["output"][:500]))
-#     pl.figure(2)
-#     pl.plot(f.fftn(process_data[0][0]["threshold"][0]["output"][:500]))
-#     pl.show()
-
-#     pl.figure(0)
-#     pl.plot(np.log(np.abs(scipy.fft.fftshift(b))**2))
-#     pl.figure(1)
-#     pl.plot(np.log(np.abs(scipy.fft.fftshift(a))**2))
-#     pl.figure(2)
-#     pl.plot(np.log(np.abs(scipy.fft.fftshift(c))**2))
-#     pl.figure(3)
-#     pl.plot(np.log(np.abs(scipy.fft.fftshift(d))**2))
-#     pl.figure(4)
-#     pl.plot(np.log(np.abs(scipy.fft.fftshift(e))**2))
-
-#     pl.show()
+@showable(True)
+def log_fft(current, data, data_len, transformer):
+    tmp = current[0][transformer][0][
+        "output"][:data_len] if current is not None else data[0][0][
+            "desired"][:data_len]
+    return np.log(np.abs(f.fftshift(f.fftn(tmp)))**2)

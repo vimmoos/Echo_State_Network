@@ -1,6 +1,6 @@
 import random
-
 import numpy as np
+import scipy.stats as stats
 
 
 def mse(output, desired):
@@ -22,6 +22,11 @@ def teacher_loss_nd(output, teacher):
         teacher_loss_1d(output[:, dim], teacher[:, dim])
         for dim in range(output.shape[1])
     ]
+
+def pearson_nd(output,teacher):
+    return [stats.pearsonr(output[:,dim],teacher[:,dim]) for dim in range(output.shape[1])]
+
+
 
 # if (__name__ == "__main__"):
 #     print(teacher_loss_nd(out, teacher, len(teacher)))
