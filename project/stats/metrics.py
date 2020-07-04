@@ -68,23 +68,13 @@ def teacher_loss_nd(output, teacher):
 @add_metric
 def euclidian_distance(output, desired):
     return cdist(output, desired, 'euclidean')
-    # return [
-    #     cdist(output[:, dim], desired[:, dim], 'euclidean')
-    #     for dim in range(output.shape[1])
-    # ]
 
 
 @add_metric
 def manhattan_distance(output, desired):
-    return [
-        cdist(output[:, dim], desired[:, dim], 'cityblock')
-        for dim in range(output.shape[1])
-    ]
+    return cdist(output, desired, 'cityblock')
 
 
 @add_metric
 def hamming_distance(output, desired):
-    return [
-        cdist(output[:, dim], desired[:, dim], 'hamming')
-        for dim in range(output.shape[1])
-    ]
+    return cdist(output, desired, 'hamming')

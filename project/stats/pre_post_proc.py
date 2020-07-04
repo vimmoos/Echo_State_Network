@@ -3,6 +3,7 @@ import random as r
 from collections import ChainMap
 from os import listdir
 from os.path import isfile, join
+from pprint import pp, pprint
 
 import matplotlib.pyplot as pl
 import scipy.fft as f
@@ -20,6 +21,7 @@ def pearson_nd(output, teacher):
 
 
 # path = "/home/vimmoos/NN/resources/esn/"
+
 path = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
 
 experiment = [f for f in listdir(path) if isfile(join(path, f))]
