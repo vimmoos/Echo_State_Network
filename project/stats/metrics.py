@@ -4,6 +4,7 @@ import numpy as np
 from aenum import extend_enum, Enum
 import project.esn.utils as u
 from functools import partial
+import functools as ft
 from scipy.spatial.distance import cdist
 
 class Metrics(Enum):
@@ -56,3 +57,10 @@ def manhattan_distance(output, desired):
 @add_metric
 def hamming_distance(output, desired):
     return cdist(output, desired, 'hamming')
+
+@add_metric
+def np_cor(output, teacher):
+    return (ft.reduce(lambda y, x: y + x, [
+        np.correlate(output[:, dim], teacher[:, dim]).tolist()
+        for dim in range(output.shape[1])
+    ]) / np.sqrt(sum(output**2) * sum(teacher**2)))
