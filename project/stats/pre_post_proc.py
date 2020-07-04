@@ -20,7 +20,8 @@ def pearson_nd(output, teacher):
 
 
 # path = "/home/vimmoos/NN/resources/esn/"
-path = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
+# path = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
+path = "/home/sneha-lodha/Desktop/esn/"
 
 experiment = [f for f in listdir(path) if isfile(join(path, f))]
 
