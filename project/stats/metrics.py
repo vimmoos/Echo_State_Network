@@ -1,6 +1,6 @@
 import random
-
 import numpy as np
+import scipy.stats as stats
 
 
 def mse(output, desired):
