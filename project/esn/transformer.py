@@ -1,13 +1,12 @@
 from random import uniform
 
 import numpy as np
-
-import project.esn.utils as u
 from aenum import Enum, extend_enum
 
-_identity = lambda x : x
-_identity.__name__ = "identity"
+import project.esn.utils as u
 
+_identity = lambda x: x
+_identity.__name__ = "identity"
 
 sigmoid = lambda x: 1 / (1 + np.exp(-x))
 sigmoid.__name__ = "sigmoid"

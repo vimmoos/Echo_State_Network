@@ -1,10 +1,18 @@
 import pickle as p
+import random as r
+from collections import ChainMap
 from os import listdir
 from os.path import isfile, join
+
+import matplotlib.pyplot as pl
+import scipy.fft as f
+import scipy.signal as s
+
 import project.esn.transformer as t
-from collections import ChainMap
 import project.stats.metrics as met
 
+def pearson_nd(output,teacher):
+    return [stats.pearsonr(output[:,dim],teacher[:,dim]) for dim in range(output.shape[1])]
 path = "/home/vimmoos/NN/resources/esn/"
 
 experiment = [f for f in listdir(path) if isfile(join(path, f))]
