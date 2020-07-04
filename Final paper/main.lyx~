@@ -316,7 +316,11 @@ In this music generating task an ESN is used.
 \end_inset
 
 .
- The following parameters of the ESN have been set:
+ This guide contained the base code of this project.
+ That code has been rewritten to fit this project.
+ The transformers, sparce matrix and noice vector were added as an addition.
+ The documentation of the code can be found *here*.
+ Regarding the ESN, the following parameters have been set:
 \end_layout
 
 \begin_layout Subsubsection*
@@ -330,7 +334,7 @@ Within ESNs, it is serverly important that the resevoir is big enough, such
 \end_inset
 
  from a linear combination of this signal space.
- 
+ The resevoir in this project has been set to ...
 \end_layout
 
 \begin_layout Subsubsection*
@@ -338,17 +342,128 @@ The resevoir density
 \end_layout
 
 \begin_layout Standard
-The parameters are: The density of the resevoir.
- The spector radius.
- The leaking rate.
- The size of the resevoir.
- Ridge regression (parameter).
- Transformer (?).
- Output
+The density of a resevoir is mainly dependent on the distribution of the
+ nonzero elements in the resevoir.
+ In this project a basic uniform distribution is used.
+ Besides the distribution, the density of the resevoir is set to ....
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Spectral radius
+\end_layout
+
+\begin_layout Standard
+Another main parameter for fitting the 
+\noun on
+ESN
+\noun default
+ is the spectral radius 
+\begin_inset Formula $\varrho$
+\end_inset
+
+.
+ This spectral radius is a parameter that will scale the resevoir matrix
+ 
+\begin_inset Formula $\mathbf{W}$
+\end_inset
+
+.
+ The effect this parameter has is mainly seen on the learning accuracy of
+ the the network.
+ The new scaled matrix 
+\begin_inset Formula $\mathbf{W}$
+\end_inset
+
+ is calculated using 
+\begin_inset Formula 
+\[
+\boldsymbol{W{\scriptstyle new}}=\mathbf{W}*(\frac{\varrho}{\max(|\lambda|)})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ represents the eigenvalues of the resevoir matrix 
+\begin_inset Formula $\mathbf{W}$
+\end_inset
+
+, and 
+\begin_inset Formula $\mathbf{W_{new}}$
+\end_inset
+
+ represents the updated resevoir matrix.
+ After experimenting, the 
+\begin_inset Formula $\varrho$
+\end_inset
+
+ has been set to ...
+\end_layout
+
+\begin_layout Subsubsection*
+Leaking rate
+\end_layout
+
+\begin_layout Standard
+The leaking rate 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ for an ESN determines how well a resevoir unit maintains its value and
+ how much it gets updated.
+ Therefore 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is one of the main parameters regarding the training process of this project.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Ridge regression
+\end_layout
+
+\begin_layout Standard
+Ridge regression (parameter).
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Transformers
+\end_layout
+
+\begin_layout Standard
+Transformer (the 3 mentioned is the intro paper: treshold, sigmoid, sigmoid
+ probability) (?) each transformer has a parameter and a squeezing function
+ (for now).
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Noice vector
+\end_layout
+
+\begin_layout Standard
+noise vector 
 \end_layout
 
 \begin_layout Subsection
 Post-processing
+\end_layout
+
+\begin_layout Subsubsection*
+Output
+\end_layout
+
+\begin_layout Standard
+not sure what to write here yet 
 \end_layout
 
 \begin_layout Subsection

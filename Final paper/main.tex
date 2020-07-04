@@ -7,6 +7,10 @@
 \usepackage[authoryear]{natbib}
 
 \makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\newcommand{\noun}[1]{\textsc{#1}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
 \numberwithin{equation}{section}
 \numberwithin{figure}{section}
@@ -51,55 +55,83 @@ paragraph text
 
 \section{Data}
 
-\subsection*{MIDI-File}
+\subsection*{MIDI-File (not implemented)}
 
 \subsection*{Generation}
 
-\section{Methods}
-
-\subsection{Pre-processing}
-
-- convert midi file into csv using https://www.fourmilab.ch/webtools/midicsv/ 
-
-- parse csv into a signal where the length represents the duration
-of the midi file. Each element is a vector of length max amount of
-nodes and each value of this vector represents the intensity / 0/1
-(testing) 
-
 - generation which contains the same properties of the signals, but
 it is generated instead of using midi files. 
+
+\section{Methods}
+
 
 \subsection{Echo State Network}
 
 In this music generating task an ESN is used. The input signal of
 the ESN is created as described in the pre-prosessing. The set up
-of this ESN is based on `` GUIDE REFERECE ``. The following parameters
-of the ESN have been set:
+of this ESN is based on `` GUIDE REFERECE ``. This guide contained
+the base code of this project. That code has been rewritten to fit
+this project. The transformers, sparce matrix and noice vector were
+added as an addition. The documentation of the code can be found {*}here{*}.
+Regarding the ESN, the following parameters have been set:
+
+\#Maybe add the system equations etc
 
 \subsubsection*{The resevoir size}
 
 Within ESNs, it is serverly important that the resevoir is big enough,
 such that is it possible to obtain the target output $y^{target}(n)$
 from a linear combination of this signal space. The resevoir in this
-project has been set to ... because ....
+project has been set to ...
 
 \subsubsection*{The resevoir density }
 
 The density of a resevoir is mainly dependent on the distribution
 of the nonzero elements in the resevoir. In this project a basic uniform
 distribution is used. Besides the distribution, the density of the
-resevoir is set to .... because ....
+resevoir is set to .... 
 
 \subsubsection*{Spectral radius}
 
-The spectral radius = param / max eigenval but we start with a random
-one 
+Another main parameter for fitting the \noun{ESN} is the spectral
+radius $\varrho$. This spectral radius is a parameter that will scale
+the resevoir matrix $\mathbf{W}$. The effect this parameter has is
+mainly seen on the learning accuracy of the the network. The new scaled
+matrix $\mathbf{W}$ is calculated using 
+\[
+\boldsymbol{W{\scriptstyle new}}=\mathbf{W}*(\frac{\varrho}{\max(|\lambda|)})
+\]
+
+where $\lambda$ represents the eigenvalues of the resevoir matrix
+$\mathbf{W}$, and $\mathbf{W_{new}}$ represents the updated resevoir
+matrix. After experimenting, the $\varrho$ has been set to ...
 
 \subsubsection*{Leaking rate}
 
-Ridge regression (parameter). Transformer (?). Output
+The leaking rate $\alpha$ for an ESN determines how well a resevoir
+unit maintains its value and how much it gets updated. Therefore $\alpha$
+is one of the main parameters regarding the training process of this
+project. In this project $\alpha$ is set to ...
+
+\subsubsection*{Ridge regression}
+
+Ridge regression (parameter). 
+
+\subsubsection*{Transformers}
+
+Transformer (the 3 mentioned is the intro paper: treshold, sigmoid,
+sigmoid probability) (?) each transformer has a parameter and a squeezing
+function (for now). 
+
+\subsubsection*{Noice vector}
+
+noise vector 
 
 \subsection{Post-processing}
+
+\subsubsection*{Output}
+
+not sure what to write here yet 
 
 \subsection{Fitting}
 
