@@ -23,8 +23,7 @@ experiment = lambda path: [f for f in listdir(path) if isfile(join(path, f))]
 
 
 def get_data(path):
-    experiment_files = experiment(path)
-    return [p.load(open(path + x, "rb")) for x in experiment[:20]]
+    return [p.load(open(path + x, "rb")) for x in experiment(path)[:20]]
 
 
 def apply_metrics(output, desired, raw_output):
