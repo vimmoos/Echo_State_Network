@@ -4,7 +4,7 @@ import numpy as np
 from aenum import extend_enum, Enum
 import project.esn.utils as u
 from functools import partial
-from scipy.spatial.distance import cdist 
+from scipy.spatial.distance import cdist
 
 class Metrics(Enum):
     pass
@@ -23,10 +23,12 @@ def add_metric(func):
     name = func.__name__
 
     extend_enum(Metrics, name, inner)
+def nmse(output, desired):
+    return (sum(np.square(desired - output)) /
+            sum(np.square(desired - np.mean(desired))))
 
 
-teacher_log = np.vectorize(lambda out, teach: out
-                           if teach >= 1 else 1 - out)
+teacher_log = np.vectorize(lambda out, teach: out if teach >= 1 else 1 - out)
 
 @add_metric
 def mse(output, desired):
@@ -34,7 +36,7 @@ def mse(output, desired):
 
 @add_metric
 def teacher_loss_1d(output, teacher):
-    return sum(teacher_log(output,teacher)) / len(output)
+    return sum(teacher_log(output, teacher)) / len(output)
 
 @add_metric
 def teacher_loss_nd(output, teacher):

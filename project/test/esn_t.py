@@ -16,13 +16,14 @@ import project.music_gen.core as cgen
 import project.music_gen.test as tgen
 import project.parse_midi.matrix.core as cmidi
 import project.parse_midi.matrix.proc_dicts as emidi
+import project.test.music_test as tgen
 
 
-def multiple__(times=10, thr=lambda x :True):
+def multiple__(times=10, thr=lambda x: True):
     def decorator(fun):
         def inner():
             filt = [x for x in [fun()[1] for _ in range(times)] if thr(x)]
-            return (times, len(filt), np.mean(filt),filt)
+            return (times, len(filt), np.mean(filt), filt)
 
         return inner
 
@@ -92,6 +93,7 @@ def test_midi():
             }) as gen:
         return gen()
 
+
 # @multiple__(thr=lambda x : sum(x) > 4)
 def test_generated():
     train_len = test_len = 1200
@@ -101,15 +103,19 @@ def test_generated():
     data = c.Data(np.array(list(~music)), music.tempo, init_len, train_len,
                   test_len)
     with c.Run(
-            **{
-                "data": data,
-                "in_out": 9,
-                "leaking_rate": 0.3,
-                "reg": 1e-8,
-                "transformer": ta.Transformers.pow_prob,
-                "t_param": 1,
-                "t_squeeze": np.tanh,
-            }).load("/home/vimmoos/NN/resources/reservoir/0.18333333333333335_0.04_2000",0) as gen:
+            **
+        {
+            "data": data,
+            "reservoir": 300,
+            "in_out": 9,
+            "leaking_rate": 0.3,
+            "reg": 1e-8,
+            "transformer": ta.Transformers.pow_prob,
+            "t_param": 1,
+            "t_squeeze": np.tanh,
+        }).load(
+            "/home/vimmoos/NN/resources/reservoir/0.18333333333333335_0.04_2000",
+            0) as gen:
         return gen()
 
 
