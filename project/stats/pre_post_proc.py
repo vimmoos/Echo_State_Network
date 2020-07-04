@@ -12,13 +12,14 @@ import project.esn.transformer as t
 
 path = "/home/vimmoos/NN/resources/esn/"
 
-experiment = (f for f in listdir(path) if isfile(join(path, f)))
+experiment = lambda path: (f for f in listdir(path) if isfile(join(path, f)))
 
 # data = (pic.load(open(f).__enter__()) for f in experiment)
 
 
-def get_data():
-    return [p.load(open(path + x, "rb")) for x in experiment]
+def get_data(path: str):
+    experiment_files = experiment(path)
+    return [p.load(open(path + x, "rb")) for x in experiment_files]
 
 
 def process_data(data):
@@ -37,9 +38,6 @@ def process_data(data):
         **{k: v
            for k, v in y.items() if k != "output"}
     } for y in x] for x in data]
-
-
-
 
 
 def _show(fun, data, data_len, max_len, transformer):

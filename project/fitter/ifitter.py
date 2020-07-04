@@ -1,21 +1,24 @@
-from  abc  import abstractmethod,abstractclassmethod
-from celery import group
-import celery as cel
-from project.fitter.logger import logger
-from dataclasses import dataclass
 import typing
+from abc import abstractclassmethod, abstractmethod
+from dataclasses import dataclass
+
+import celery as cel
+from celery import group
+from project.fitter.logger import logger
+
 
 class TaskRunningError(Exception):
     pass
 
+
 class TaskNotRunningError(Exception):
     pass
+
 
 class IFitter():
     """Pseudo interface for auto fitters.
 
     """
-
     @abstractmethod
     def current_state(self):
         """Should return the current state of the fitter.
@@ -25,18 +28,18 @@ class IFitter():
         pass
 
     @abstractmethod
-    def swap_state(self,new_state):
+    def swap_state(self, new_state):
         pass
 
     @abstractmethod
-    def get_candidates(self,current_state):
+    def get_candidates(self, current_state):
         """Should implement the neighborghood
         expansion procedure given the current state.
         """
         pass
 
     @abstractmethod
-    def pick_canditates(self,candidates):
+    def pick_canditates(self, candidates):
         """Should implement the selection procedure
         that filters the products of `self.get_candidates`
 
@@ -48,7 +51,7 @@ class IFitter():
         pass
 
     @abstractmethod
-    def evaluate_results(self,results_iter):
+    def evaluate_results(self, results_iter):
         """Should determine what is the new current state given an iterable of
         results, presumably from task batch completion.
 
@@ -58,14 +61,12 @@ class IFitter():
         """
         pass
 
-
     @abstractmethod
     def stop_criterion(self):
         """Should return True when the fitter judges its job is done.
 
         """
         pass
-
 
     @abstractclassmethod
     def state_to_args(state):
@@ -81,13 +82,12 @@ class IFitter():
         pass
 
 
-
 @dataclass(init=True, repr=True)
 class ADispatcher():
-    algortihm_task : cel.Task
-    current_task : typing.Any = None
+    algortihm_task: cel.Task
+    current_task: typing.Any = None
 
-    def _build_task(self,fitter):
+    def _build_task(self, fitter):
         """Build the celery task callable for the given fitter
         """
         logger.debug(f"Building new task for {repr(fitter)}")
@@ -101,14 +101,14 @@ class ADispatcher():
         as_args = list(map(type(fitter).state_to_args, picked))
         logger.debug(f"Args: {as_args} for {self.algortihm_task}")
 
-        task_group =  group(self.algortihm_task.s(*a) for a in as_args)()
+        task_group = group(self.algortihm_task.s(*a) for a in as_args)()
         logger.debug(f"group: {task_group}")
 
-        return  task_group
+        return task_group
 
-    def dispatch_task(self,fitter):
+    def dispatch_task(self, fitter):
         if not self.current_task:
-            self.current_task =  self._build_task(fitter)
+            self.current_task = self._build_task(fitter)
         else:
             raise TaskRunningError(self)
         return self.current_task
@@ -122,6 +122,7 @@ class ADispatcher():
         else:
             raise TaskNotRunningError(self)
 
+
 @dataclass
 class Combiner():
     fitter: IFitter
@@ -131,7 +132,7 @@ class Combiner():
         logger.debug(f"Fit-combiner step")
         r = self.dispatcher.dispatch_task(self.fitter)
         logger.debug(f"Fit-combiner dispatched jobs, waiting for results")
-        results,_ = self.dispatcher.wait()
+        results, _ = self.dispatcher.wait()
         logger.debug(f"Fit-combiner evaulating results")
         next_state = self.fitter.evaluate_results(results)
         self.fitter.swap_state(next_state)
