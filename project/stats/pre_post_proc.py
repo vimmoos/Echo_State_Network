@@ -11,11 +11,17 @@ import scipy.signal as s
 import project.esn.transformer as t
 import project.stats.metrics as met
 
-def pearson_nd(output,teacher):
-    return [stats.pearsonr(output[:,dim],teacher[:,dim]) for dim in range(output.shape[1])]
+
+def pearson_nd(output, teacher):
+    return [
+        stats.pearsonr(output[:, dim], teacher[:, dim])
+        for dim in range(output.shape[1])
+    ]
+
+
 path = "/home/vimmoos/NN/resources/esn/"
 
-experiment = [f for f in listdir(path) if isfile(join(path, f))]
+experiment = lambda path: (f for f in listdir(path) if isfile(join(path, f)))
 
 # data = (pic.load(open(f).__enter__()) for f in experiment)
 
@@ -32,7 +38,7 @@ def apply_metrics(output, desired, raw_output):
     }
 
 
-def apply_transformers(dict_,data_len):
+def apply_transformers(dict_, data_len):
     output = dict_["output"][:data_len]
     des = dict_["desired"][:data_len]
     return {
@@ -46,6 +52,7 @@ def apply_transformers(dict_,data_len):
         for trans in list(t.Transformers)
     }
 
+
     # {
     #     "output": trans.value(val, t._identity)(y["output"])
     # }
@@ -57,10 +64,14 @@ def np_cor(output, teacher):
     ]) / np.sqrt(sum(output**2) * sum(teacher**2)))
 
 
-def process_data(data,data_len):
-    return ([{**apply_transformers(y,data_len), **y} for y in x] for x in data)
+def process_data(data, data_len):
+    return ([{
+        **apply_transformers(y, data_len),
+        **y
+    } for y in x] for x in data)
 
-def remove_raw(data_gen,rkeys=["output","desired","input"]):
+
+def remove_raw(data_gen, rkeys=["output", "desired", "input"]):
     for x in data_gen:
         removed = [x[idx].pop(key) for idx in range(len(x)) for key in rkeys]
         yield x

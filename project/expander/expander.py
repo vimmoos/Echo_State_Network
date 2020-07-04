@@ -1,21 +1,11 @@
 import copy
 import pickle
-<<<<<<< HEAD
 import signal
-import sys
-import time
-from itertools import product, tee
 
 import project.esn.core as c
 import project.esn.matrix as m
-from project.esn.utils import *
-=======
-from project.esn.utils import *
-import project.esn.matrix as m
-import project.esn.core as c
 import project.esn.transformer as t
-import signal
->>>>>>> 5614bae1c392ff5950e784469f1ff4a6c988567c
+from project.esn.utils import *
 
 
 @mydataclass(init=True, repr=True, check=True)
@@ -74,16 +64,14 @@ def gen_reservoir(spectral_radius=None,
     ]
 
 
-
-
 @d_expander(esn_name)
 def run_esn(repetition, matrix_path, idx, **kwargs):
     return [
         c.Run(**kwargs).load(matrix_path, idx).__enter__()()
         for _ in range(repetition)
-    ] if kwargs["transformer"] not in [t.Transformers.threshold, t.Transformers.identity] else [
-        c.Run(**kwargs).load(matrix_path, idx).__enter__()()
-    ]
+    ] if kwargs["transformer"] not in [
+        t.Transformers.threshold, t.Transformers.identity
+    ] else [c.Run(**kwargs).load(matrix_path, idx).__enter__()()]
 
 
 @mydataclass(init=True, repr=True, check=False)
@@ -100,7 +88,8 @@ class Pickler():
         for i, conf in enumerate(self.expander()):
             if (not (self.max_exp is True)) and self.max_exp == i:
                 return self.path_to_dir
-            print(f"dump conf {i}{self._dumper(conf)}" if self.verbose else f"dump conf {i}")
+            print(f"dump conf {i}{self._dumper(conf)}" if self.
+                  verbose else f"dump conf {i}")
             with open(
                     self.path_to_dir + "_".join(self.expander._name_gen(conf)),
                     "wb") as f:
