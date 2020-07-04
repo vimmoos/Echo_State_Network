@@ -19,9 +19,10 @@ def pearson_nd(output, teacher):
     ]
 
 
-path = "/home/vimmoos/NN/resources/esn/"
+# path = "/home/vimmoos/NN/resources/esn/"
+path = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
 
-experiment = lambda path: (f for f in listdir(path) if isfile(join(path, f)))
+experiment = [f for f in listdir(path) if isfile(join(path, f))]
 
 # data = (pic.load(open(f).__enter__()) for f in experiment)
 
@@ -32,8 +33,8 @@ def get_data():
 
 def apply_metrics(output, desired, raw_output):
     return {
-        x.name: x.value(output, desired)
-        if x.name != "teacher_loss_nd" else x.value(raw_output, desired)
+        x.name: x.value(output, desired)()
+        if x.name != "teacher_loss_nd" else x.value(raw_output, desired)()
         for x in list(met.Metrics)
     }
 
@@ -51,17 +52,6 @@ def apply_transformers(dict_, data_len):
         } for param in range(5)]
         for trans in list(t.Transformers)
     }
-
-
-    # {
-    #     "output": trans.value(val, t._identity)(y["output"])
-    # }
-@add_metrics
-def np_cor(output, teacher):
-    return (ft.reduce(lambda y, x: y + x, [
-        np.correlate(output[:, dim], teacher[:, dim]).tolist()
-        for dim in range(output.shape[1])
-    ]) / np.sqrt(sum(output**2) * sum(teacher**2)))
 
 
 def process_data(data, data_len):
