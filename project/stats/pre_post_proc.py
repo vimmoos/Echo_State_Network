@@ -12,24 +12,18 @@ import scipy.signal as s
 import project.esn.transformer as t
 import project.stats.metrics as met
 
+path_max = "/home/vimmoos/NN/resources/esn/"
 
-def pearson_nd(output, teacher):
-    return [
-        stats.pearsonr(output[:, dim], teacher[:, dim])
-        for dim in range(output.shape[1])
-    ]
+path_mar = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
+path_s = "/home/sneha-lodha/Desktop/esn/"
 
-
-# path = "/home/vimmoos/NN/resources/esn/"
-
-path = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
-
-experiment = [f for f in listdir(path) if isfile(join(path, f))]
+experiment = lambda path: [f for f in listdir(path) if isfile(join(path, f))]
 
 # data = (pic.load(open(f).__enter__()) for f in experiment)
 
 
-def get_data():
+def get_data(path):
+    experiment_files = experiment(path)
     return [p.load(open(path + x, "rb")) for x in experiment[:20]]
 
 

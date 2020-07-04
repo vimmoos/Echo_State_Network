@@ -5,7 +5,7 @@ from functools import partial
 
 import numpy as np
 from aenum import Enum, extend_enum
-from scipy.spatial.distance import cdist
+from scipy.spatial import distance as dist
 
 import project.esn.utils as u
 
@@ -41,14 +41,6 @@ teacher_log = np.vectorize(lambda out, teach: out if teach >= 1 else 1 - out)
 
 
 @add_metric
-def np_cor(output, teacher):
-    return (ft.reduce(lambda y, x: y + x, [
-        np.correlate(output[:, dim], teacher[:, dim]).tolist()
-        for dim in range(output.shape[1])
-    ]) / np.sqrt(sum(output**2) * sum(teacher**2)))
-
-
-@add_metric
 def mse(output, desired):
     return sum(np.square(desired - output)) / len(output)
 
@@ -65,16 +57,41 @@ def teacher_loss_nd(output, teacher):
     ]
 
 
+# @add_metric
+# def pearson_nd(output, teacher):
+#     return [
+#         stats.pearsonr(output[:, dim], teacher[:, dim])
+#         for dim in range(output.shape[1])
+#     ]
+
+
 @add_metric
 def euclidian_distance(output, desired):
-    return cdist(output, desired, 'euclidean')
+    return [
+        dist.euclidean(output[:, dim], desired[:, dim])
+        for dim in range(output.shape[1])
+    ]
 
 
 @add_metric
 def manhattan_distance(output, desired):
-    return cdist(output, desired, 'cityblock')
+    return [
+        dist.cityblock(output[:, dim], desired[:, dim])
+        for dim in range(output.shape[1])
+    ]
 
 
 @add_metric
 def hamming_distance(output, desired):
-    return cdist(output, desired, 'hamming')
+    return [
+        dist.hamming(output[:, dim], desired[:, dim])
+        for dim in range(output.shape[1])
+    ]
+
+
+@add_metric
+def np_cor(output, teacher):
+    return (ft.reduce(lambda y, x: y + x, [
+        np.correlate(output[:, dim], teacher[:, dim]).tolist()
+        for dim in range(output.shape[1])
+    ]) / np.sqrt(sum(output**2) * sum(teacher**2)))
