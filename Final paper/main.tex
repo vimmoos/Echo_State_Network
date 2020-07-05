@@ -1,4 +1,3 @@
-%% LyX 2.2.4 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass{extarticle}
 \usepackage[utf8]{inputenc}
@@ -6,6 +5,8 @@
 \usepackage{amsthm}
 \usepackage[authoryear]{natbib}
 \usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{fancyvrb}
 
 \makeatletter
 
@@ -34,15 +35,44 @@ University of Groningen\\
 \begin{abstract}
 abstract text (10 lines)
 \end{abstract}
+
 \tableofcontents{}
 \newpage
 
 
 \section{Introduction}
 
+\paragraph{} Classical music generation outside the domain of AI is mainly inspired by creativity and the knowledge of some musical elements.
+There are several methods that have been used in the past to perform similar tasks, some of which include the use of algorithmic composition and Markov chains. %Ref?% 
+Composing music through algorithmic rules can be restrictive in terms of originality, and user feedback. [1] Once the algorithms to generate the music 
+have been defined, there is little to modify or fix. %%this sentence is weird%% 
+When using Markov chains for the generation of music, although the presented output has more variation, 
+drawbacks such as the violation of the Markov property come hand in hand. [2] This is mainly due to the fact that Markov property relies on simply the 
+previous output which is not enough when it comes to generating musical patterns.  In this project, we will be attempting to generate musical drum 
+patterns using an Echo State Network, also referred to as an ESN, and measure how close the generated pattern is to actual music.
 
+\paragraph{} An ESN is a type of Recurrent Neural Network (RNN) with an input layer, a hidden layer, also known as a reservoir and an output layer. The interesting 
+aspect of the ESN is that the reservoir to output weights are the only ones that need to be learned, and the weights of the reservoir itself are fixed. 
+Due to this property of the learning the ESN is considered faster than some other RNNs.
+We decided to use  
 
 \section{Data}
+
+\paragraph{} In this section the data used in this project is descibed and explained. The first subsection will explain how the drums are represented, and the second 
+subsection will decribe the generation of the music.
+
+\subsection{Representation of the drums}
+
+\paragraph{} The drum beats are represented in the network in the form of a matrix. In Table 1 an example of such a matrix can be seen. 
+All the matrices will have 9 colums, each representing different notes as seen in the table.
+Each row in the matrix this matrix will represent a quarter, and 4 row will represent a bar. If the tempo of the song is 
+for example in 8th, 8 rows will together represent a bar. This is thus dependend on the tempo of the song. 
+
+\paragraph{} The matrix seen in Table 1 represents 1 bar of music. Longer files will consist of more rows. Therefore the time is thus represented
+in the rows of the matrix. In this table all the colums are set to 0 instead of the bass drum. This will therefore produce one bar of
+music with a bass drum playing on the first and third quarter. 
+
+
 
 \begin{table}[h!]
        \centering
@@ -56,16 +86,23 @@ abstract text (10 lines)
        \multicolumn{1}{|l|}{Quarter 4} & 0             & 0           & 0         & 0     & 0     & 0        & 0       & 0         & 0   
        \end{tabular}%
        }
+       \caption{An example of how the input matrix is structured.}
        \end{table}
 
-- pseudocode of the generator
-- what happens with 8th and 16th 
-- this is 1 bar, this matrix repeats for multiple bars
-- how much we generated 
+\subsection{Generation of the music}
+
+\paragraph{} The database used for training is generared by hand in this project. 
+In order te generate music, two fuctions were implemented. The first one being \Verb"note_replicator" and the second one being \Verb"note_generator".
+The replicator generates a note in a bar using the tempo, the note, and in what quarter it plays (this can also be a list of quarters / eight's etc). 
+This bar is then repeated during the course of the whole dataset. 
+The generater works in a similar way, only will this also need a variable representing how many bars this note is played. 
+Besides the two generating function, another function is implements that allows the user to concatenate matrices. This is used to combine different "songs" 
+into one long song in such a way that the network can use it to train. This way ... bars of music were generated to train the network.
+% And Sneha explains a bit more. 
 
 \section{Methods}
 
-In this experiment, one pipeline is used. This consists of the learning
+\paragraph{} In this experiment, one pipeline is used. This consists of the learning
 algorithm, the post processing and the performance metrics. All of these steps will
 be explained in detail in this section. The reason there is no pre-process present
 is because the data is generated in such a way that it does not need to be pre-processed 
@@ -75,7 +112,7 @@ is done in R.
 
 \subsection{Echo State Network}
 
-In this music generating task an ESN is used. The input signal of
+\paragraph{} In this music generating task an ESN is used. The input signal of
 the ESN is created as described in the pre-prosessing. The set up
 of this ESN is based on ``GUIDE REFERECE``. This guide contained
 the base code of this project. It also provided the needed knowledge about the 
@@ -88,21 +125,21 @@ Regarding the ESN, the following parameters have been set:
 
 \subsubsection*{The resevoir size}
 
-Within ESNs, it is serverly important that the resevoir is big enough,
+\paragraph{} Within ESNs, it is serverly important that the resevoir is big enough,
 such that is it possible to obtain the target output $y^{target}(n)$
 from a linear combination of this signal space. The resevoir in this
 project has been set to ...
 
 \subsubsection*{The resevoir density}
 
-The density of a resevoir is mainly dependent on the distribution
+\paragraph{} The density of a resevoir is mainly dependent on the distribution
 of the nonzero elements in the resevoir. In this project a basic uniform
 distribution is used. Besides the distribution, the density of the
 resevoir is set to .... 
 
 \subsubsection*{Spectral radius}
 
-Another main parameter for fitting the ESN is the spectral
+\paragraph{} Another main parameter for fitting the ESN is the spectral
 radius $\varrho$. This spectral radius is a parameter that will scale
 the resevoir matrix $\mathbf{W}$. The effect this parameter has is
 mainly seen on the learning accuracy of the the network. The new scaled
@@ -110,27 +147,26 @@ matrix $\mathbf{W}$ is calculated using
 \[
 \boldsymbol{W{\scriptstyle new}}=\mathbf{W}*(\frac{\varrho}{\max(|\lambda|)})
 \]
-
 where $\lambda$ represents the eigenvalues of the resevoir matrix
 $\mathbf{W}$, and $\mathbf{W_{new}}$ represents the updated resevoir
 matrix. After experimenting, the $\varrho$ has been set to ...
 
 \subsubsection*{Leaking rate}
 
-The leaking rate $\alpha$ for an ESN determines how well a resevoir
+\paragraph{} The leaking rate $\alpha$ for an ESN determines how well a resevoir
 unit maintains its value and how much it gets updated. Therefore $\alpha$
 is one of the main parameters regarding the training process of this
 project. In this project $\alpha$ is set to ...
 
 \subsubsection*{Regularization}
 
-The regularization of this project is implemented using a ridge regression 
+\paragraph{} The regularization of this project is implemented using a ridge regression 
 in the learning step of the network. This is used to stabilize the output 
 in the long run. The parameter that scales the identity matrix in the ridge
 regression is the actual set parameter in this situation. In this code this 
 parameter is set to $e^{-8}$.
 
-Besides the ridge regression, a noise vector is also present in the code.
+\paragraph{} Besides the ridge regression, a noise vector is also present in the code.
 This is not used during this project. 
 
 \subsubsection*{Transformers}
