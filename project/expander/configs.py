@@ -60,19 +60,19 @@ esn_final = {
              c.Data(np.array(list(~(data.test * 100))), (data.test * 100).tempo,
                        960, 5500, 5500)
              ],
-    "in_out": [9],
-    "reg": [1e-8],
-    "leaking_rate": (((x * 2) / 10) + 0.2 for x in range(5)),
-    "noise": [0],
-    "t_squeeze": (x for x in [np.tanh, sigmoid, my_sigm]),
-    "t_param": (((x * 2) / 10) + 0.2 for x in range(5)),
-    "transformer": (x for x  in list(t.Transformers)),
-    "idx": (x for x in range(10)),
-    "squeeze_o": (x for x in [my_sigm,np.tanh,sigmoid]),
     "matrix_path":
     ("/".join(["/home", "vimmoos", "NN", "resources", "reservoir","final", x])
      for x in ~e.gen_reservoir(final_reservoir)),
-    "repetition": [5]
+    "idx": (x for x in range(10)),
+    "in_out": [9],
+    "reg": [1e-8],
+    "noise": [0],
+    "squeeze_o": (x for x in [my_sigm,np.tanh,sigmoid]),
+    "leaking_rate": (((x * 2) / 10) + 0.2 for x in range(5)),
+    "t_squeeze": (x for x in [np.tanh, sigmoid, my_sigm]),
+    "t_param": (((x * 2) / 10) + 0.2 for x in range(5)),
+    "transformer": (x for x  in list(t.Transformers)),
+    "repetition": [1]
 }
 
 if __name__ == "__main__":
@@ -81,6 +81,6 @@ if __name__ == "__main__":
     #                     path_to_dir="/home/vimmoos/NN/resources/reservoir/final/",
     #                     verbose=True)
     p = e.esn_pickler(esn_final,
-                      path_to_dir="/home/vimmoos/NN/resources/esn/final/",
+                      path_to_dir="/home/vimmoos/NN/resources/esn/final1/",
                       verbose=True)
     p()

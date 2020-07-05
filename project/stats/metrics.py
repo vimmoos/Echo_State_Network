@@ -96,8 +96,7 @@ def hamming_distance(output, desired):
     ]
 
 
-# @add_metric
-
+@add_metric
 def np_cor(output, teacher):
     return (ft.reduce(lambda y, x: y + x, [
         np.correlate(output[:, dim], teacher[:, dim]).tolist()
