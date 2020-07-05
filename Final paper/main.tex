@@ -41,19 +41,32 @@ abstract text (10 lines)
 \section{Introduction}
 
 Classical music generation outside the domain of AI is mainly inspired by creativity and the knowledge of some musical elements.
-There are several methods that have been used in the past to perform similar tasks, some of which include the use of algorithmic composition and Markov chains. 
+There are several methods that have been used in the past to perform similar tasks, some of which include the use of algorithmic composition and Markov chains. %Ref?% 
 Composing music through algorithmic rules can be restrictive in terms of originality, and user feedback. [1] Once the algorithms to generate the music 
-have been defined, there is little to modify or fix. When using Markov chains for the generation of music, although the presented output has more variation, 
+have been defined, there is little to modify or fix. %%this sentence is weird%% 
+When using Markov chains for the generation of music, although the presented output has more variation, 
 drawbacks such as the violation of the Markov property come hand in hand. [2] This is mainly due to the fact that Markov property relies on simply the 
 previous output which is not enough when it comes to generating musical patterns.  In this project, we will be attempting to generate musical drum 
-patterns using an Echo State network, also referred to as an ESN, and measure how close the generated pattern is to actual music.\\
+patterns using an Echo State Network, also referred to as an ESN, and measure how close the generated pattern is to actual music.\\
 
-An ESN is a type of Recurrent neural network (RNN) with an input layer, a hidden layer, also known as a reservoir and an output layer. The interesting 
+An ESN is a type of Recurrent Neural Network (RNN) with an input layer, a hidden layer, also known as a reservoir and an output layer. The interesting 
 aspect of the ESN is that the reservoir to output weights are the only ones that need to be learned, and the weights of the reservoir itself are fixed. 
 Due to this property of the learning the ESN is considered faster than some other RNNs.
 We decided to use  
 
 \section{Data}
+
+In this section the data used in this project is descibed and explained. The first subsection will explain how the drums are represented, and the second 
+subsection will decribe the generation of the music.
+
+\subsection*{Representation of the drums}
+
+The drum beats are represented in the network in the form of a matrix. In Table 1 an example of such a matrix can be seen. 
+All the matrices will have 9 colums, each representing different notes as seen in the table.
+Each row in the matrix this matrix will represent a quarter, and 4 row will represent a bar. If the tempo of the song is 
+for example in 8th, 8 rows will together represent a bar. This is thus dependent on the tempo of the song. 
+
+
 
 \begin{table}[h!]
        \centering
