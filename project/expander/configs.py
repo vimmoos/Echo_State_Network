@@ -1,9 +1,13 @@
-from project.esn.transformer import Transformers, sigmoid, my_sigm, _identity
-import project.esn.transformer as t
-from project.esn.utils import *
 import signal
+
 import numpy as np
+
+import project.esn.core as c
+import project.esn.transformer as t
 import project.expander.expander as e
+import project.test.music_test as data
+from project.esn.transformer import Transformers, _identity, my_sigm, sigmoid
+from project.esn.utils import *
 
 reservoir_gen = {
     "spectral_radius": ((x / 10) + 0.05 for x in range(12)),

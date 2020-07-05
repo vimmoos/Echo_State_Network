@@ -67,7 +67,7 @@ class Run:
     transformer: tr.Transformers = tr.Transformers.identity
     t_param: float = 0.0
     t_squeeze: callable = np.tanh
-    squeeze_o:callable = lambda x :x
+    squeeze_o: callable = lambda x: x
     noise: float = 0.0
 
     def to_dict(self, kwargs={}):
@@ -120,7 +120,7 @@ class Run:
         updator = up.vanilla_updator(matrixs,
                                      np.zeros((self.reservoir, 1)),
                                      leaking_rate=self.leaking_rate,
-                                     squeeze_o = self.squeeze_o)
+                                     squeeze_o=self.squeeze_o)
 
         trainer = t.ridge_reg(param=self.reg)
         transformer = self.transformer.value(self.t_param, self.t_squeeze)
