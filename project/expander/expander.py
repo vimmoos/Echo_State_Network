@@ -6,6 +6,9 @@ import project.esn.core as c
 import project.esn.matrix as m
 import project.esn.transformer as t
 from project.esn.utils import *
+from itertools import product,tee
+
+
 
 
 @mydataclass(init=True, repr=True, check=True)
@@ -91,7 +94,7 @@ class Pickler():
             print(f"dump conf {i}{self._dumper(conf)}" if self.
                   verbose else f"dump conf {i}")
             with open(
-                    self.path_to_dir + "_".join(self.expander._name_gen(conf)),
+                    self.path_to_dir + self.expander._name_gen(conf),
                     "wb") as f:
                 pickle.dump(self._dumper(conf), f)
 

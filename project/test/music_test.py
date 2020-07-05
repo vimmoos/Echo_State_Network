@@ -3,6 +3,29 @@ from pprint import pprint as p
 from project.music_gen.core import *
 from project.music_gen.data_types import *
 
+# def defn(tempo:int,abs_n,quarter):
+#     return note_generator(Note(Tempo(tempo),abs_n,Quarters(quarter)))
+
+
+# hit_8t = note_replicator(Tempo.EIGHTH,Abs_note.HI_HAT_CLOSE,list(Quarters))
+# bass_4t_1q = defn(4,Abs_note.BASS_DRUM,1)
+# snare_4t_1q = defn(4,Abs_note.SNARE,2)
+# snare_4t_4q = defn(4,Abs_note.SNARE,4)
+# bass_16t_2q = defn(16,Abs_note.BASS_DRUM,2) // (2,[0,0,0,1])
+# bass_16t_3q =  defn(16,Abs_note.BASS_DRUM,3) // (2,[0,1,0,0])
+# hito_8t_4q = defn(8,)
+
+# first_A = hit_8t + bass_4t_1q + snare_4t_1q + snare_4t_4q + bass_16t_2q + bass_16t_3q
+
+
+# second_A = first_A +
+
+
+
+# patter_a =
+
+
+
 t_len = 3
 
 hit_quarter = note_replicator(Tempo.QUARTER, Abs_note.HI_HAT_CLOSE,
@@ -33,39 +56,6 @@ test = classic | std_groove * 2 | test_g
 test3 = test * 2
 
 test4 = test[2]
-
-# def quartes_gen(tempo: Tempo):
-#     for x in range(tempo.value):
-#         yield (x, Quarters(int(x / (tempo.value / 4)) + 1))
-
-# def measure_generator(max_note: int, note: Note):
-#     while True:
-#         yield [[
-#             note.val if idx == note.note.value else 0
-#             for idx in range(max_note)
-#         ] for _ in range(note.tempo.value)]
-
-# def pippo():
-#     a = mona()
-#     b = gna()
-#     for i, j in zip(a, b):
-#         yield i + j + "last"
-
-# def mona():
-#     a = test()
-#     for i in a:
-#         yield i + "normal"
-
-# def gna():
-#     a = test()
-#     for i in a:
-#         newa = test()
-#         for i in newa:
-#             yield i + "nested"
-
-# def test():
-#     for i in (1, 2, 3):
-#         yield str(i) + "base"
 
 len_ = 1
 
