@@ -5,20 +5,12 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage[authoryear]{natbib}
+\usepackage{graphicx}
 
 \makeatletter
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
-\newcommand{\noun}[1]{\textsc{#1}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
 \numberwithin{equation}{section}
 \numberwithin{figure}{section}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
-
-
-\usepackage{graphicx}
 
 \makeatother
 
@@ -38,44 +30,61 @@ University of Groningen\\
 7th of July 2020                 
 \end{center}
 \end{titlepage}
+
 \begin{abstract}
 abstract text (10 lines)
 \end{abstract}
 \tableofcontents{}
-
 \newpage
+
 
 \section{Introduction}
 
-\paragraph{Paragraph 1 }
 
-paragraph text
-
-(ESN)
 
 \section{Data}
 
-\subsection*{MIDI-File (not implemented)}
+\begin{table}[h!]
+       \centering
+       \resizebox{\columnwidth}{!}{%
+       \begin{tabular}{l|lllllllll}
+       \cline{2-10}
+                                       & Hi-hat-closed & Hi-hat-open & Bass drum & Crash & Snare & High-tom & Mid-tom & Floor-tom & Ride \\ \hline
+       \multicolumn{1}{|l|}{Quarter 1} & 0             & 0           & 1         & 0     & 0     & 0        & 0       & 0         & 0    \\
+       \multicolumn{1}{|l|}{Quarter 2} & 0             & 0           & 0         & 0     & 0     & 0        & 0       & 0         & 0    \\
+       \multicolumn{1}{|l|}{Quarter 3} & 0             & 0           & 1         & 0     & 0     & 0        & 0       & 0         & 0    \\
+       \multicolumn{1}{|l|}{Quarter 4} & 0             & 0           & 0         & 0     & 0     & 0        & 0       & 0         & 0   
+       \end{tabular}%
+       }
+       \end{table}
 
-\subsection*{Generation}
-
-- generation which contains the same properties of the signals, but
-it is generated instead of using midi files. 
+- pseudocode of the generator
+- what happens with 8th and 16th 
+- this is 1 bar, this matrix repeats for multiple bars
+- how much we generated 
 
 \section{Methods}
 
+In this experiment, one pipeline is used. This consists of the learning
+algorithm, the post processing and the performance metrics. All of these steps will
+be explained in detail in this section. The reason there is no pre-process present
+is because the data is generated in such a way that it does not need to be pre-processed 
+for the network. The way this data is generated was explained in the previous section. 
+The code of this project is mainly written in Python, while the statistical analysis 
+is done in R. 
 
 \subsection{Echo State Network}
 
 In this music generating task an ESN is used. The input signal of
 the ESN is created as described in the pre-prosessing. The set up
-of this ESN is based on `` GUIDE REFERECE ``. This guide contained
-the base code of this project. That code has been rewritten to fit
-this project. The transformers, sparce matrix and noice vector were
+of this ESN is based on ``GUIDE REFERECE``. This guide contained
+the base code of this project. It also provided the needed knowledge about the 
+network and its parameters as descibed below. The given code has been rewritten 
+to fit this project. The transformers, sparce matrix and noice vector were
 added as an addition. The documentation of the code can be found {*}here{*}.
 Regarding the ESN, the following parameters have been set:
 
-\#Maybe add the system equations etc
+%% Maybe add the system equations etc %%
 
 \subsubsection*{The resevoir size}
 
@@ -84,7 +93,7 @@ such that is it possible to obtain the target output $y^{target}(n)$
 from a linear combination of this signal space. The resevoir in this
 project has been set to ...
 
-\subsubsection*{The resevoir density }
+\subsubsection*{The resevoir density}
 
 The density of a resevoir is mainly dependent on the distribution
 of the nonzero elements in the resevoir. In this project a basic uniform
@@ -93,7 +102,7 @@ resevoir is set to ....
 
 \subsubsection*{Spectral radius}
 
-Another main parameter for fitting the \noun{ESN} is the spectral
+Another main parameter for fitting the ESN is the spectral
 radius $\varrho$. This spectral radius is a parameter that will scale
 the resevoir matrix $\mathbf{W}$. The effect this parameter has is
 mainly seen on the learning accuracy of the the network. The new scaled
@@ -113,19 +122,23 @@ unit maintains its value and how much it gets updated. Therefore $\alpha$
 is one of the main parameters regarding the training process of this
 project. In this project $\alpha$ is set to ...
 
-\subsubsection*{Ridge regression}
+\subsubsection*{Regularization}
 
-Ridge regression (parameter). 
+The regularization of this project is implemented using a ridge regression 
+in the learning step of the network. This is used to stabilize the output 
+in the long run. The parameter that scales the identity matrix in the ridge
+regression is the actual set parameter in this situation. In this code this 
+parameter is set to $e^{-8}$.
+
+Besides the ridge regression, a noise vector is also present in the code.
+This is not used during this project. 
 
 \subsubsection*{Transformers}
 
+@Max :)
 Transformer (the 3 mentioned is the intro paper: treshold, sigmoid,
 sigmoid probability) (?) each transformer has a parameter and a squeezing
 function (for now). 
-
-\subsubsection*{Noice vector}
-
-noise vector 
 
 \subsection{Post-processing}
 
@@ -141,4 +154,6 @@ gradient decent.
 \section{Results}
 
 \section{Discussion}
+
+%% add bib %%
 \end{document}
