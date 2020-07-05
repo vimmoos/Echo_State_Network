@@ -69,7 +69,7 @@ charl = note_replicator(Tempo.EIGHTH, Abs_note.HI_HAT_CLOSE,
 
 ttest = bass + charl + ride
 
-n0 = note_replicator(Tempo.EIGHTH, Abs_note.MID_TOM, [Quarters.TWO]) 
+n0 = note_replicator(Tempo.EIGHTH, Abs_note.MID_TOM, [Quarters.TWO])
 n1 = note_replicator(Tempo.QUARTER, Abs_note.CRASH, [Quarters.TWO])
 n2 = note_replicator(Tempo.QUARTER, Abs_note.HI_HAT_CLOSE,
                      [Quarters.ONE, Quarters.THREE])
@@ -121,15 +121,15 @@ reg_m2 = reg_2 + reg_3 + reg_4 + reg_5 + reg_10 + reg_7 + reg_8 + reg_11
 reg_m3 = reg_2 + reg_3 + reg_4 + reg_5 + reg_6 + reg_7 + reg_8 + reg_9
 reg_m4 = reg_2 + reg_12 + reg_3 + reg_4 + reg_5 + reg_10 + reg_13 + reg_14 + reg_15
 
-reggae = (reg_m1 + reg_m2 + reg_m3 + reg_m4) *10
+reggae = (reg_m1 | reg_m2 | reg_m3 | reg_m4) *10
 
 ste_1 = note_replicator(Tempo.EIGHTH, Abs_note.BASS_DRUM, [Quarters.ONE])// (1,[1,0])
 ste_2 = note_replicator(Tempo.EIGHTH, Abs_note.BASS_DRUM, [Quarters.TWO])// (2,[1,0])
 ste_3 = note_replicator(Tempo.EIGHTH, Abs_note.BASS_DRUM, [Quarters.THREE])// (3,[1,0])
 ste_4 = note_replicator(Tempo.EIGHTH, Abs_note.BASS_DRUM, [Quarters.FOUR])// (4,[1,0])
 ste_5 = note_replicator(Tempo.EIGHTH, Abs_note.HI_HAT_CLOSE, [Quarters.ONE, Quarters.TWO, Quarters.THREE])
-ste_6 = note_replicator(Tempo.EIGHTH, Abs_note.HI_HAT_CLOSE, [Quarters.FOUR])// (4, [1,0]) 
-ste_7 = note_replicator(Tempo.EIGHTH, Abs_note.CRASH, [Quarters.FOUR])// (4, [0,1]) 
+ste_6 = note_replicator(Tempo.EIGHTH, Abs_note.HI_HAT_CLOSE, [Quarters.FOUR])// (4, [1,0])
+ste_7 = note_replicator(Tempo.EIGHTH, Abs_note.CRASH, [Quarters.FOUR])// (4, [0,1])
 ste_8 = note_replicator(Tempo.EIGHTH, Abs_note.HIG_TOM, [Quarters.FOUR])// (4, [0,1])
 ste_9 = note_replicator(Tempo.EIGHTH, Abs_note.HI_HAT_CLOSE, [Quarters.FOUR])
 ste_10 = note_replicator(Tempo.EIGHTH, Abs_note.FLOOR_TOM, [Quarters.TWO]) // (2,[0,1])
@@ -142,9 +142,9 @@ ste_m2 = ste_1 + ste_2 + ste_3 + ste_4 + ste_5 + ste_9 + ste_10 + ste_11
 ste_m3 = ste_1 + ste_2 + ste_3 + ste_4 + ste_5 + ste_9
 ste_m4 = ste_1 + ste_2 + ste_3 + ste_4 + ste_5 + ste_6 + ste_7 + ste_8 + ste_10 + ste_12
 
-steward = (ste_m1 + ste_m2 + ste_m3 + ste_m4) * 10
+steward = (ste_m1 | ste_m2 | ste_m3 | ste_m4) * 10
 
-all = red_hot + reggae + steward
+all = red_hot | reggae | steward
 
 p(all.len())
 
