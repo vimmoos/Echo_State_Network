@@ -19,6 +19,14 @@ reservoir_gen_small = {
     "repetition": [10],
 }
 
+final_reservoir = {
+    "spectral_radius":
+    ((x / 5) + 0.5 for x in range(5)),
+    "density": [0.04],
+    "size": (x for x in [2000,5000]),
+    "repetition": [10],
+}
+
 import project.test.music_test as data
 import project.esn.core as c
 
@@ -43,9 +51,32 @@ esn_gen = {
     "repetition": [10]
 }
 
+esn_final = {
+    "data": [
+             c.Data(np.array(list(~(data.test * 100))), (data.test * 100).tempo,
+                       960, 5500, 5500)
+             ],
+    "in_out": [9],
+    "reg": [1e-8],
+    "leaking_rate": (((x * 2) / 10) + 0.2 for x in range(5)),
+    "noise": [0],
+    "t_squeeze": (x for x in [np.tanh, sigmoid, my_sigm]),
+    "t_param": (((x * 2) / 10) + 0.2 for x in range(5)),
+    "transformer": (x for x  in list(t.Transformers)),
+    "idx": (x for x in range(10)),
+    "squeeze_o": (x for x in [my_sigm,np.tanh,sigmoid]),
+    "matrix_path":
+    ("/".join(["/home", "vimmoos", "NN", "resources", "reservoir","final", x])
+     for x in ~e.gen_reservoir(final_reservoir)),
+    "repetition": [5]
+}
+
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_hadler())
-    p = e.esn_pickler(esn_gen,
-                      path_to_dir="/home/vimmoos/NN/resources/esn/",
+    # p = e.reservoir_pickler(final_reservoir,
+    #                     path_to_dir="/home/vimmoos/NN/resources/reservoir/final/",
+    #                     verbose=True)
+    p = e.esn_pickler(esn_final,
+                      path_to_dir="/home/vimmoos/NN/resources/esn/final/",
                       verbose=True)
     p()

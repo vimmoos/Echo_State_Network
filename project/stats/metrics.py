@@ -3,15 +3,21 @@ import random
 from dataclasses import dataclass
 from functools import partial
 
+from math import isnan
 import numpy as np
 from aenum import Enum, extend_enum
 from scipy.spatial import distance as dist
+import scipy.stats as stats
 
 import project.esn.utils as u
 
 
 class Metrics(Enum):
     pass
+
+
+nans = lambda li: [float("nan") if x == 0 else x for x in li]
+
 
 
 @dataclass(init=True, repr=True, frozen=True)
@@ -21,7 +27,8 @@ class Metric():
     target: list
 
     def __call__(self):
-        return self._metric(self.output, self.target)
+        ret = nans(self._metric(self.output, self.target))
+        return np.nanmean(np.where(ret!=0,ret,np.nan))
 
 
 def add_metric(func):
@@ -57,12 +64,12 @@ def teacher_loss_nd(output, teacher):
     ]
 
 
-# @add_metric
-# def pearson_nd(output, teacher):
-#     return [
-#         stats.pearsonr(output[:, dim], teacher[:, dim])
-#         for dim in range(output.shape[1])
-#     ]
+@add_metric
+def pearson_nd(output, teacher):
+    return [
+        stats.pearsonr(output[:, dim], teacher[:, dim])[0]
+        for dim in range(output.shape[1])
+    ]
 
 
 @add_metric
@@ -89,7 +96,8 @@ def hamming_distance(output, desired):
     ]
 
 
-@add_metric
+# @add_metric
+
 def np_cor(output, teacher):
     return (ft.reduce(lambda y, x: y + x, [
         np.correlate(output[:, dim], teacher[:, dim]).tolist()
