@@ -8,12 +8,10 @@ from scipy import linalg, sparse
 
 import project.esn.core as c
 import project.esn.matrix as m
-import project.esn.teacher as te
 import project.esn.trainer as tr
 import project.esn.transformer as ta
 import project.esn.updater as up
 import project.music_gen.core as cgen
-import project.music_gen.test as tgen
 import project.parse_midi.matrix.core as cmidi
 import project.parse_midi.matrix.proc_dicts as emidi
 import project.test.music_test as tgen

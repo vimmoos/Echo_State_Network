@@ -7,11 +7,12 @@ from enum import Enum
 import numpy as np
 
 import project.music_gen.data_types as dt
-import project.test.esn_t as tesn
+#import project.test.esn_t as tesn
+import project.test.music_test as mt
 
-tot_out = tesn.test_generated()
+#tot_out = tesn.test_generated()
 
-net_out, tempo = tot_out["desired"], tot_out["tempo"]
+#net_out, tempo = tot_out["desired"], tot_out["tempo"]
 
 
 class Note_MIDI(Enum):
@@ -125,3 +126,6 @@ def net2midi(net_out: np.ndarray, filename: str, bpm: int = 120, listen=False):
 #     for k, v in zip([2**i for i in range(2, 6)],
 #                     [base + j for j in range(0, lim, step)])
 # }
+
+if __name__ == "__main__":
+    net2midi(mt.new, "new", bpm= 170)
