@@ -56,11 +56,13 @@ def run_netwok(out_transf: transf.Transformer = transf.Transformers.sig_prob,
     PSO_kwargs = map_params(**PSO_kwargs)
     # pprint(add_net_params(**PSO_kwargs))
     net_param = {k: v for k, v in PSO_kwargs.items() if k != "reservoir"}
-    load_param = c.path + PSO_kwargs["reservoir"].value
-    run_dict = core.Run(**add_net_params(**net_param)).load(
-        load_param, r.randint(0, 9)).__enter__()()
-    with open(c.path_esn + "_".join(res_name(run_dict)), "wb") as f:
-        pickle.dump(run_dict, f)
+    # load_param = c.path + PSO_kwargs["reservoir"].value
+    # pprint(add_net_params(**net_param))
+    # run_dict = core.Run(**add_net_params(**net_param)).load(
+    #     load_param, r.randint(0, 9)).__enter__()()
+    run_dict = core.Run(**add_net_params(**net_param)).__enter__()()
+    # with open(c.path_esn + "_".join(res_name(run_dict)), "wb") as f:
+    #     pickle.dump(run_dict, f)
     pprint(f"dumped conf : {PSO_kwargs}")
     return ((raw_out := run_dict["output"]),
             out_transf.value(0.8,
@@ -178,7 +180,7 @@ class Landscape:
     it: int = 0
     particles: np.ndarray = None
     gbest_position: np.ndarray = None
-    gbest_value: tuple = None
+    gbest_value: list = None
     _pso_params: dict = None
     cost_func: met.Metric = met.Metrics.np_cor
     termination_func: callable = None
@@ -192,7 +194,7 @@ class Landscape:
         self.particles = np.array(
             [Particle(self._dims) for _ in range(self.n_particles)])
         self.gbest_position = distribute_dimensions(self._dims)
-        self.gbest_value = (-np.inf, 0)
+        self.gbest_value = [-np.inf, 0]
         self.termination_func = check_default(self.termination_func,
                                               lambda: self.it >= self.max_iter,
                                               False)
@@ -229,7 +231,7 @@ class Landscape:
     def update_gbest_candidate(self, part: Particle):
         if part.pbest_value <= self.gbest_value[0]:
             return
-        self.gbest_value = (part.pbest_value, 0)
+        self.gbest_value = [part.pbest_value, 0]
         # print(f"old gbest pos -> {self.gbest_position}")
         self.gbest_position = part.pbest_position
         # print(f"Updated gbest position -> {self.gbest_position}")
