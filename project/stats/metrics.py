@@ -2,12 +2,12 @@ import functools as ft
 import random
 from dataclasses import dataclass
 from functools import partial
-
 from math import isnan
+
 import numpy as np
+import scipy.stats as stats
 from aenum import Enum, extend_enum
 from scipy.spatial import distance as dist
-import scipy.stats as stats
 
 import project.esn.utils as u
 
@@ -19,7 +19,6 @@ class Metrics(Enum):
 nans = lambda li: [float("nan") if x == 0 else x for x in li]
 
 
-
 @dataclass(init=True, repr=True, frozen=True)
 class Metric():
     _metric: callable
@@ -28,7 +27,7 @@ class Metric():
 
     def __call__(self):
         ret = nans(self._metric(self.output, self.target))
-        return np.nanmean(np.where(ret!=0,ret,np.nan))
+        return np.nanmean(np.where(ret != 0, ret, np.nan))
 
 
 def add_metric(func):
@@ -96,8 +95,7 @@ def hamming_distance(output, desired):
     ]
 
 
-# @add_metric
-
+@add_metric
 def np_cor(output, teacher):
     return (ft.reduce(lambda y, x: y + x, [
         np.correlate(output[:, dim], teacher[:, dim]).tolist()

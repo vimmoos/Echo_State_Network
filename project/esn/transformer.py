@@ -1,3 +1,4 @@
+# import enum as e
 from random import uniform
 
 import numpy as np
@@ -21,6 +22,15 @@ squeezed_tanh = lambda x: (np.tanh(x) + 1) / 2
 squeezed_tanh.__name__ = "squeezed_tanh"
 
 choose_prob = lambda x: uniform(0, 1) <= x
+
+
+class Squeezers(Enum):
+    pass
+
+
+def fill_squeezer():
+    for fun in [_identity, sigmoid, my_sigm, squeezed_tanh, np.tanh]:
+        extend_enum(Squeezers, fun.__name__, fun)
 
 
 @np.vectorize
