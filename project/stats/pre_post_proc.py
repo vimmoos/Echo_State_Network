@@ -12,12 +12,13 @@ import scipy.signal as s
 import project.esn.transformer as t
 import project.stats.metrics as met
 import project.esn.utils as u
+import numpy as np
 
 path_resources = "/home/vimmoos/NN/resources/"
 
-path_max = path_resources + "esn/"
+path_max = path_resources + "esn/final1/"
 
-path_csv = path_resources + "esn_csv/"
+path_csv = path_resources + "esn_csv/final1/"
 
 path_mar = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
 
@@ -30,6 +31,8 @@ experiment = lambda path: [
 get_data = lambda paths: (p.load(open(f, "rb")) for f in paths)
 
 get_experiment = u.comp(get_data, experiment)
+
+squeeze_fs= [t._identity,t.my_sigm,np.tanh,t.sigmoid]
 
 
 def apply_metrics(output, desired, raw_output):
@@ -45,12 +48,11 @@ def apply_transformers(dict_, data_len):
     des = dict_["desired"][:data_len]
     return {
         trans.name: [{
-            **{
-                "param": (val := ((param * 2) / 10) + 0.2)
-            },
+            "param": (val := ((param * 2) / 10) + 0.2),
+            "squeeze_f": squeeze_f.__name__,
             **apply_metrics(
-                trans.value(val, t._identity)(output), des, output)
-        } for param in range(5)]
+                trans.value(val, squeeze_f)(output), des, output)
+        } for param in range(5) for squeeze_f in squeeze_fs]
         for trans in list(t.Transformers)
     }
 
@@ -70,7 +72,7 @@ def process_data(data, data_len, rkeys=None):
 
 
 def hget_metrics(metrics):
-    return [x for x in metrics[0].keys() if x not in ["param"]]
+    return [x for x in metrics[0].keys() if x not in ["param","squeeze_f"]]
 
 
 def hget_params(params):
@@ -86,6 +88,9 @@ def bget_metrics(metrics):
 def bget_tparam(metrics):
     return [metrics[x]["param"] for x in range(len(metrics))]
 
+def bget_tsqueeze(metrics):
+    return [metrics[x]["squeeze_f"] for x in range(len(squeeze_fs))]
+
 
 def bget_params(params):
     return [params[x] for x in hget_params(params)]
@@ -96,14 +101,14 @@ first_t = list(t.Transformers)[0].name
 
 def get_header(single_run):
     return [
-        *hget_params(single_run[0]), "post_trans", "post_param","metric","metric_val"
+        *hget_params(single_run[0]), "post_trans", "post_param","post_squeeze","metric","metric_val"
         # *hget_metrics(single_run[0][first_t])
     ]
 
 def get_body(single_run):
     return [[
-        [[[*bget_params(redun),trans,t_param,x,redun[trans][0][x]] for x in hget_metrics(redun[trans])]
-            for t_param in bget_tparam(redun[first_t])]
+        [[[*bget_params(redun),trans,t_param,t_squeeze,x,redun[trans][0][x]] for x in hget_metrics(redun[trans])]
+            for t_param in bget_tparam(redun[first_t]) for t_squeeze in bget_tsqueeze(redun[first_t])]
         for trans in map(lambda x : x.name,list(t.Transformers))
     ] for redun in single_run]
 
