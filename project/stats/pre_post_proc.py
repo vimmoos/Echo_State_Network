@@ -20,9 +20,9 @@ import project.stats.metrics as met
 
 path_resources = "/home/vimmoos/NN/resources/"
 
-path_max = path_resources + "esn/final1/"
+path_max = path_resources + "esn/final_final/"
 
-path_csv = path_resources + "esn_csv/final1/"
+path_csv = path_resources + "esn_csv/final_final/"
 
 path_mar = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
 
@@ -178,8 +178,15 @@ def pre_post_proc(enumeration, cpath, data_len):
         print(f"dumped run {n}")
 
 
+def write_output(raw_data, opath, data_len):
+    data = process_data(raw_data, data_len)
+    for i, run in enumerate(data):
+
+        print(f"dumped output {n}")
+
+
 def partial_fun(enum):
-    return pre_post_proc(enum, path_csv, 5000)
+    return pre_post_proc(enum, path_csv, 6000)
 
 
 def cpre_post_proc(raw_data, size_group=4, workers=20):
