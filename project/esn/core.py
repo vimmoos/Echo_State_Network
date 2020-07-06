@@ -57,6 +57,9 @@ def _get_val(x):
 
 @ut.mydataclass(init=True, repr=True, check=False)
 class Run:
+    """patching alll stauff
+
+    """
     data: Data
     in_out: int = 1
     reservoir: int = 100

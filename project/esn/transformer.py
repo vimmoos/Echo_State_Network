@@ -32,6 +32,7 @@ def fill_squeezer():
     for fun in [_identity, sigmoid, my_sigm, squeezed_tanh, np.tanh]:
         extend_enum(Squeezers, fun.__name__, fun)
 
+fill_squeezer()
 
 @np.vectorize
 def trim(x):

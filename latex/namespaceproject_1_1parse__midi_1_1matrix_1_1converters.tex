@@ -1,0 +1,68 @@
+\hypertarget{namespaceproject_1_1parse__midi_1_1matrix_1_1converters}{}\doxysection{project.\+parse\+\_\+midi.\+matrix.\+converters Namespace Reference}
+\label{namespaceproject_1_1parse__midi_1_1matrix_1_1converters}\index{project.parse\_midi.matrix.converters@{project.parse\_midi.matrix.converters}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_af1771c69eb2bc18da31183371094c6b3}{note\+\_\+to}} (reduce\+\_\+fun, row\+\_\+fun, row, lenght)
+\item 
+def \mbox{\hyperlink{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_aa7f255af5719fc693e091c8d2a1dc08d}{note\+\_\+to\+\_\+binary}} (row, lenght)
+\item 
+def \mbox{\hyperlink{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_af5441c8d0a050b45aa18b04aded96ea1}{note\+\_\+to\+\_\+velocity}} (row, lenght)
+\item 
+def \mbox{\hyperlink{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_a131b877f80a802fca35f127ac1f5fca1}{convert\+\_\+to\+\_\+matrix}} (df, func, n\+\_\+note)
+\item 
+def \mbox{\hyperlink{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_ac6616b9c4351bb447cb43bc6fabc3710}{convert\+\_\+to\+\_\+full\+\_\+matrix}} (df, func, n\+\_\+note)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_ac6616b9c4351bb447cb43bc6fabc3710}\label{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_ac6616b9c4351bb447cb43bc6fabc3710}} 
+\index{project.parse\_midi.matrix.converters@{project.parse\_midi.matrix.converters}!convert\_to\_full\_matrix@{convert\_to\_full\_matrix}}
+\index{convert\_to\_full\_matrix@{convert\_to\_full\_matrix}!project.parse\_midi.matrix.converters@{project.parse\_midi.matrix.converters}}
+\doxysubsubsection{\texorpdfstring{convert\_to\_full\_matrix()}{convert\_to\_full\_matrix()}}
+{\footnotesize\ttfamily def project.\+parse\+\_\+midi.\+matrix.\+converters.\+convert\+\_\+to\+\_\+full\+\_\+matrix (\begin{DoxyParamCaption}\item[{}]{df,  }\item[{}]{func,  }\item[{}]{n\+\_\+note }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}General converter from df to matrix
+First get the clock (which is the gcd of all the event, in this
+way we are sure that any event will happen at time x*clock) this
+is used to encode the temporal information in the lenght of the
+matrix. After that we loop over the list of all clocks in the
+"song"/df and we apply the func with the row if there is at least
+one row with that time otherwise we apply the func with an empty
+Series\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_a131b877f80a802fca35f127ac1f5fca1}\label{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_a131b877f80a802fca35f127ac1f5fca1}} 
+\index{project.parse\_midi.matrix.converters@{project.parse\_midi.matrix.converters}!convert\_to\_matrix@{convert\_to\_matrix}}
+\index{convert\_to\_matrix@{convert\_to\_matrix}!project.parse\_midi.matrix.converters@{project.parse\_midi.matrix.converters}}
+\doxysubsubsection{\texorpdfstring{convert\_to\_matrix()}{convert\_to\_matrix()}}
+{\footnotesize\ttfamily def project.\+parse\+\_\+midi.\+matrix.\+converters.\+convert\+\_\+to\+\_\+matrix (\begin{DoxyParamCaption}\item[{}]{df,  }\item[{}]{func,  }\item[{}]{n\+\_\+note }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Simple convert to matrix function [UNUSED]
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_af1771c69eb2bc18da31183371094c6b3}\label{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_af1771c69eb2bc18da31183371094c6b3}} 
+\index{project.parse\_midi.matrix.converters@{project.parse\_midi.matrix.converters}!note\_to@{note\_to}}
+\index{note\_to@{note\_to}!project.parse\_midi.matrix.converters@{project.parse\_midi.matrix.converters}}
+\doxysubsubsection{\texorpdfstring{note\_to()}{note\_to()}}
+{\footnotesize\ttfamily def project.\+parse\+\_\+midi.\+matrix.\+converters.\+note\+\_\+to (\begin{DoxyParamCaption}\item[{}]{reduce\+\_\+fun,  }\item[{}]{row\+\_\+fun,  }\item[{}]{row,  }\item[{}]{lenght }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}General converter from row to list. First loop over the lenght and
+if the row is not empty call the row_fun which must return a
+list. After that we loop over the just created list and apply the
+reduce_function for each elem (because we will have a structure
+like [[0],[a,b,b],...,[a,a,b]])\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_aa7f255af5719fc693e091c8d2a1dc08d}\label{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_aa7f255af5719fc693e091c8d2a1dc08d}} 
+\index{project.parse\_midi.matrix.converters@{project.parse\_midi.matrix.converters}!note\_to\_binary@{note\_to\_binary}}
+\index{note\_to\_binary@{note\_to\_binary}!project.parse\_midi.matrix.converters@{project.parse\_midi.matrix.converters}}
+\doxysubsubsection{\texorpdfstring{note\_to\_binary()}{note\_to\_binary()}}
+{\footnotesize\ttfamily def project.\+parse\+\_\+midi.\+matrix.\+converters.\+note\+\_\+to\+\_\+binary (\begin{DoxyParamCaption}\item[{}]{row,  }\item[{}]{lenght }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reduce a row to a list with 0s and 1s corresponding to the event
+note\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_af5441c8d0a050b45aa18b04aded96ea1}\label{namespaceproject_1_1parse__midi_1_1matrix_1_1converters_af5441c8d0a050b45aa18b04aded96ea1}} 
+\index{project.parse\_midi.matrix.converters@{project.parse\_midi.matrix.converters}!note\_to\_velocity@{note\_to\_velocity}}
+\index{note\_to\_velocity@{note\_to\_velocity}!project.parse\_midi.matrix.converters@{project.parse\_midi.matrix.converters}}
+\doxysubsubsection{\texorpdfstring{note\_to\_velocity()}{note\_to\_velocity()}}
+{\footnotesize\ttfamily def project.\+parse\+\_\+midi.\+matrix.\+converters.\+note\+\_\+to\+\_\+velocity (\begin{DoxyParamCaption}\item[{}]{row,  }\item[{}]{lenght }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reduce a row to a list with 0s and velocities corresponding to the event
+note\end{DoxyVerb}
+ 

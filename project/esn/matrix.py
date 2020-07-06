@@ -19,8 +19,9 @@ def generate_rmatrix(m, n, bound=0.5, **kwargs):
 
 
 def scale_spectral_smatrix(matrix: sparse.issparse,
-                           spectral_radius=1.25,
-                           in_place=False):
+                                   spectral_radius=1.25,
+                                   in_place=False):
+    eigs = None
     try:
         eigs = sparse.linalg.eigs(matrix)[0]
     except sparse.linalg.ArpackNoConvergence as e:
