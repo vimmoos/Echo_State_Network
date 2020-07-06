@@ -5,6 +5,7 @@
 #        particle, then take mean)
 #      - reproducibility (save seeds)
 
+import pickle
 import random as r
 from dataclasses import dataclass
 from pprint import pprint
@@ -14,15 +15,15 @@ from aenum import Enum
 
 import project.esn.core as core
 import project.esn.transformer as transf
+import project.PSO.config as c
 import project.stats.metrics as met
 import project.test.music_test as tmusic
-import project.PSO.config as c
-import pickle
+
 
 def add_net_params(**kwargs) -> dict:
     for k, v in kwargs.items():
-        esn_gen[k] = v
-    return esn_gen
+        c.esn_gen[k] = v
+    return c.esn_gen
 
 
 def bind_enum_idx(idx: float, e: Enum) -> int:
@@ -39,32 +40,31 @@ def map_params(**PSO_kwargs) -> dict:
                 v, transf.Transformers)]
         if k == "reservoir":
             PSO_kwargs[k] = list(c.Res)[bind_enum_idx(v, c.Res)]
-
     return PSO_kwargs
 
-def res_name(conf: dict):
+
+def res_name(conf: dict) -> list:
     return [
-        str(v) for k, v in conf.items() if k not in ["desired", "output","input"]
+        str(v) for k, v in conf.items()
+        if k not in ["desired", "output", "input"]
     ]
 
+
 def run_netwok(out_transf: transf.Transformer = transf.Transformers.sig_prob,
-                           **PSO_kwargs) -> tuple:
+               **PSO_kwargs) -> tuple:
     # pprint(PSO_kwargs)
     PSO_kwargs = map_params(**PSO_kwargs)
     # pprint(add_net_params(**PSO_kwargs))
     net_param = {k: v for k, v in PSO_kwargs.items() if k != "reservoir"}
     load_param = c.path + PSO_kwargs["reservoir"].value
-
-    run_dict = core.Run(**add_net_params(**net_param)).load(load_param,r.randint(0,9)).__enter__()()
+    run_dict = core.Run(**add_net_params(**net_param)).load(
+        load_param, r.randint(0, 9)).__enter__()()
     with open(c.path_esn + "_".join(res_name(run_dict)), "wb") as f:
         pickle.dump(run_dict, f)
     pprint(f"dumped conf : {PSO_kwargs}")
     return ((raw_out := run_dict["output"]),
             out_transf.value(0.8,
                              transf._identity)(raw_out), run_dict["desired"])
-
-
-
 
 
 def eval_config(**PSO_kwargs) -> float:
@@ -93,8 +93,6 @@ def check_transformer(dims: dict):
             dims["t_param"] = (0.05, 1)
         if "t_squeeze" not in keys:
             dims["t_squeeze"] = transf.Squeezers
-
-
 
 
 def distribute_dimensions(dims: dict, velocity: bool = False) -> float:
@@ -130,6 +128,9 @@ class Particle:
         self.pbest_position = self.position
         self.velocity = distribute_dimensions(self._dims, velocity=True)
 
+    def __repr__(self):
+        return str(self.state)
+
     @property
     def ndim(self):
         return len(self._dims.keys())
@@ -143,6 +144,16 @@ class Particle:
         return list(
             map(lambda x: x if isinstance(x, tuple) else (0, len(list(x)) - 1),
                 self._dims.values()))
+
+    @property
+    def state(self):
+        return {
+            "dimensions": {k: v
+                           for k, v in zip(self.dims, self.dim_bounds)},
+            "position:": self.position,
+            "pbest_position": self.pbest_position,
+            "velocity": self.velocity
+        }
 
     def adjust_position(self):
         for idx, bound in enumerate(self.dim_bounds):
@@ -161,14 +172,16 @@ class Particle:
 @dataclass
 class Landscape:
     _dims: dict
-    cost_func: met.Metric = met.Metrics.np_cor
-    termination_func: callable = None
     n_particles: int = 20
-    max_iterations: int = 100
+    max_iter: int = 100
+    restart_limit: int = 3
+    it: int = 0
     particles: np.ndarray = None
     gbest_position: np.ndarray = None
-    gbest_value: float = -np.inf
+    gbest_value: tuple = None
     _pso_params: dict = None
+    cost_func: met.Metric = met.Metrics.np_cor
+    termination_func: callable = None
 
     def __post_init__(self):
         self._pso_params = check_default(self._pso_params, {
@@ -179,8 +192,13 @@ class Landscape:
         self.particles = np.array(
             [Particle(self._dims) for _ in range(self.n_particles)])
         self.gbest_position = distribute_dimensions(self._dims)
-        self.termination_func = check_default(
-            self.termination_func, lambda it: it >= self.max_iterations, False)
+        self.gbest_value = (-np.inf, 0)
+        self.termination_func = check_default(self.termination_func,
+                                              lambda: self.it >= self.max_iter,
+                                              False)
+
+    def __repr__(self):
+        return str(self.state)
 
     def update_vel_component(self,
                              part: Particle,
@@ -209,9 +227,9 @@ class Landscape:
         return True
 
     def update_gbest_candidate(self, part: Particle):
-        if part.pbest_value <= self.gbest_value:
+        if part.pbest_value <= self.gbest_value[0]:
             return
-        self.gbest_value = part.pbest_value
+        self.gbest_value = (part.pbest_value, 0)
         # print(f"old gbest pos -> {self.gbest_position}")
         self.gbest_position = part.pbest_position
         # print(f"Updated gbest position -> {self.gbest_position}")
@@ -221,14 +239,20 @@ class Landscape:
             self.update_gbest_candidate(part)
 
     def run(self, *args, **kwargs):
-        it = 0
-        while not self.termination_func(it, *args, **kwargs):
-            print(f"iter {it}")
+        while not self.termination_func(*args, **kwargs):
+            # print(f"iter {it}")
             for part in self.particles:
                 part.move(self.update_part_velocity(part))
                 self.update_best_candidate(part)
-            it += 1
-        return self.print_results(it)
+            self.random_restart()
+        return self.state
+
+    def random_restart(self):
+        self.it += 1
+        self.gbest_value[1] += 1
+        if self.gbest_value[1] >= self.restart_limit:
+            print("random restart!")
+            self.__post_init__()
 
     # NOTE args and kwargs are given only for the custom termination function,
     # in reality they should already be saved at initialization (when the term
@@ -238,28 +262,23 @@ class Landscape:
     def __call__(self, *args, **kwargs):
         return self.run(*args, **kwargs)
 
-    def print_results(self, it: int):
-        # res = (f"# Iterations: {it}\nFinal {self.cost_func.name}: "
-        #        f"{self.gbest_value}\nBest config: "
-        #        f"{}")
-        dio_porco = lambda k, v: (v.name if k == "transformer" else v
-                                  if not callable(v) else v.__name__)
+    @property
+    def state(self) -> dict:
+        replace_name = lambda k, v: (v.name if k == "transformer" else v
+                                     if not callable(v) else v.__name__)
         return {
-            "iteration": it,
+            "iteration": self.it,
+            "max_iteration": self.max_iter,
             "metric": self.cost_func.name,
             "best": self.gbest_value,
             **{
-                k: dio_porco(k, v)
+                k: replace_name(k, v)
                 for k, v in map_params(**{
                     k: v
                     for k, v in zip(self._dims.keys(), self.gbest_position)
                 }).items()
             }
         }
-
-    # def print_results(self, it: int):
-    #     res = self._print_results
-    #     return {i for k,v in res}
 
     @property
     def W(self):
