@@ -43,7 +43,7 @@ def d_expander(inverter):
 
 def res_name(conf: dict):
     return [
-        str(v) for k, v in conf.items() if not k in ["result", "repetition"]
+        str(v) for k, v in conf.items() if k not in ["result", "repetition"]
     ]
 
 

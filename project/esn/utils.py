@@ -1,9 +1,9 @@
-import numpy as np
-from dataclasses import dataclass
-from functools import reduce
-from functools import wraps
 import sys
 import time
+from dataclasses import dataclass
+from functools import reduce, wraps
+
+import numpy as np
 
 comp = lambda *fs: reduce(
     lambda f, g: lambda *args, **kwargs: f(g(*args, **kwargs)), fs)
@@ -62,6 +62,7 @@ def register_methods(kwargs):
 
     return decorator
 
+
 def force_2dim(np_arr: np.array):
     if np_arr is None: return
     try:
@@ -82,7 +83,7 @@ def pre_proc_args(kwargs):
         @wraps(fun)
         def wrapper(*args):
             return fun(*[
-                v if not i in kw_index.keys() else kw_index.get(i)(v)
+                v if i not in kw_index.keys() else kw_index.get(i)(v)
                 for i, v in enumerate(args)
             ])
 
