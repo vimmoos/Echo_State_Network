@@ -16,8 +16,6 @@ def \mbox{\hyperlink{namespaceproject_1_1esn_1_1utils_a9a7bf32c45aacb7567b703148
 def \mbox{\hyperlink{namespaceproject_1_1esn_1_1utils_a302d83410d0a65c047877ca1f4b6bebe}{pre\+\_\+proc\+\_\+args}} (kwargs)
 \item 
 def \mbox{\hyperlink{namespaceproject_1_1esn_1_1utils_a4bdc1842cb24290b8c560d5f52231d58}{signal\+\_\+hadler}} ()
-\item 
-def \mbox{\hyperlink{namespaceproject_1_1esn_1_1utils_a9a9d92d55b8b04d12c1c7b8241d16456}{composable}} (fun)
 \end{DoxyCompactItemize}
 \doxysubsection*{Variables}
 \begin{DoxyCompactItemize}
@@ -33,55 +31,63 @@ def \mbox{\hyperlink{namespaceproject_1_1esn_1_1utils_a9a9d92d55b8b04d12c1c7b824
 
 
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a9a9d92d55b8b04d12c1c7b8241d16456}\label{namespaceproject_1_1esn_1_1utils_a9a9d92d55b8b04d12c1c7b8241d16456}} 
-\index{project.esn.utils@{project.esn.utils}!composable@{composable}}
-\index{composable@{composable}!project.esn.utils@{project.esn.utils}}
-\doxysubsubsection{\texorpdfstring{composable()}{composable()}}
-{\footnotesize\ttfamily def project.\+esn.\+utils.\+composable (\begin{DoxyParamCaption}\item[{}]{fun }\end{DoxyParamCaption})}
-
 \mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a2b285c7b14a8771e6913b7ce8877c21d}\label{namespaceproject_1_1esn_1_1utils_a2b285c7b14a8771e6913b7ce8877c21d}} 
 \index{project.esn.utils@{project.esn.utils}!factories@{factories}}
 \index{factories@{factories}!project.esn.utils@{project.esn.utils}}
 \doxysubsubsection{\texorpdfstring{factories()}{factories()}}
 {\footnotesize\ttfamily def project.\+esn.\+utils.\+factories (\begin{DoxyParamCaption}\item[{$\ast$}]{args }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a9a7bf32c45aacb7567b7031489a22675}\label{namespaceproject_1_1esn_1_1utils_a9a7bf32c45aacb7567b7031489a22675}} 
+\begin{DoxyVerb}Decorator which call the constructur after the specified methods
+are called\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a9a7bf32c45aacb7567b7031489a22675}\label{namespaceproject_1_1esn_1_1utils_a9a7bf32c45aacb7567b7031489a22675}} 
 \index{project.esn.utils@{project.esn.utils}!force\_2dim@{force\_2dim}}
 \index{force\_2dim@{force\_2dim}!project.esn.utils@{project.esn.utils}}
 \doxysubsubsection{\texorpdfstring{force\_2dim()}{force\_2dim()}}
 {\footnotesize\ttfamily def project.\+esn.\+utils.\+force\+\_\+2dim (\begin{DoxyParamCaption}\item[{np.\+array}]{np\+\_\+arr }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a595a53d1ca83d0becd442e1380bab533}\label{namespaceproject_1_1esn_1_1utils_a595a53d1ca83d0becd442e1380bab533}} 
+\begin{DoxyVerb}Force 2 dimension on a numpy array\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a595a53d1ca83d0becd442e1380bab533}\label{namespaceproject_1_1esn_1_1utils_a595a53d1ca83d0becd442e1380bab533}} 
 \index{project.esn.utils@{project.esn.utils}!mydataclass@{mydataclass}}
 \index{mydataclass@{mydataclass}!project.esn.utils@{project.esn.utils}}
 \doxysubsubsection{\texorpdfstring{mydataclass()}{mydataclass()}}
 {\footnotesize\ttfamily def project.\+esn.\+utils.\+mydataclass (\begin{DoxyParamCaption}\item[{}]{check = {\ttfamily False},  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a302d83410d0a65c047877ca1f4b6bebe}\label{namespaceproject_1_1esn_1_1utils_a302d83410d0a65c047877ca1f4b6bebe}} 
+\begin{DoxyVerb}Enrich the standard dataclass with the check keyword which when
+setted to True validate each field value against the corresponding
+type annotation\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a302d83410d0a65c047877ca1f4b6bebe}\label{namespaceproject_1_1esn_1_1utils_a302d83410d0a65c047877ca1f4b6bebe}} 
 \index{project.esn.utils@{project.esn.utils}!pre\_proc\_args@{pre\_proc\_args}}
 \index{pre\_proc\_args@{pre\_proc\_args}!project.esn.utils@{project.esn.utils}}
 \doxysubsubsection{\texorpdfstring{pre\_proc\_args()}{pre\_proc\_args()}}
 {\footnotesize\ttfamily def project.\+esn.\+utils.\+pre\+\_\+proc\+\_\+args (\begin{DoxyParamCaption}\item[{}]{kwargs }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a336cef3affba36b779b648b2b78a8afe}\label{namespaceproject_1_1esn_1_1utils_a336cef3affba36b779b648b2b78a8afe}} 
+\begin{DoxyVerb}For each key in the dict (where the keys are the parameter that u
+want to pre_process) apply the value of that keys and then pass the
+output of the application to the specified paramater\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a336cef3affba36b779b648b2b78a8afe}\label{namespaceproject_1_1esn_1_1utils_a336cef3affba36b779b648b2b78a8afe}} 
 \index{project.esn.utils@{project.esn.utils}!register\_methods@{register\_methods}}
 \index{register\_methods@{register\_methods}!project.esn.utils@{project.esn.utils}}
 \doxysubsubsection{\texorpdfstring{register\_methods()}{register\_methods()}}
 {\footnotesize\ttfamily def project.\+esn.\+utils.\+register\+\_\+methods (\begin{DoxyParamCaption}\item[{}]{kwargs }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a4bdc1842cb24290b8c560d5f52231d58}\label{namespaceproject_1_1esn_1_1utils_a4bdc1842cb24290b8c560d5f52231d58}} 
+\begin{DoxyVerb}Register all the methods in the dictionary\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_a4bdc1842cb24290b8c560d5f52231d58}\label{namespaceproject_1_1esn_1_1utils_a4bdc1842cb24290b8c560d5f52231d58}} 
 \index{project.esn.utils@{project.esn.utils}!signal\_hadler@{signal\_hadler}}
 \index{signal\_hadler@{signal\_hadler}!project.esn.utils@{project.esn.utils}}
 \doxysubsubsection{\texorpdfstring{signal\_hadler()}{signal\_hadler()}}
 {\footnotesize\ttfamily def project.\+esn.\+utils.\+signal\+\_\+hadler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_ae61b6c8227364fe24569a02a95442f31}\label{namespaceproject_1_1esn_1_1utils_ae61b6c8227364fe24569a02a95442f31}} 
+\begin{DoxyVerb}Simple handler which put asleep the process for the specified time
+in the std_in\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_ae61b6c8227364fe24569a02a95442f31}\label{namespaceproject_1_1esn_1_1utils_ae61b6c8227364fe24569a02a95442f31}} 
 \index{project.esn.utils@{project.esn.utils}!validate@{validate}}
 \index{validate@{validate}!project.esn.utils@{project.esn.utils}}
 \doxysubsubsection{\texorpdfstring{validate()}{validate()}}
 {\footnotesize\ttfamily def project.\+esn.\+utils.\+validate (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{\+\_\+class }\end{DoxyParamCaption})}
 
-
+\begin{DoxyVerb}Simple validate function which validate all the value against a
+function or a type which is specified as a type annotation\end{DoxyVerb}
+ 
 
 \doxysubsection{Variable Documentation}
 \mbox{\Hypertarget{namespaceproject_1_1esn_1_1utils_ac2e3c3f2b6b538d7d97622db3c33893b}\label{namespaceproject_1_1esn_1_1utils_ac2e3c3f2b6b538d7d97622db3c33893b}} 

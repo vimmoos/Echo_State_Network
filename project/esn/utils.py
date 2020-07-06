@@ -2,7 +2,6 @@ import sys
 import time
 from dataclasses import dataclass
 from functools import reduce, wraps
-
 import numpy as np
 
 comp = lambda *fs: reduce(
@@ -15,6 +14,10 @@ Comp = lambda fun: lambda inner_fun: comp(fun, inner_fun)
 
 
 def factories(*args):
+    """Decorator which call the constructur after the specified methods
+are called
+
+    """
     def decorator(_class):
         for method in args:
             setattr(_class, method, comp(_class, getattr(_class, method)))
@@ -24,6 +27,10 @@ def factories(*args):
 
 
 def validate(self, _class):
+    """Simple validate function which validate all the value against a
+function or a type which is specified as a type annotation
+
+    """
     for fname, fdef in _class.__dataclass_fields__.items():
         fval = getattr(self, fname)
         if callable(fdef.type):
@@ -42,6 +49,11 @@ def validate(self, _class):
 
 
 def mydataclass(check=False, **kwargs):
+    """Enrich the standard dataclass with the check keyword which when
+setted to True validate each field value against the corresponding
+type annotation
+
+    """
     def decorator(_class):
         if check:
             old_post_init = _class.__post_init__ if hasattr(
@@ -55,6 +67,9 @@ def mydataclass(check=False, **kwargs):
 
 
 def register_methods(kwargs):
+    """Register all the methods in the dictionary
+
+    """
     def decorator(_class):
         for k, v in kwargs.items():
             setattr(_class, k, v)
@@ -64,6 +79,9 @@ def register_methods(kwargs):
 
 
 def force_2dim(np_arr: np.array):
+    """Force 2 dimension on a numpy array
+
+    """
     if np_arr is None: return
     try:
         np_arr.shape[1]
@@ -76,6 +94,11 @@ force_2dim_all = lambda *args: [force_2dim(x) for x in args]
 
 
 def pre_proc_args(kwargs):
+    """For each key in the dict (where the keys are the parameter that u
+want to pre_process) apply the value of that keys and then pass the
+output of the application to the specified paramater
+
+    """
     def decorator(fun):
         f_args = fun.__code__.co_varnames
         kw_index = {f_args.index(k): v for k, v in kwargs.items()}
@@ -93,6 +116,10 @@ def pre_proc_args(kwargs):
 
 
 def signal_hadler():
+    """Simple handler which put asleep the process for the specified time
+in the std_in
+
+    """
     count = 0
 
     def signal_hadler(sig, frame):
@@ -107,12 +134,3 @@ def signal_hadler():
         count = 0
 
     return signal_hadler
-
-
-''' TODO '''
-
-
-def composable(fun):
-    setattr(
-        fun, "compose", lambda cl, : lambda inner: lambda *args, **kwargs: cl(
-            inner, fun(), *args, **kwargs))

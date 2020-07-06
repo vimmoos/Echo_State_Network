@@ -28,11 +28,9 @@ var hierarchy =
       [ "project.fitter.afilter.DemoFitter", "classproject_1_1fitter_1_1afilter_1_1DemoFitter.html", null ]
     ] ],
     [ "core.Landscape", "classcore_1_1Landscape.html", null ],
-    [ "project.fitter.PSO.Landscape", "classproject_1_1fitter_1_1PSO_1_1Landscape.html", null ],
     [ "metrics.Metric", "classmetrics_1_1Metric.html", null ],
     [ "project.music_gen.data_types.Note", "classproject_1_1music__gen_1_1data__types_1_1Note.html", null ],
     [ "core.Particle", "classcore_1_1Particle.html", null ],
-    [ "project.fitter.PSO.Particle", "classproject_1_1fitter_1_1PSO_1_1Particle.html", null ],
     [ "expander.Pickler", "classexpander_1_1Pickler.html", null ],
     [ "project.esn.core.Run", "classproject_1_1esn_1_1core_1_1Run.html", null ],
     [ "project.esn.runner.Runner", "classproject_1_1esn_1_1runner_1_1Runner.html", null ],

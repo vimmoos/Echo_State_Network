@@ -14,6 +14,6 @@ var dir_bee328fa5c80826299f3bcb7eb5c9eca =
     ] ],
     [ "launcher.py", "launcher_8py.html", "launcher_8py" ],
     [ "logger.py", "logger_8py.html", "logger_8py" ],
-    [ "PSO.py", "PSO_8py.html", "PSO_8py" ],
+    [ "PSO.py", "PSO_8py.html", null ],
     [ "tasks.py", "tasks_8py.html", "tasks_8py" ]
 ];

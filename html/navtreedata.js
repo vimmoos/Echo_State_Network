@@ -52,8 +52,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "PSO_2core_8py.html",
-"expander_8py.html#a00a36f4b2471928e5036b9c4dd69e664",
-"parse__midi_2matrix_2utils_8py.html#a5a53e1c8ce8ae240652c1d15799dad86"
+"metrics_8py.html#a027493bb2c6844ee7ea316c43bc698b4",
+"pre__post__proc_8py.html#aa57fc538afddf0f55c3642f63748f970"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
