@@ -20,12 +20,6 @@ import project.stats.metrics as met
 import project.test.music_test as tmusic
 
 
-def add_net_params(**kwargs) -> dict:
-    for k, v in kwargs.items():
-        c.esn_gen[k] = v
-    return c.esn_gen
-
-
 def bind_enum_idx(idx: float, e: Enum) -> int:
     return int(idx) if int(idx) < len(list(e)) else int(idx) - 1
 
@@ -52,13 +46,14 @@ def res_name(conf: dict) -> list:
 
 def run_netwok(out_transf: transf.Transformer = transf.Transformers.sig_prob,
                **PSO_kwargs) -> tuple:
-    # pprint(PSO_kwargs)
     PSO_kwargs = map_params(**PSO_kwargs)
-    # pprint(add_net_params(**PSO_kwargs))
     net_param = {k: v for k, v in PSO_kwargs.items() if k != "reservoir"}
     load_param = c.path + PSO_kwargs["reservoir"].value
-    run_dict = core.Run(**add_net_params(**net_param)).load(
-        load_param, r.randint(0, 9)).__enter__()()
+    # pprint(add_net_params(**net_param))
+    run_dict = core.Run(**{
+        **c.esn_gen,
+        **net_param
+    }).load(load_param, r.randint(0, 9)).__enter__()()
     with open(c.path_esn + "_".join(res_name(run_dict)), "wb") as f:
         pickle.dump(run_dict, f)
     pprint(f"dumped conf : {PSO_kwargs}")
@@ -178,7 +173,7 @@ class Landscape:
     it: int = 0
     particles: np.ndarray = None
     gbest_position: np.ndarray = None
-    gbest_value: tuple = None
+    gbest_value: list = None
     _pso_params: dict = None
     cost_func: met.Metric = met.Metrics.np_cor
     termination_func: callable = None
@@ -192,7 +187,7 @@ class Landscape:
         self.particles = np.array(
             [Particle(self._dims) for _ in range(self.n_particles)])
         self.gbest_position = distribute_dimensions(self._dims)
-        self.gbest_value = (-np.inf, 0)
+        self.gbest_value = [-np.inf, 0]
         self.termination_func = check_default(self.termination_func,
                                               lambda: self.it >= self.max_iter,
                                               False)
@@ -229,10 +224,8 @@ class Landscape:
     def update_gbest_candidate(self, part: Particle):
         if part.pbest_value <= self.gbest_value[0]:
             return
-        self.gbest_value = (part.pbest_value, 0)
-        # print(f"old gbest pos -> {self.gbest_position}")
+        self.gbest_value = [part.pbest_value, 0]
         self.gbest_position = part.pbest_position
-        # print(f"Updated gbest position -> {self.gbest_position}")
 
     def update_best_candidate(self, part: Particle):
         if self.update_pbest_candidate(part):
@@ -240,7 +233,6 @@ class Landscape:
 
     def run(self, *args, **kwargs):
         while not self.termination_func(*args, **kwargs):
-            # print(f"iter {it}")
             for part in self.particles:
                 part.move(self.update_part_velocity(part))
                 self.update_best_candidate(part)
@@ -251,8 +243,11 @@ class Landscape:
         self.it += 1
         self.gbest_value[1] += 1
         if self.gbest_value[1] >= self.restart_limit:
-            print("random restart!")
+            last_gbest_val = self.gbest_value[0]
+            last_gbest_pos = self.gbest_position
             self.__post_init__()
+            self.gbest_value[0] = last_gbest_val
+            self.gbest_position = last_gbest_pos
 
     # NOTE args and kwargs are given only for the custom termination function,
     # in reality they should already be saved at initialization (when the term
