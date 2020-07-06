@@ -6,24 +6,53 @@ from project.esn import utils as u
 
 
 def apply_leak(state, update, leaking_rate=0.3):
+    """Simple leaking formula which returns the new state from the next
+state and the previous one scaling both by the leaking rate and
+1-leaking rate
+
+    """
     return (update * leaking_rate) + (state * (1 - leaking_rate))
 
 
 @u.mydataclass(repr=True, init=True, check=False)
 class Updator():
+    """Updator data class This class manage the update process and all
+    the weights involved in it It also store the last state in other
+    to use it in the next update
+
+    """
     _next: callable
+    """ The update function used to calculate the next state """
     weights: m.Esn_matrixs
+    """The class which wraps all the matrixs involved in the ESN"""
     state: np.ndarray
+    """The current state of the network (it will be updated at each
+iteration)"""
     squeeze_f: callable = np.tanh
+    """The squeezing function applied to the result of the the _next
+function
+
+    """
     squeeze_o : callable = lambda x : x
+    """The squeezing function applied to the result of the output
+function"""
     leaking_rate: float = 0.3
+    """The leaking rate used to calculate the _next state"""
     noise: float = 0.0
+    """The noise which is added to the result of the _next function"""
 
     def __post_init__(self):
+        """Enrich the specified _next function. It adds the noise and squeeze
+the final output after calling the _next function
+
+        """
         self._next = u.comp(self.squeeze_f, lambda x: x + self.noise,
                             self._next)
 
     def __call__(self, other):
+        """
+
+        """
         next_state = self._next(self.weights, self.state, other)
         self.state = apply_leak(self.state, next_state, self.leaking_rate)
         return self.state
@@ -37,9 +66,6 @@ class Updator():
             self.state,
             other,
             self.squeeze_o
-            # my_sigm
-            # sigmoid
-            # self.squeeze_f
         )
 
 

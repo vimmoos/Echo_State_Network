@@ -1,6 +1,5 @@
 var esn_2utils_8py =
 [
-    [ "composable", "esn_2utils_8py.html#a9a9d92d55b8b04d12c1c7b8241d16456", null ],
     [ "factories", "esn_2utils_8py.html#a2b285c7b14a8771e6913b7ce8877c21d", null ],
     [ "force_2dim", "esn_2utils_8py.html#a9a7bf32c45aacb7567b7031489a22675", null ],
     [ "mydataclass", "esn_2utils_8py.html#a595a53d1ca83d0becd442e1380bab533", null ],
