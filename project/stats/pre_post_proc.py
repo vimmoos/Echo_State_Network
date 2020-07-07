@@ -20,21 +20,24 @@ import project.stats.metrics as met
 
 path_resources = "/home/vimmoos/NN/resources/"
 
-path_max = path_resources + "esn/final_final/"
+path_max = path_resources + "esn/pso/"
 
-path_csv = path_resources + "esn_csv/final_final/"
+path_csv = path_resources + "esn_csv/pso/"
 
 path_mar = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
 
 path_s = "/home/sneha-lodha/Desktop/esn/"
 
-experiment = lambda path: [
+experiment = lambda path: (
     join(path, f) for f in listdir(path) if isfile(join(path, f))
-]
+)
 
-get_data = lambda paths: (p.load(open(f, "rb")) for f in paths)
+def get_data (paths):
+    for f in paths:
+        yield [p.load(open(f, "rb"))]
 
-get_experiment = u.comp(get_data, experiment)
+
+get_experiment = u.comp(get_data,experiment)
 
 squeeze_fs = [t._identity, t.my_sigm, np.tanh, t.sigmoid]
 
