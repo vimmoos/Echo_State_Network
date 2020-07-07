@@ -57,7 +57,7 @@ class Abs_note(IndexName):
 
 @ut.mydataclass(init=True, repr=True)
 class Note():
-    """Note class, a note is represented as follows : It as a Tempo, a
+    """Note class, a note is represented as follows : It has a Tempo, a
     Quarters (in which the note is played), a value which is the
     intensity of the note, finally the abstract note
 

@@ -62,11 +62,13 @@ class Esn_matrixs():
     W_out: np.ndarray = np.zeros((0, 0))
     spectral_radius: float = 1.25
     density: float = 1.
+    scaled: bool = False
 
     def __post_init__(self):
-        scale_spectral_smatrix(self.W_res,
-                               spectral_radius=self.spectral_radius,
-                               in_place=True)
+        if not self.scaled :
+            scale_spectral_smatrix(self.W_res,
+                                   spectral_radius=self.spectral_radius,
+                                   in_place=True)
 
 
 esn_matrixs = lambda W_in, *args, **kwargs: Esn_matrixs(

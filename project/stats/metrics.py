@@ -35,6 +35,7 @@ def add_metric(func):
     name = func.__name__
 
     extend_enum(Metrics, name, inner)
+    return func
 
 
 @add_metric
@@ -101,3 +102,7 @@ def np_cor(output, teacher):
         np.correlate(output[:, dim], teacher[:, dim]).tolist()
         for dim in range(output.shape[1])
     ]) / np.sqrt(sum(output**2) * sum(teacher**2)))
+
+@add_metric
+def mse_cor(output,teacher):
+    return np_cor(output,teacher) -  mse(output,teacher)

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-import utils as u
+import project.PSO.utils as u
 
 
 # NOTE need checking when default args are passed during init to enforce

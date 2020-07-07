@@ -120,7 +120,8 @@ network easily
                                                     self.in_out),
                                  dic["W_res"],
                                  spectral_radius=self.spectral_radius,
-                                 density=self.density)
+                                 density=self.density,
+                                 scaled=True)
 
         setattr(self, "matrixs_gen", lambda: matrixs_gen(self))
         return self

@@ -58,7 +58,7 @@ new.zres <- zres %>%
 ## NOTE: only possible if all metrics have the same gradient
 ## (e.g. bigger m0 means good,bigger m1 means good ..... , bigger mN
 ## means good)
-zcomp.n <- new.zres %>%
+zcomp <- new.zres %>%
     group_by(reservoir,leaking_rate,spectral_radius,transformer,
              t_param,t_squeeze,squeeze_o,post_trans,post_param,post_squeeze,metric) %>%
     summarise(z.comp = mean(z.val))
@@ -109,14 +109,14 @@ matrix_zcomp_plot <- ggplot(best_zcomp,aes(spectral_radius,z.comp,color=squeeze_
     geom_smooth()+
     facet_grid(squeeze_o ~ reservoir)
 
-trans_cor_plot <- ggplot(res_cor,aes(t_param,metric_val,color=squeeze_o,shape=as.factor(spectral_radius)))+
+trans_cor_plot <- ggplot(gna,aes(t_param,metric_val,color=squeeze_o,shape=as.factor(spectral_radius)))+
     geom_point()+
     facet_grid( transformer ~ t_squeeze)
 
 trans_cor_plot
 
 gna <- res %>%
-    filter(metric == "nmse")
+    filter(metric == "mse")
 
 
 trans_zscores_plot <- ggplot(new.zres,aes(t_param,metric_val,color=squeeze_o,shape=t_squeeze))+

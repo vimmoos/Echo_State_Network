@@ -12,7 +12,7 @@ default_filter = ".*Note_on_c.*"
 example_proc_dict = {
     "column": default_columns,
     "midi": "~/NN/resources/csv/34time13.csv",
-    "n_note": 6,
+    "n_note": 9,
     "body_drop": default_drop,
     "filter_event": default_filter,
     "agg_func": u.agg_to_literal_arr,

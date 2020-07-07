@@ -20,9 +20,9 @@ import project.stats.metrics as met
 
 path_resources = "/home/vimmoos/NN/resources/"
 
-path_max = path_resources + "esn/pso/"
+path_max = path_resources + "esn/final_pso/"
 
-path_csv = path_resources + "esn_csv/pso/"
+path_csv = path_resources + "esn_csv/final_pso/"
 
 path_mar = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
 

@@ -146,7 +146,9 @@ steward = (ste_m1 | ste_m2 | ste_m3 | ste_m4) * 10
 
 all = red_hot | reggae | steward
 
-p(all.len())
+new_all = all | classic | std_groove * 2
+
+p(new_all.len())
 
 test_patterns = [ttest, add, add1, red_hot, reggae, steward]
 

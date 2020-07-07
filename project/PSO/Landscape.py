@@ -34,7 +34,7 @@ class Landscape:
     gbest_position: np.ndarray = None
     gbest_value: list = None
     _pso_params: dict = None
-    cost_func: met.Metric = met.Metrics.np_cor
+    cost_func: met.Metric = met.Metrics.mse_cor
     termination_func: callable = None
     eval_network_len: int = 500
 
@@ -92,6 +92,7 @@ class Landscape:
 
     def run(self, *args, **kwargs):
         while not self.termination_func(*args, **kwargs):
+            print(self.it)
             for part in self.particles:
                 part.move(self.update_part_velocity(part))
                 self.update_best_candidate(part)
