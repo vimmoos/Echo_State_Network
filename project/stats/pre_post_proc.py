@@ -26,13 +26,14 @@ path_csv = path_resources + "esn_csv/final_final/"
 
 path_mar = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
 
-path_s = "/home/sneha-lodha/Desktop/esn/"
+path_s = "/home/sneha-lodha/Desktop/Year2Block2B/NeuralNetworks/pso/"
+path_sneha = "/home/sneha-lodha/Desktop/Year2Block2B/NeuralNetworks/pso_extract/"
 
 experiment = lambda path: [
     join(path, f) for f in listdir(path) if isfile(join(path, f))
 ]
 
-get_data = lambda paths: (p.load(open(f, "rb")) for f in paths)
+get_data = lambda paths: ([p.load(open(f, "rb"))] for f in paths)
 
 get_experiment = u.comp(get_data, experiment)
 
@@ -186,9 +187,12 @@ def write_output(raw_data, opath, data_len):
 
 
 def partial_fun(enum):
-    return pre_post_proc(enum, path_csv, 6000)
+    return pre_post_proc(enum, path_sneha, 6000)
 
 
 def cpre_post_proc(raw_data, size_group=4, workers=20):
     multiproc(partial_fun, enumerate(partition_data(raw_data, size_group)),
               workers)
+
+if __name__ == "__main__":
+    cpre_post_proc(get_experiment(path_s), workers = 8)

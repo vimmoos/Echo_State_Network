@@ -26,6 +26,10 @@ class Note_MIDI(Enum):
     FLOOR_TOM = 43
     RIDE = 51
 
+tempo_to_offset = {'Tempo.QUARTER': (lambda m_offset: m_offset),
+                    'Tempo.EIGHTH': (lambda m_offset: m_offset // 2), 
+                    'Tempo.SIXTEENTH': (lambda m_offset: m_offset // 4),
+                    'Tempo.THIRTY_SECOND': (lambda m_offset: m_offset // 8)}
 
 enum_values = lambda t: [ent.value for ent in t]
 
@@ -99,9 +103,9 @@ class CSV_Out:
 
 
 # Other parameters of the dataclass are not passed atm...
-def net2midi(net_out: np.ndarray, filename: str, bpm: int = 120, listen=False):
+def net2midi(net_out: np.ndarray, tempo: dt.Tempo, filename: str, offset: int = 480, listen=False):
     fname_midi = filename + ".midi"
-    csv_out = CSV_Out(net_out, filename, bpm)
+    csv_out = CSV_Out(net_out, filename, tempo_to_offset[str(tempo)](offset))
     fname_csv = csv_out()
     sp.run(["csvmidi", fname_csv, fname_midi])
     if listen:
@@ -128,4 +132,6 @@ def net2midi(net_out: np.ndarray, filename: str, bpm: int = 120, listen=False):
 # }
 
 if __name__ == "__main__":
-    net2midi(mt.new, "new", bpm= 170)
+    tempo = dt.Tempo.SIXTEENTH
+    print(str(tempo))
+    print(tempo_to_offset[str(tempo)](50))    
