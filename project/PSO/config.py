@@ -14,15 +14,15 @@ path_esn = "/home/vimmoos/NN/resources/esn/pso/"
 
 class Res(e.Enum):
     res_0 = "1.1_0.04_2000"
-    res_1 = "0.9_0.04_5000"
+    # res_1 = "0.9_0.04_5000"
     res_2 = "0.5_0.04_2000"
-    res_3 = "0.5_0.04_5000"
+    # res_3 = "0.5_0.04_5000"
     res_4 = "0.7_0.04_2000"
-    res_5 = "0.7_0.04_5000"
+    # res_5 = "0.7_0.04_5000"
     res_6 = "0.9_0.04_2000"
-    res_7 = "1.1_0.04_5000"
+    # res_7 = "1.1_0.04_5000"
     res_8 = "1.3_0.04_2000"
-    res_9 = "1.3_0.04_5000"
+    # res_9 = "1.3_0.04_5000"
 
 
 test_dimensions = {
@@ -33,7 +33,6 @@ test_dimensions = {
     "leaking_rate": (0.05, 1),
     "noise": (0.05, 1),
     "reservoir": Res,
-    # "spectral_radius":
 }
 
 esn_gen = {

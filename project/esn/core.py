@@ -13,23 +13,35 @@ from project.music_gen.data_types import Tempo
 
 @ut.mydataclass(init=True, repr=True, check=False, frozen=True)
 class ESN:
+    """Echo State Network class, this wraps a runner,a trainer and a
+    transformer it performs both phase of the network
+
+    """
     _runner: r.Runner
     trainer: t.Trainer
     transformer: tr.Transformer
     init_len: int = 100
 
     def __lshift__(self, other):
+        """ Training mode
+        """
         (input, desired) = other
         ex_state = r.run_extended(self._runner, self.init_len, (input, None))
         self._runner.updator.weights.W_out = self.trainer((ex_state, desired))
         return ex_state
 
     def __rshift__(self, other):
+        """Generation mode
+
+        """
         return r.run_gen_mode(self._runner, self.transformer, other)
 
 
 @ut.mydataclass(init=True, repr=True, check=False, frozen=True)
 class Data:
+    """Wraps the data used during the training and the testing
+
+    """
     data: np.ndarray
     tempo: Tempo
     init_len: int
@@ -50,6 +62,9 @@ class Data:
 
 
 def _get_val(x):
+    """Helper function for getting the name of a variable
+
+    """
     if isinstance(x, tr.Transformers):
         return x.name
     return x.__name__ if callable(x) else x
@@ -57,7 +72,8 @@ def _get_val(x):
 
 @ut.mydataclass(init=True, repr=True, check=False)
 class Run:
-    """patching alll stauff
+    """Exposed class, this simply patch everything, allowing to run the
+network easily
 
     """
     data: Data

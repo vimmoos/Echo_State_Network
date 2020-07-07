@@ -45,7 +45,7 @@ def res_name(conf: dict) -> list:
 
 
 def run_netwok(out_transf: transf.Transformer = transf.Transformers.sig_prob,
-               **PSO_kwargs) -> tuple:
+                           **PSO_kwargs) -> tuple:
     PSO_kwargs = map_params(**PSO_kwargs)
     net_param = {k: v for k, v in PSO_kwargs.items() if k != "reservoir"}
     load_param = c.path + PSO_kwargs["reservoir"].value
@@ -54,6 +54,7 @@ def run_netwok(out_transf: transf.Transformer = transf.Transformers.sig_prob,
         **c.esn_gen,
         **net_param
     }).load(load_param, r.randint(0, 9)).__enter__()()
+
     with open(c.path_esn + "_".join(res_name(run_dict)), "wb") as f:
         pickle.dump(run_dict, f)
     pprint(f"dumped conf : {PSO_kwargs}")
@@ -240,6 +241,7 @@ class Landscape:
         return self.state
 
     def random_restart(self):
+        pprint(self.it)
         self.it += 1
         self.gbest_value[1] += 1
         if self.gbest_value[1] >= self.restart_limit:

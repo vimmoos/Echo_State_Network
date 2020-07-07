@@ -6,6 +6,9 @@ import pickle as pic
 
 
 def generate_smatrix(m, n, density=1, bound=0.5, **kwargs):
+    """generate a sparse matrix in the CSR format (Compressed Sparse Row)
+
+    """
     smatrix = sparse.random(m,
                             n,
                             density=density,
@@ -15,12 +18,17 @@ def generate_smatrix(m, n, density=1, bound=0.5, **kwargs):
 
 
 def generate_rmatrix(m, n, bound=0.5, **kwargs):
+    """ generate a random dense matrix
+    """
     return np.random.rand(m, n) - bound
 
 
 def scale_spectral_smatrix(matrix: sparse.issparse,
                                    spectral_radius=1.25,
                                    in_place=False):
+    """calculate the spectral radius and scale the matrix
+
+    """
     eigs = None
     try:
         eigs = sparse.linalg.eigs(matrix)[0]
@@ -38,11 +46,16 @@ from pprint import pprint
 
 @pre_proc_args({"inputs": force_2dim, "states": force_2dim})
 def build_extended_states(inputs: np.ndarray, states: np.ndarray, init_len=0):
+    """ create the extend state given an input array and a state array
+    """
     return np.vstack((inputs.T[:, init_len:], states.T[:, init_len:])).T
 
 
 @mydataclass(init=True, repr=True, check=False)
 class Esn_matrixs():
+    """Wraps all the matrixs needed by the network
+
+    """
     W_in: np.ndarray
     W_res: sparse.issparse
     W_feb: np.ndarray = np.zeros((0, 0))
@@ -61,6 +74,9 @@ esn_matrixs = lambda W_in, *args, **kwargs: Esn_matrixs(
     kwargs)
 
 def load_smatrix(path, idx):
+    """used to load a matrix from a pickled file
+
+    """
     with open(path, "rb") as f:
         dic = pic.load(f)
         return {
