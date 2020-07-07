@@ -15,18 +15,16 @@ from project.PSO.Particle import Particle
 
 
 def eval_config(slice_len: int, **PSO_kwargs) -> float:
-    """"""
     met = PSO_kwargs.pop("metric")
     raw_out, out, target = u.run_network(**PSO_kwargs)
-    return met.value(
-        (out[:slice_len] if met.name != "teacher_loss_nd" else raw_out),
-        target[:slice_len])()
+    return met.value((out[:slice_len] if met.name != "teacher_loss_nd" else
+                      raw_out)[:slice_len], target[:slice_len])()
 
 
 @dataclass
 class Landscape:
     _dims: dict
-    n_particles: int = 20
+    n_particles: int = 2
     max_iter: int = 100
     restart_limit: int = 3
     it: int = 0
@@ -51,18 +49,18 @@ class Landscape:
         self.termination_func = u.check_default(
             self.termination_func, lambda: self.it >= self.max_iter, False)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self.state)
 
     def update_vel_component(self,
                              part: Particle,
                              comp: str,
-                             global_=False) -> float:
+                             global_=False) -> np.ndarray:
         return (self._pso_params[comp] * np.random.uniform() * (
             (part.pbest_position if not global_ else self.gbest_position) -
             part.position))
 
-    def update_part_velocity(self, part: Particle):
+    def update_part_velocity(self, part: Particle) -> np.ndarray:
         return (self.W * part.velocity +
                 self.update_vel_component(part, "phi_cog") +
                 self.update_vel_component(part, "phi_soc", global_=True))
@@ -96,7 +94,7 @@ class Landscape:
                 part.move(self.update_part_velocity(part))
                 self.update_best_candidate(part)
             self.random_restart()
-        return self.state
+        return self
 
     def random_restart(self):
         self.it += 1
@@ -136,13 +134,13 @@ class Landscape:
         }
 
     @property
-    def W(self):
+    def W(self) -> float:
         return self._pso_params.get("W", None)
 
     @property
-    def phi_cog(self):
+    def phi_cog(self) -> float:
         return self._pso_params.get("phi_cog", None)
 
     @property
-    def phi_soc(self):
+    def phi_soc(self) -> float:
         return self._pso_params.get("phi_soc", None)

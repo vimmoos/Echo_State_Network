@@ -57,7 +57,7 @@ def _get_val(x):
 
 @ut.mydataclass(init=True, repr=True, check=False)
 class Run:
-    """patching alll stauff
+    """patching alll stuff
 
     """
     data: Data

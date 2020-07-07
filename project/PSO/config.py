@@ -31,8 +31,8 @@ test_dimensions = {
     "t_squeeze": transf.Squeezers,
     "t_param": (0.05, 1),
     "leaking_rate": (0.05, 1),
-    "noise": (0.05, 1),
-    "reservoir": Res,
+    "noise": (0.05, 1)
+    # "reservoir": Res,
     # "spectral_radius":
 }
 
