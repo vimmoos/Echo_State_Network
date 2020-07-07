@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>project.PSO.utils API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>project.PSO.utils</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import pickle
+from enum import Enum
+from pprint import pprint
+from random import randint
+
+import numpy as np
+
+import project.esn.core as core
+import project.esn.transformer as transf
+import project.PSO.config as c
+import project.esn.core as core
+import random as r
+from pprint import pprint
+
+
+def bind_enum_idx(idx: float, e: Enum) -&gt; int:
+    return int(idx) if int(idx) &lt; len(list(e)) else int(idx) - 1
+
+
+def map_params(**PSO_kwargs) -&gt; dict:
+    for k, v in PSO_kwargs.items():
+        if k in [&#34;t_squeeze&#34;, &#34;squeeze_o&#34;]:
+            PSO_kwargs[k] = list(transf.Squeezers)[bind_enum_idx(
+                v, transf.Squeezers)].value
+        if k == &#34;transformer&#34;:
+            PSO_kwargs[k] = list(transf.Transformers)[bind_enum_idx(
+                v, transf.Transformers)]
+        if k == &#34;reservoir&#34;:
+            PSO_kwargs[k] = list(c.Res)[bind_enum_idx(v, c.Res)]
+    return PSO_kwargs
+
+
+def res_name(conf: dict) -&gt; list:
+    return [
+        str(v) for k, v in conf.items()
+        if k not in [&#34;desired&#34;, &#34;output&#34;, &#34;input&#34;]
+    ]
+
+
+def run_net_load_matrix(load_param: c.Res, **kwargs) -&gt; dict:
+    run_dict = core.Run(**{
+        **c.esn_gen,
+        **kwargs
+    }).load((c.path + load_param.value), randint(0, 9)).__enter__()()
+    with open(c.path_esn + &#34;_&#34;.join(res_name(run_dict)), &#34;wb&#34;) as f:
+        pickle.dump(run_dict, f)
+    return run_dict
+
+
+def run_network(out_transf: transf.Transformer = transf.Transformers.sig_prob,
+                **PSO_kwargs) -&gt; tuple:
+    PSO_kwargs = map_params(**PSO_kwargs)
+    load_param = PSO_kwargs.pop(&#34;reservoir&#34;) if PSO_kwargs.get(
+        &#34;reservoir&#34;, None) else None
+    run_dict = (run_net_load_matrix(load_param, **PSO_kwargs)
+                if load_param else core.Run(**{
+                    **c.esn_gen,
+                    **PSO_kwargs
+                }).__enter__()())
+    pprint(f&#34;dumped conf : {PSO_kwargs}&#34;)
+    return ((raw_out := run_dict[&#34;output&#34;]),
+            out_transf.value(0.8,
+                             transf._identity)(raw_out), run_dict[&#34;desired&#34;])
+
+
+check_default = lambda obj, default, call, *args, **kwargs: (
+    obj if obj is not None else
+    (default(*args, **kwargs)
+     if hasattr(default, &#34;__call__&#34;) and call else default))
+
+
+def enum_rand_idx(e: Enum, velocity: bool) -&gt; float:
+    return np.random.uniform(0 if not velocity else -len(list(e)),
+                             len(list(e)))
+
+
+def check_transformer(dims: dict):
+    if &#34;transformer&#34; in (keys := dims.keys()):
+        if &#34;t_param&#34; not in keys:
+            dims[&#34;t_param&#34;] = (0.05, 1)
+        if &#34;t_squeeze&#34; not in keys:
+            dims[&#34;t_squeeze&#34;] = transf.Squeezers
+
+
+def distribute_dimensions(dims: dict, velocity: bool = False) -&gt; float:
+    check_transformer(dims)
+    ret = []
+    for k, v in dims.items():
+        if k in [&#34;t_squeeze&#34;, &#34;squeeze_o&#34;] and v.__name__ == &#34;Squeezers&#34;:
+            ret.append(enum_rand_idx(transf.Squeezers, velocity))
+        elif k == &#34;transformer&#34; and v.__name__ == &#34;Transformers&#34;:
+            ret.append(enum_rand_idx(transf.Transformers, velocity))
+        elif k == &#34;reservoir&#34; and v.__name__ == &#34;Res&#34;:
+            ret.append(enum_rand_idx(c.Res, velocity))
+        elif isinstance(v, tuple):
+            up, low = v
+            ret.append(
+                np.random.uniform(up, low) if not velocity else np.random.
+                uniform(-np.abs(up - low), np.abs(up - low)))
+    return np.array(ret)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="project.PSO.utils.bind_enum_idx"><code class="name flex">
+<span>def <span class="ident">bind_enum_idx</span></span>(<span>idx: float, e: enum.Enum) ‑> int</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bind_enum_idx(idx: float, e: Enum) -&gt; int:
+    return int(idx) if int(idx) &lt; len(list(e)) else int(idx) - 1</code></pre>
+</details>
+</dd>
+<dt id="project.PSO.utils.check_default"><code class="name flex">
+<span>def <span class="ident">check_default</span></span>(<span>obj, default, call, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">check_default = lambda obj, default, call, *args, **kwargs: (
+    obj if obj is not None else
+    (default(*args, **kwargs)
+     if hasattr(default, &#34;__call__&#34;) and call else default))</code></pre>
+</details>
+</dd>
+<dt id="project.PSO.utils.check_transformer"><code class="name flex">
+<span>def <span class="ident">check_transformer</span></span>(<span>dims: dict)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def check_transformer(dims: dict):
+    if &#34;transformer&#34; in (keys := dims.keys()):
+        if &#34;t_param&#34; not in keys:
+            dims[&#34;t_param&#34;] = (0.05, 1)
+        if &#34;t_squeeze&#34; not in keys:
+            dims[&#34;t_squeeze&#34;] = transf.Squeezers</code></pre>
+</details>
+</dd>
+<dt id="project.PSO.utils.distribute_dimensions"><code class="name flex">
+<span>def <span class="ident">distribute_dimensions</span></span>(<span>dims: dict, velocity: bool = False) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def distribute_dimensions(dims: dict, velocity: bool = False) -&gt; float:
+    check_transformer(dims)
+    ret = []
+    for k, v in dims.items():
+        if k in [&#34;t_squeeze&#34;, &#34;squeeze_o&#34;] and v.__name__ == &#34;Squeezers&#34;:
+            ret.append(enum_rand_idx(transf.Squeezers, velocity))
+        elif k == &#34;transformer&#34; and v.__name__ == &#34;Transformers&#34;:
+            ret.append(enum_rand_idx(transf.Transformers, velocity))
+        elif k == &#34;reservoir&#34; and v.__name__ == &#34;Res&#34;:
+            ret.append(enum_rand_idx(c.Res, velocity))
+        elif isinstance(v, tuple):
+            up, low = v
+            ret.append(
+                np.random.uniform(up, low) if not velocity else np.random.
+                uniform(-np.abs(up - low), np.abs(up - low)))
+    return np.array(ret)</code></pre>
+</details>
+</dd>
+<dt id="project.PSO.utils.enum_rand_idx"><code class="name flex">
+<span>def <span class="ident">enum_rand_idx</span></span>(<span>e: enum.Enum, velocity: bool) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def enum_rand_idx(e: Enum, velocity: bool) -&gt; float:
+    return np.random.uniform(0 if not velocity else -len(list(e)),
+                             len(list(e)))</code></pre>
+</details>
+</dd>
+<dt id="project.PSO.utils.map_params"><code class="name flex">
+<span>def <span class="ident">map_params</span></span>(<span>**PSO_kwargs) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def map_params(**PSO_kwargs) -&gt; dict:
+    for k, v in PSO_kwargs.items():
+        if k in [&#34;t_squeeze&#34;, &#34;squeeze_o&#34;]:
+            PSO_kwargs[k] = list(transf.Squeezers)[bind_enum_idx(
+                v, transf.Squeezers)].value
+        if k == &#34;transformer&#34;:
+            PSO_kwargs[k] = list(transf.Transformers)[bind_enum_idx(
+                v, transf.Transformers)]
+        if k == &#34;reservoir&#34;:
+            PSO_kwargs[k] = list(c.Res)[bind_enum_idx(v, c.Res)]
+    return PSO_kwargs</code></pre>
+</details>
+</dd>
+<dt id="project.PSO.utils.res_name"><code class="name flex">
+<span>def <span class="ident">res_name</span></span>(<span>conf: dict) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def res_name(conf: dict) -&gt; list:
+    return [
+        str(v) for k, v in conf.items()
+        if k not in [&#34;desired&#34;, &#34;output&#34;, &#34;input&#34;]
+    ]</code></pre>
+</details>
+</dd>
+<dt id="project.PSO.utils.run_net_load_matrix"><code class="name flex">
+<span>def <span class="ident">run_net_load_matrix</span></span>(<span>load_param: <a title="project.PSO.config.Res" href="config.html#project.PSO.config.Res">Res</a>, **kwargs) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_net_load_matrix(load_param: c.Res, **kwargs) -&gt; dict:
+    run_dict = core.Run(**{
+        **c.esn_gen,
+        **kwargs
+    }).load((c.path + load_param.value), randint(0, 9)).__enter__()()
+    with open(c.path_esn + &#34;_&#34;.join(res_name(run_dict)), &#34;wb&#34;) as f:
+        pickle.dump(run_dict, f)
+    return run_dict</code></pre>
+</details>
+</dd>
+<dt id="project.PSO.utils.run_network"><code class="name flex">
+<span>def <span class="ident">run_network</span></span>(<span>out_transf: <a title="project.esn.transformer.Transformer" href="../esn/transformer.html#project.esn.transformer.Transformer">Transformer</a> = Transformers.sig_prob, **PSO_kwargs) ‑> tuple</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_network(out_transf: transf.Transformer = transf.Transformers.sig_prob,
+                **PSO_kwargs) -&gt; tuple:
+    PSO_kwargs = map_params(**PSO_kwargs)
+    load_param = PSO_kwargs.pop(&#34;reservoir&#34;) if PSO_kwargs.get(
+        &#34;reservoir&#34;, None) else None
+    run_dict = (run_net_load_matrix(load_param, **PSO_kwargs)
+                if load_param else core.Run(**{
+                    **c.esn_gen,
+                    **PSO_kwargs
+                }).__enter__()())
+    pprint(f&#34;dumped conf : {PSO_kwargs}&#34;)
+    return ((raw_out := run_dict[&#34;output&#34;]),
+            out_transf.value(0.8,
+                             transf._identity)(raw_out), run_dict[&#34;desired&#34;])</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="project.PSO" href="index.html">project.PSO</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="project.PSO.utils.bind_enum_idx" href="#project.PSO.utils.bind_enum_idx">bind_enum_idx</a></code></li>
+<li><code><a title="project.PSO.utils.check_default" href="#project.PSO.utils.check_default">check_default</a></code></li>
+<li><code><a title="project.PSO.utils.check_transformer" href="#project.PSO.utils.check_transformer">check_transformer</a></code></li>
+<li><code><a title="project.PSO.utils.distribute_dimensions" href="#project.PSO.utils.distribute_dimensions">distribute_dimensions</a></code></li>
+<li><code><a title="project.PSO.utils.enum_rand_idx" href="#project.PSO.utils.enum_rand_idx">enum_rand_idx</a></code></li>
+<li><code><a title="project.PSO.utils.map_params" href="#project.PSO.utils.map_params">map_params</a></code></li>
+<li><code><a title="project.PSO.utils.res_name" href="#project.PSO.utils.res_name">res_name</a></code></li>
+<li><code><a title="project.PSO.utils.run_net_load_matrix" href="#project.PSO.utils.run_net_load_matrix">run_net_load_matrix</a></code></li>
+<li><code><a title="project.PSO.utils.run_network" href="#project.PSO.utils.run_network">run_network</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>

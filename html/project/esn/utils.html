@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>project.esn.utils API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>project.esn.utils</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import sys
+import time
+from dataclasses import dataclass
+from functools import reduce, wraps
+import numpy as np
+
+comp = lambda *fs: reduce(
+    lambda f, g: lambda *args, **kwargs: f(g(*args, **kwargs)), fs)
+
+callable_attr = lambda cls, string: (hasattr(cls, string) and callable(
+    getattr(cls, string)))
+
+Comp = lambda fun: lambda inner_fun: comp(fun, inner_fun)
+
+
+def factories(*args):
+    &#34;&#34;&#34;Decorator which call the constructur after the specified methods
+are called
+
+    &#34;&#34;&#34;
+    def decorator(_class):
+        for method in args:
+            setattr(_class, method, comp(_class, getattr(_class, method)))
+        return _class
+
+    return decorator
+
+
+def validate(self, _class):
+    &#34;&#34;&#34;Simple validate function which validate all the value against a
+function or a type which is specified as a type annotation
+
+    &#34;&#34;&#34;
+    for fname, fdef in _class.__dataclass_fields__.items():
+        fval = getattr(self, fname)
+        if callable(fdef.type):
+            if fdef.type(fval):
+                continue
+
+            raise ValueError(
+                f&#34;The field {fname} failed to be validated with the function {fdef.type}&#34;
+            )
+
+        elif isinstance(fval, type(fdef.type)):
+            continue
+
+        raise ValueError(f&#34;The field {fname} should be of type {fdef.type}&#34;)
+    return True
+
+
+def mydataclass(check=False, **kwargs):
+    &#34;&#34;&#34;Enrich the standard dataclass with the check keyword which when
+setted to True validate each field value against the corresponding
+type annotation
+
+    &#34;&#34;&#34;
+    def decorator(_class):
+        if check:
+            old_post_init = _class.__post_init__ if hasattr(
+                _class, &#34;__post_init__&#34;) else lambda self: None
+            _class.__post_init__ = lambda self: validate(
+                self, _class) and old_post_init(self)
+
+        return dataclass(_class, **kwargs)
+
+    return decorator
+
+
+def register_methods(kwargs):
+    &#34;&#34;&#34;Register all the methods in the dictionary
+
+    &#34;&#34;&#34;
+    def decorator(_class):
+        for k, v in kwargs.items():
+            setattr(_class, k, v)
+        return _class
+
+    return decorator
+
+
+def force_2dim(np_arr: np.array):
+    &#34;&#34;&#34;Force 2 dimension on a numpy array
+
+    &#34;&#34;&#34;
+    if np_arr is None: return
+    try:
+        np_arr.shape[1]
+    except IndexError as e:
+        return np.reshape(np_arr, (-1, 1))
+    return np_arr
+
+
+force_2dim_all = lambda *args: [force_2dim(x) for x in args]
+
+
+def pre_proc_args(kwargs):
+    &#34;&#34;&#34;For each key in the dict (where the keys are the parameter that u
+want to pre_process) apply the value of that keys and then pass the
+output of the application to the specified paramater
+
+    &#34;&#34;&#34;
+    def decorator(fun):
+        f_args = fun.__code__.co_varnames
+        kw_index = {f_args.index(k): v for k, v in kwargs.items()}
+
+        @wraps(fun)
+        def wrapper(*args):
+            return fun(*[
+                v if i not in kw_index.keys() else kw_index.get(i)(v)
+                for i, v in enumerate(args)
+            ])
+
+        return wrapper
+
+    return decorator
+
+
+def signal_hadler():
+    &#34;&#34;&#34;Simple handler which put asleep the process for the specified time
+in the std_in
+
+    &#34;&#34;&#34;
+    count = 0
+
+    def signal_hadler(sig, frame):
+        nonlocal count
+        count += 1
+        if count == 2:
+            sys.exit(0)
+        print(&#34;te volessi mazarme ah&#34;)
+        print(&#34;quanti secondi te me fa dormir?&#34;)
+        sys.stdout.flush()
+        time.sleep(int(input()))
+        count = 0
+
+    return signal_hadler</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="project.esn.utils.Comp"><code class="name flex">
+<span>def <span class="ident">Comp</span></span>(<span>fun)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">Comp = lambda fun: lambda inner_fun: comp(fun, inner_fun)</code></pre>
+</details>
+</dd>
+<dt id="project.esn.utils.callable_attr"><code class="name flex">
+<span>def <span class="ident">callable_attr</span></span>(<span>cls, string)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">callable_attr = lambda cls, string: (hasattr(cls, string) and callable(
+    getattr(cls, string)))</code></pre>
+</details>
+</dd>
+<dt id="project.esn.utils.comp"><code class="name flex">
+<span>def <span class="ident">comp</span></span>(<span>*fs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">comp = lambda *fs: reduce(
+    lambda f, g: lambda *args, **kwargs: f(g(*args, **kwargs)), fs)</code></pre>
+</details>
+</dd>
+<dt id="project.esn.utils.factories"><code class="name flex">
+<span>def <span class="ident">factories</span></span>(<span>*args)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decorator which call the constructur after the specified methods
+are called</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def factories(*args):
+    &#34;&#34;&#34;Decorator which call the constructur after the specified methods
+are called
+
+    &#34;&#34;&#34;
+    def decorator(_class):
+        for method in args:
+            setattr(_class, method, comp(_class, getattr(_class, method)))
+        return _class
+
+    return decorator</code></pre>
+</details>
+</dd>
+<dt id="project.esn.utils.force_2dim"><code class="name flex">
+<span>def <span class="ident">force_2dim</span></span>(<span>np_arr: <built-in function array>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Force 2 dimension on a numpy array</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def force_2dim(np_arr: np.array):
+    &#34;&#34;&#34;Force 2 dimension on a numpy array
+
+    &#34;&#34;&#34;
+    if np_arr is None: return
+    try:
+        np_arr.shape[1]
+    except IndexError as e:
+        return np.reshape(np_arr, (-1, 1))
+    return np_arr</code></pre>
+</details>
+</dd>
+<dt id="project.esn.utils.force_2dim_all"><code class="name flex">
+<span>def <span class="ident">force_2dim_all</span></span>(<span>*args)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">force_2dim_all = lambda *args: [force_2dim(x) for x in args]</code></pre>
+</details>
+</dd>
+<dt id="project.esn.utils.mydataclass"><code class="name flex">
+<span>def <span class="ident">mydataclass</span></span>(<span>check=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enrich the standard dataclass with the check keyword which when
+setted to True validate each field value against the corresponding
+type annotation</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mydataclass(check=False, **kwargs):
+    &#34;&#34;&#34;Enrich the standard dataclass with the check keyword which when
+setted to True validate each field value against the corresponding
+type annotation
+
+    &#34;&#34;&#34;
+    def decorator(_class):
+        if check:
+            old_post_init = _class.__post_init__ if hasattr(
+                _class, &#34;__post_init__&#34;) else lambda self: None
+            _class.__post_init__ = lambda self: validate(
+                self, _class) and old_post_init(self)
+
+        return dataclass(_class, **kwargs)
+
+    return decorator</code></pre>
+</details>
+</dd>
+<dt id="project.esn.utils.pre_proc_args"><code class="name flex">
+<span>def <span class="ident">pre_proc_args</span></span>(<span>kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>For each key in the dict (where the keys are the parameter that u
+want to pre_process) apply the value of that keys and then pass the
+output of the application to the specified paramater</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pre_proc_args(kwargs):
+    &#34;&#34;&#34;For each key in the dict (where the keys are the parameter that u
+want to pre_process) apply the value of that keys and then pass the
+output of the application to the specified paramater
+
+    &#34;&#34;&#34;
+    def decorator(fun):
+        f_args = fun.__code__.co_varnames
+        kw_index = {f_args.index(k): v for k, v in kwargs.items()}
+
+        @wraps(fun)
+        def wrapper(*args):
+            return fun(*[
+                v if i not in kw_index.keys() else kw_index.get(i)(v)
+                for i, v in enumerate(args)
+            ])
+
+        return wrapper
+
+    return decorator</code></pre>
+</details>
+</dd>
+<dt id="project.esn.utils.register_methods"><code class="name flex">
+<span>def <span class="ident">register_methods</span></span>(<span>kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Register all the methods in the dictionary</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def register_methods(kwargs):
+    &#34;&#34;&#34;Register all the methods in the dictionary
+
+    &#34;&#34;&#34;
+    def decorator(_class):
+        for k, v in kwargs.items():
+            setattr(_class, k, v)
+        return _class
+
+    return decorator</code></pre>
+</details>
+</dd>
+<dt id="project.esn.utils.signal_hadler"><code class="name flex">
+<span>def <span class="ident">signal_hadler</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Simple handler which put asleep the process for the specified time
+in the std_in</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def signal_hadler():
+    &#34;&#34;&#34;Simple handler which put asleep the process for the specified time
+in the std_in
+
+    &#34;&#34;&#34;
+    count = 0
+
+    def signal_hadler(sig, frame):
+        nonlocal count
+        count += 1
+        if count == 2:
+            sys.exit(0)
+        print(&#34;te volessi mazarme ah&#34;)
+        print(&#34;quanti secondi te me fa dormir?&#34;)
+        sys.stdout.flush()
+        time.sleep(int(input()))
+        count = 0
+
+    return signal_hadler</code></pre>
+</details>
+</dd>
+<dt id="project.esn.utils.validate"><code class="name flex">
+<span>def <span class="ident">validate</span></span>(<span>self, _class)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Simple validate function which validate all the value against a
+function or a type which is specified as a type annotation</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validate(self, _class):
+    &#34;&#34;&#34;Simple validate function which validate all the value against a
+function or a type which is specified as a type annotation
+
+    &#34;&#34;&#34;
+    for fname, fdef in _class.__dataclass_fields__.items():
+        fval = getattr(self, fname)
+        if callable(fdef.type):
+            if fdef.type(fval):
+                continue
+
+            raise ValueError(
+                f&#34;The field {fname} failed to be validated with the function {fdef.type}&#34;
+            )
+
+        elif isinstance(fval, type(fdef.type)):
+            continue
+
+        raise ValueError(f&#34;The field {fname} should be of type {fdef.type}&#34;)
+    return True</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="project.esn" href="index.html">project.esn</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="project.esn.utils.Comp" href="#project.esn.utils.Comp">Comp</a></code></li>
+<li><code><a title="project.esn.utils.callable_attr" href="#project.esn.utils.callable_attr">callable_attr</a></code></li>
+<li><code><a title="project.esn.utils.comp" href="#project.esn.utils.comp">comp</a></code></li>
+<li><code><a title="project.esn.utils.factories" href="#project.esn.utils.factories">factories</a></code></li>
+<li><code><a title="project.esn.utils.force_2dim" href="#project.esn.utils.force_2dim">force_2dim</a></code></li>
+<li><code><a title="project.esn.utils.force_2dim_all" href="#project.esn.utils.force_2dim_all">force_2dim_all</a></code></li>
+<li><code><a title="project.esn.utils.mydataclass" href="#project.esn.utils.mydataclass">mydataclass</a></code></li>
+<li><code><a title="project.esn.utils.pre_proc_args" href="#project.esn.utils.pre_proc_args">pre_proc_args</a></code></li>
+<li><code><a title="project.esn.utils.register_methods" href="#project.esn.utils.register_methods">register_methods</a></code></li>
+<li><code><a title="project.esn.utils.signal_hadler" href="#project.esn.utils.signal_hadler">signal_hadler</a></code></li>
+<li><code><a title="project.esn.utils.validate" href="#project.esn.utils.validate">validate</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>

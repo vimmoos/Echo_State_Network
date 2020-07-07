@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>project.music_gen.core API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>project.music_gen.core</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import functools as ft
+import itertools as it
+
+import numpy as np
+
+import project.esn.utils as ut
+from project.music_gen.data_types import *
+
+
+@ut.mydataclass(init=True, repr=True)
+class gNote():
+    &#34;&#34;&#34;gNote class, wraps a note and generate the output matrix for the
+note
+
+    &#34;&#34;&#34;
+    note: Note
+    _generator: callable
+    tempo: Tempo
+    pattern_len: int = 1
+
+    def __add__(self, other):
+        return check_instance(other, gNote, lambda x: note_zipper(self, x),
+                              f&#34;cannot add!! {other}&#34;)
+
+    def __or__(self, other):
+        return check_instance(other, gNote, lambda x: note_concat(self, x),
+                              f&#34;cannot zip !! {other}&#34;)
+
+    def __mul__(self, other):
+        return check_instance(other, int, lambda x: note_replic(self, x),
+                              f&#34;cannot replic with {other}&#34;)
+
+    def __getitem__(self, key):
+        return check_instance(key, int, lambda x: note_slice(self, x),
+                              f&#34;cannot slice with {key}&#34;)
+
+    def __floordiv__(self, other):
+        return check_instance(other, tuple,
+                              lambda x: note_pattern(self, other),
+                              f&#34;cannote apply the patter {other}&#34;)
+
+    def len(self):
+        return int((self.pattern_len * 4) * (self.tempo.value / len(Quarters)))
+
+    def __invert__(self):
+        return note_sampler(self)
+
+    def __call__(self):
+        return self._generator(self.note, self.pattern_len)
+
+
+gNote_ = lambda note=None, pattern_len=None, tempo=None: lambda fun: (
+    lambda n, p: gNote(_generator=fun, note=n, pattern_len=p, tempo=n.tempo)
+) if note is None else lambda: gNote(
+    _generator=fun, note=note, pattern_len=pattern_len, tempo=tempo)
+
+
+def note_sampler(note: gNote):
+    &#34;&#34;&#34;returns line by line the output matrix
+
+    &#34;&#34;&#34;
+    for x in note():
+        for el in x:
+            yield el
+
+                                                      
+def note_replicator(tempo: Tempo,
+                    note: Abs_note,
+                    quarters: list,
+                    pattern_len=1):
+    &#34;&#34;&#34;simply replicate a note for the specified quarters
+
+    &#34;&#34;&#34;
+    return note_zipper.reduce(
+        [note_generator(Note(tempo, note, x), pattern_len) for x in quarters])
+
+
+&#39;&#39;&#39; implementation of gNote operators
+&#39;&#39;&#39;
+
+
+def merge_tempos_f(tempo: Tempo):
+    &#34;&#34;&#34;merge two note with possible different tempos
+
+    &#34;&#34;&#34;
+    @np.vectorize
+    def merge_tempos(genNote: gNote):
+        def inner():
+            for x in genNote():
+                if genNote.tempo.value &lt; tempo.value:
+                    yield np.vstack(
+                        (x, [[0 for _ in range(len(Abs_note))] for _ in range(
+                            int((tempo.value - genNote.tempo.value) /
+                                len(Quarters)))]))
+                else:
+                    yield x
+
+        return inner()
+
+    return merge_tempos
+
+
+def note_reduce(f: callable, notes: list):
+    &#34;&#34;&#34; reducing function for notes
+    &#34;&#34;&#34;
+    return ft.reduce(f, notes)
+
+
+def reducer(fun):
+    setattr(fun, &#34;reduce&#34;, lambda li: note_reduce(fun, li))
+    return fun
+
+
+def note_map(f: callable, notes: list):
+    &#34;&#34;&#34;mapping function for notes
+
+    &#34;&#34;&#34;
+    return map(f, notes)
+
+
+def mapper(fun):
+    setattr(fun, &#34;map&#34;, lambda li: note_map(fun, li))
+    return fun
+
+
+def note_slice(gnote: gNote, n: int):
+    &#34;&#34;&#34;possibly reduce the lenght of the pattern
+
+    &#34;&#34;&#34;
+    @gNote_(note=&#34;slice&#34;, pattern_len=n, tempo=gnote.tempo)
+    def gsliced(note: Note, pattern_len: int):
+        return it.islice(gnote(), n * len(Quarters), None)
+
+    return gsliced()
+
+
+def note_replic(gnote: gNote, n: int):
+    &#34;&#34;&#34;multiply the lenght of the pattern
+
+    &#34;&#34;&#34;
+    @gNote_(note=&#34;replic&#34;,
+            pattern_len=gnote.pattern_len * n,
+            tempo=gnote.tempo)
+    def greplic(note: Note, pattern_len: int):
+        for _ in range(n):
+            for x in gnote():
+                yield x
+
+    return greplic()
+
+
+@gNote_()
+def note_generator(note: Note, pattern_len: int):
+    &#34;&#34;&#34;generator for notes
+
+    &#34;&#34;&#34;
+    for _ in range(pattern_len):
+        for x in Quarters:
+            yield np.array([
+                np.array([
+                    note.val
+                    if idx == note.note.value and x == note.quarter else 0
+                    for idx in range(len(Abs_note))
+                ]) for t in range(int(note.tempo.value / len(Quarters)))
+            ])
+
+
+def note_pattern(gnote: gNote, qua_pat: tuple):
+    &#34;&#34;&#34;modify the pattern of the note given a tuple which consist on a
+tuple of the Quarter in which you want to apply the pattern and the
+patter itself
+
+    &#34;&#34;&#34;
+    quarter, pattern = qua_pat
+    if not isinstance(quarter, Quarters):
+        quarter = Quarters(quarter)
+    c_pattern = np.array([
+        np.ones(len(Abs_note)) if x != 0 else np.zeros(len(Abs_note))
+        for x in pattern
+    ])
+
+    @gNote_(note=&#34;pattern&#34;, pattern_len=gnote.pattern_len, tempo=gnote.tempo)
+    def gpatter(note: Note, pattern_len: int):
+        for i, x in enumerate(gnote()):
+            yield x if (i % 4) == quarter.value else x * c_pattern
+
+    return gpatter()
+
+
+@reducer
+@mapper
+def note_concat(gNote_0: gNote, gNote_1: gNote):
+    &#34;&#34;&#34;concat two notes (one after another)
+
+    &#34;&#34;&#34;
+    max_tempo = max_tempos(gNote_0.tempo, gNote_1.tempo)
+    merge_t = merge_tempos_f(max_tempo)
+
+    @gNote_(note=&#34;concated&#34;,
+            pattern_len=(gNote_0.pattern_len + gNote_1.pattern_len),
+            tempo=max_tempo)
+    def gconcat(note: Note, pattern_len: int):
+        return it.chain(*merge_t([gNote_0, gNote_1]))
+
+    return gconcat()
+
+
+@reducer
+@mapper
+def note_zipper(gNote_0: gNote, gNote_1: gNote):
+    &#34;&#34;&#34;zip the notes (play the 2 note in the same measure)
+
+    &#34;&#34;&#34;
+    max_tempo = max_tempos(gNote_0.tempo, gNote_1.tempo)
+    merge_t = merge_tempos_f(max_tempo)
+
+    @gNote_(note=&#34;zipped&#34;, pattern_len=gNote_0.pattern_len, tempo=max_tempo)
+    def gzipped(note: Note, pattern_len: int):
+        for (x, y) in it.zip_longest(*merge_t([gNote_0, gNote_1]),
+                                     fillvalue=np.zeros(
+                                         (int(max_tempo.value / len(Quarters)),
+                                          len(Abs_note)))):
+            yield x + y
+
+    return gzipped()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="project.music_gen.core.gNote_"><code class="name flex">
+<span>def <span class="ident">gNote_</span></span>(<span>note=None, pattern_len=None, tempo=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">gNote_ = lambda note=None, pattern_len=None, tempo=None: lambda fun: (
+    lambda n, p: gNote(_generator=fun, note=n, pattern_len=p, tempo=n.tempo)
+) if note is None else lambda: gNote(
+    _generator=fun, note=note, pattern_len=pattern_len, tempo=tempo)</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.mapper"><code class="name flex">
+<span>def <span class="ident">mapper</span></span>(<span>fun)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mapper(fun):
+    setattr(fun, &#34;map&#34;, lambda li: note_map(fun, li))
+    return fun</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.merge_tempos_f"><code class="name flex">
+<span>def <span class="ident">merge_tempos_f</span></span>(<span>tempo: <a title="project.music_gen.data_types.Tempo" href="data_types.html#project.music_gen.data_types.Tempo">Tempo</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>merge two note with possible different tempos</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def merge_tempos_f(tempo: Tempo):
+    &#34;&#34;&#34;merge two note with possible different tempos
+
+    &#34;&#34;&#34;
+    @np.vectorize
+    def merge_tempos(genNote: gNote):
+        def inner():
+            for x in genNote():
+                if genNote.tempo.value &lt; tempo.value:
+                    yield np.vstack(
+                        (x, [[0 for _ in range(len(Abs_note))] for _ in range(
+                            int((tempo.value - genNote.tempo.value) /
+                                len(Quarters)))]))
+                else:
+                    yield x
+
+        return inner()
+
+    return merge_tempos</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.note_concat"><code class="name flex">
+<span>def <span class="ident">note_concat</span></span>(<span>gNote_0: <a title="project.music_gen.core.gNote" href="#project.music_gen.core.gNote">gNote</a>, gNote_1: <a title="project.music_gen.core.gNote" href="#project.music_gen.core.gNote">gNote</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>concat two notes (one after another)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@reducer
+@mapper
+def note_concat(gNote_0: gNote, gNote_1: gNote):
+    &#34;&#34;&#34;concat two notes (one after another)
+
+    &#34;&#34;&#34;
+    max_tempo = max_tempos(gNote_0.tempo, gNote_1.tempo)
+    merge_t = merge_tempos_f(max_tempo)
+
+    @gNote_(note=&#34;concated&#34;,
+            pattern_len=(gNote_0.pattern_len + gNote_1.pattern_len),
+            tempo=max_tempo)
+    def gconcat(note: Note, pattern_len: int):
+        return it.chain(*merge_t([gNote_0, gNote_1]))
+
+    return gconcat()</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.note_generator"><code class="name flex">
+<span>def <span class="ident">note_generator</span></span>(<span>n, p)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">lambda n, p: gNote(_generator=fun, note=n, pattern_len=p, tempo=n.tempo)</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.note_map"><code class="name flex">
+<span>def <span class="ident">note_map</span></span>(<span>f: <built-in function callable>, notes: list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>mapping function for notes</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def note_map(f: callable, notes: list):
+    &#34;&#34;&#34;mapping function for notes
+
+    &#34;&#34;&#34;
+    return map(f, notes)</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.note_pattern"><code class="name flex">
+<span>def <span class="ident">note_pattern</span></span>(<span>gnote: <a title="project.music_gen.core.gNote" href="#project.music_gen.core.gNote">gNote</a>, qua_pat: tuple)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>modify the pattern of the note given a tuple which consist on a
+tuple of the Quarter in which you want to apply the pattern and the
+patter itself</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def note_pattern(gnote: gNote, qua_pat: tuple):
+    &#34;&#34;&#34;modify the pattern of the note given a tuple which consist on a
+tuple of the Quarter in which you want to apply the pattern and the
+patter itself
+
+    &#34;&#34;&#34;
+    quarter, pattern = qua_pat
+    if not isinstance(quarter, Quarters):
+        quarter = Quarters(quarter)
+    c_pattern = np.array([
+        np.ones(len(Abs_note)) if x != 0 else np.zeros(len(Abs_note))
+        for x in pattern
+    ])
+
+    @gNote_(note=&#34;pattern&#34;, pattern_len=gnote.pattern_len, tempo=gnote.tempo)
+    def gpatter(note: Note, pattern_len: int):
+        for i, x in enumerate(gnote()):
+            yield x if (i % 4) == quarter.value else x * c_pattern
+
+    return gpatter()</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.note_reduce"><code class="name flex">
+<span>def <span class="ident">note_reduce</span></span>(<span>f: <built-in function callable>, notes: list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>reducing function for notes</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def note_reduce(f: callable, notes: list):
+    &#34;&#34;&#34; reducing function for notes
+    &#34;&#34;&#34;
+    return ft.reduce(f, notes)</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.note_replic"><code class="name flex">
+<span>def <span class="ident">note_replic</span></span>(<span>gnote: <a title="project.music_gen.core.gNote" href="#project.music_gen.core.gNote">gNote</a>, n: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>multiply the lenght of the pattern</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def note_replic(gnote: gNote, n: int):
+    &#34;&#34;&#34;multiply the lenght of the pattern
+
+    &#34;&#34;&#34;
+    @gNote_(note=&#34;replic&#34;,
+            pattern_len=gnote.pattern_len * n,
+            tempo=gnote.tempo)
+    def greplic(note: Note, pattern_len: int):
+        for _ in range(n):
+            for x in gnote():
+                yield x
+
+    return greplic()</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.note_replicator"><code class="name flex">
+<span>def <span class="ident">note_replicator</span></span>(<span>tempo: <a title="project.music_gen.data_types.Tempo" href="data_types.html#project.music_gen.data_types.Tempo">Tempo</a>, note: <a title="project.music_gen.data_types.Abs_note" href="data_types.html#project.music_gen.data_types.Abs_note">Abs_note</a>, quarters: list, pattern_len=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>simply replicate a note for the specified quarters</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def note_replicator(tempo: Tempo,
+                    note: Abs_note,
+                    quarters: list,
+                    pattern_len=1):
+    &#34;&#34;&#34;simply replicate a note for the specified quarters
+
+    &#34;&#34;&#34;
+    return note_zipper.reduce(
+        [note_generator(Note(tempo, note, x), pattern_len) for x in quarters])</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.note_sampler"><code class="name flex">
+<span>def <span class="ident">note_sampler</span></span>(<span>note: <a title="project.music_gen.core.gNote" href="#project.music_gen.core.gNote">gNote</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>returns line by line the output matrix</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def note_sampler(note: gNote):
+    &#34;&#34;&#34;returns line by line the output matrix
+
+    &#34;&#34;&#34;
+    for x in note():
+        for el in x:
+            yield el</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.note_slice"><code class="name flex">
+<span>def <span class="ident">note_slice</span></span>(<span>gnote: <a title="project.music_gen.core.gNote" href="#project.music_gen.core.gNote">gNote</a>, n: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>possibly reduce the lenght of the pattern</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def note_slice(gnote: gNote, n: int):
+    &#34;&#34;&#34;possibly reduce the lenght of the pattern
+
+    &#34;&#34;&#34;
+    @gNote_(note=&#34;slice&#34;, pattern_len=n, tempo=gnote.tempo)
+    def gsliced(note: Note, pattern_len: int):
+        return it.islice(gnote(), n * len(Quarters), None)
+
+    return gsliced()</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.note_zipper"><code class="name flex">
+<span>def <span class="ident">note_zipper</span></span>(<span>gNote_0: <a title="project.music_gen.core.gNote" href="#project.music_gen.core.gNote">gNote</a>, gNote_1: <a title="project.music_gen.core.gNote" href="#project.music_gen.core.gNote">gNote</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>zip the notes (play the 2 note in the same measure)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@reducer
+@mapper
+def note_zipper(gNote_0: gNote, gNote_1: gNote):
+    &#34;&#34;&#34;zip the notes (play the 2 note in the same measure)
+
+    &#34;&#34;&#34;
+    max_tempo = max_tempos(gNote_0.tempo, gNote_1.tempo)
+    merge_t = merge_tempos_f(max_tempo)
+
+    @gNote_(note=&#34;zipped&#34;, pattern_len=gNote_0.pattern_len, tempo=max_tempo)
+    def gzipped(note: Note, pattern_len: int):
+        for (x, y) in it.zip_longest(*merge_t([gNote_0, gNote_1]),
+                                     fillvalue=np.zeros(
+                                         (int(max_tempo.value / len(Quarters)),
+                                          len(Abs_note)))):
+            yield x + y
+
+    return gzipped()</code></pre>
+</details>
+</dd>
+<dt id="project.music_gen.core.reducer"><code class="name flex">
+<span>def <span class="ident">reducer</span></span>(<span>fun)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reducer(fun):
+    setattr(fun, &#34;reduce&#34;, lambda li: note_reduce(fun, li))
+    return fun</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="project.music_gen.core.gNote"><code class="flex name class">
+<span>class <span class="ident">gNote</span></span>
+<span>(</span><span>note: <a title="project.music_gen.data_types.Note" href="data_types.html#project.music_gen.data_types.Note">Note</a>, _generator: <built-in function callable>, tempo: <a title="project.music_gen.data_types.Tempo" href="data_types.html#project.music_gen.data_types.Tempo">Tempo</a>, pattern_len: int = 1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>gNote class, wraps a note and generate the output matrix for the
+note</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class gNote():
+    &#34;&#34;&#34;gNote class, wraps a note and generate the output matrix for the
+note
+
+    &#34;&#34;&#34;
+    note: Note
+    _generator: callable
+    tempo: Tempo
+    pattern_len: int = 1
+
+    def __add__(self, other):
+        return check_instance(other, gNote, lambda x: note_zipper(self, x),
+                              f&#34;cannot add!! {other}&#34;)
+
+    def __or__(self, other):
+        return check_instance(other, gNote, lambda x: note_concat(self, x),
+                              f&#34;cannot zip !! {other}&#34;)
+
+    def __mul__(self, other):
+        return check_instance(other, int, lambda x: note_replic(self, x),
+                              f&#34;cannot replic with {other}&#34;)
+
+    def __getitem__(self, key):
+        return check_instance(key, int, lambda x: note_slice(self, x),
+                              f&#34;cannot slice with {key}&#34;)
+
+    def __floordiv__(self, other):
+        return check_instance(other, tuple,
+                              lambda x: note_pattern(self, other),
+                              f&#34;cannote apply the patter {other}&#34;)
+
+    def len(self):
+        return int((self.pattern_len * 4) * (self.tempo.value / len(Quarters)))
+
+    def __invert__(self):
+        return note_sampler(self)
+
+    def __call__(self):
+        return self._generator(self.note, self.pattern_len)</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="project.music_gen.core.gNote.pattern_len"><code class="name">var <span class="ident">pattern_len</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="project.music_gen.core.gNote.len"><code class="name flex">
+<span>def <span class="ident">len</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def len(self):
+    return int((self.pattern_len * 4) * (self.tempo.value / len(Quarters)))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="project.music_gen" href="index.html">project.music_gen</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="project.music_gen.core.gNote_" href="#project.music_gen.core.gNote_">gNote_</a></code></li>
+<li><code><a title="project.music_gen.core.mapper" href="#project.music_gen.core.mapper">mapper</a></code></li>
+<li><code><a title="project.music_gen.core.merge_tempos_f" href="#project.music_gen.core.merge_tempos_f">merge_tempos_f</a></code></li>
+<li><code><a title="project.music_gen.core.note_concat" href="#project.music_gen.core.note_concat">note_concat</a></code></li>
+<li><code><a title="project.music_gen.core.note_generator" href="#project.music_gen.core.note_generator">note_generator</a></code></li>
+<li><code><a title="project.music_gen.core.note_map" href="#project.music_gen.core.note_map">note_map</a></code></li>
+<li><code><a title="project.music_gen.core.note_pattern" href="#project.music_gen.core.note_pattern">note_pattern</a></code></li>
+<li><code><a title="project.music_gen.core.note_reduce" href="#project.music_gen.core.note_reduce">note_reduce</a></code></li>
+<li><code><a title="project.music_gen.core.note_replic" href="#project.music_gen.core.note_replic">note_replic</a></code></li>
+<li><code><a title="project.music_gen.core.note_replicator" href="#project.music_gen.core.note_replicator">note_replicator</a></code></li>
+<li><code><a title="project.music_gen.core.note_sampler" href="#project.music_gen.core.note_sampler">note_sampler</a></code></li>
+<li><code><a title="project.music_gen.core.note_slice" href="#project.music_gen.core.note_slice">note_slice</a></code></li>
+<li><code><a title="project.music_gen.core.note_zipper" href="#project.music_gen.core.note_zipper">note_zipper</a></code></li>
+<li><code><a title="project.music_gen.core.reducer" href="#project.music_gen.core.reducer">reducer</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="project.music_gen.core.gNote" href="#project.music_gen.core.gNote">gNote</a></code></h4>
+<ul class="">
+<li><code><a title="project.music_gen.core.gNote.len" href="#project.music_gen.core.gNote.len">len</a></code></li>
+<li><code><a title="project.music_gen.core.gNote.pattern_len" href="#project.music_gen.core.gNote.pattern_len">pattern_len</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>project.esn.transformer API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>project.esn.transformer</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># import enum as e
+from random import uniform
+
+import numpy as np
+from aenum import Enum, extend_enum
+
+import project.esn.utils as u
+
+_identity = lambda x: x
+_identity.__name__ = &#34;identity&#34;
+
+def sigmoid (x):
+    &#34;&#34;&#34;classical sigmoid function&#34;&#34;&#34;
+    return 1 / (1 + np.exp(-x))
+
+def enhanced_sigm(x,a):
+    &#34;&#34;&#34;enhanced sigmoid function which scales the input usign the a
+    parameter
+
+    &#34;&#34;&#34;
+    return  1 / (1 + np.exp(-(x * a)))
+
+def my_sigm(x):
+    &#34;&#34;&#34;a sigmoid function which is between 0 and 1 and maps 0.5 -&gt; 0.5 ,1
+-&gt;1 and 0 -&gt; 0
+
+    &#34;&#34;&#34;
+    return enhanced_sigm(x - 0.5, 8)
+
+def squeezed_tanh(x):
+    &#34;&#34;&#34;a squeezed tanh between 0 and 1
+
+    &#34;&#34;&#34;
+    return  (np.tanh(x) + 1) / 2
+def choose_prob(x):
+    &#34;&#34;&#34;givend a probability value it returns True if the random number is
+below that value otherwise False
+
+    &#34;&#34;&#34;
+    return  uniform(0, 1) &lt;= x
+
+
+class Squeezers(Enum):
+    &#34;&#34;&#34;collect all the squeezing function
+
+    &#34;&#34;&#34;
+    pass
+
+
+def fill_squeezer():
+    &#34;&#34;&#34;fill the Squeezers enum using all the possible squeezing function
+
+    &#34;&#34;&#34;
+    for fun in [_identity, sigmoid, my_sigm, squeezed_tanh, np.tanh]:
+        extend_enum(Squeezers, fun.__name__, fun)
+
+fill_squeezer()
+
+@np.vectorize
+def trim(x):
+    &#34;&#34;&#34;Trim the output between 0 and 1
+
+    &#34;&#34;&#34;
+    x = x if x &gt; 0. else 0.
+    return 1. if x &gt; 1. else x
+
+
+class Transformers(Enum):
+    &#34;&#34;&#34;collect all the possibles Transformer
+
+    &#34;&#34;&#34;
+    pass
+
+
+@u.mydataclass(init=True, repr=True, frozen=True)
+class Transformer():
+    &#34;&#34;&#34;Transformer class : it transform a probability vector to a 0s and
+1s
+
+    &#34;&#34;&#34;
+    _transformer: callable = None
+    &#34;&#34;&#34; the function which perform the transformation
+    &#34;&#34;&#34;
+    param: float = 0.0
+    &#34;&#34;&#34;the parameter to the function (it should be used in the decision
+process)
+
+    &#34;&#34;&#34;
+    squeeze_f: callable = lambda x: x
+    &#34;&#34;&#34;the squeezing function which squeeze the input of the transformer
+
+    &#34;&#34;&#34;
+
+    def __call__(self, sig):
+        &#34;&#34;&#34;it trims and squeeze the input signal and then call the
+_transformer function
+
+        &#34;&#34;&#34;
+        sig = u.comp(trim, self.squeeze_f)(sig)
+        if isinstance(self._transformer, np.vectorize):
+            return self._transformer(sig, self.param)
+        else:
+            return np.array([self._transformer(el, self.param) for el in sig])
+
+
+def add_transformer(fun):
+    &#34;&#34;&#34;decorator which create a new Transformer and add the new
+transformer to the Transformers enum
+
+    &#34;&#34;&#34;
+    inner = lambda *args, **kwargs: Transformer(fun, *args, **kwargs)
+    name = fun.pyfunc.__name__ if isinstance(fun,
+                                             np.vectorize) else fun.__name__
+
+    extend_enum(Transformers, name, inner)
+
+@add_transformer
+@np.vectorize
+def identity(x, param):
+    &#34;&#34;&#34;identity function
+
+    &#34;&#34;&#34;
+    return x
+
+
+@add_transformer
+@np.vectorize
+def threshold(x, t):
+    &#34;&#34;&#34;use the parameter as a threshold if the value if higher then the
+threshold the it return a 1 otherwise 0
+
+    &#34;&#34;&#34;
+    return 1 if x &gt; t else 0
+
+
+@add_transformer
+@np.vectorize
+def pow_prob(x, alpha):
+    &#34;&#34;&#34;scale the input non-linearly by alpha and then convert the
+probability non-deterministically to 1 or 0
+
+    &#34;&#34;&#34;
+    return 1 if choose_prob(x**alpha) else 0
+
+
+@add_transformer
+@np.vectorize
+def sig_prob(x, alpha):
+    &#34;&#34;&#34;substract 0.5 from the input by 0.5 and then scale it by the alpha
+parameter. non determistic
+
+    &#34;&#34;&#34;
+    return 1 if choose_prob(sigmoid((x - 0.5) * ((alpha * 10) + 4))) else 0</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="project.esn.transformer.add_transformer"><code class="name flex">
+<span>def <span class="ident">add_transformer</span></span>(<span>fun)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>decorator which create a new Transformer and add the new
+transformer to the Transformers enum</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_transformer(fun):
+    &#34;&#34;&#34;decorator which create a new Transformer and add the new
+transformer to the Transformers enum
+
+    &#34;&#34;&#34;
+    inner = lambda *args, **kwargs: Transformer(fun, *args, **kwargs)
+    name = fun.pyfunc.__name__ if isinstance(fun,
+                                             np.vectorize) else fun.__name__
+
+    extend_enum(Transformers, name, inner)</code></pre>
+</details>
+</dd>
+<dt id="project.esn.transformer.choose_prob"><code class="name flex">
+<span>def <span class="ident">choose_prob</span></span>(<span>x)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>givend a probability value it returns True if the random number is
+below that value otherwise False</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def choose_prob(x):
+    &#34;&#34;&#34;givend a probability value it returns True if the random number is
+below that value otherwise False
+
+    &#34;&#34;&#34;
+    return  uniform(0, 1) &lt;= x</code></pre>
+</details>
+</dd>
+<dt id="project.esn.transformer.enhanced_sigm"><code class="name flex">
+<span>def <span class="ident">enhanced_sigm</span></span>(<span>x, a)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>enhanced sigmoid function which scales the input usign the a
+parameter</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def enhanced_sigm(x,a):
+    &#34;&#34;&#34;enhanced sigmoid function which scales the input usign the a
+    parameter
+
+    &#34;&#34;&#34;
+    return  1 / (1 + np.exp(-(x * a)))</code></pre>
+</details>
+</dd>
+<dt id="project.esn.transformer.fill_squeezer"><code class="name flex">
+<span>def <span class="ident">fill_squeezer</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>fill the Squeezers enum using all the possible squeezing function</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fill_squeezer():
+    &#34;&#34;&#34;fill the Squeezers enum using all the possible squeezing function
+
+    &#34;&#34;&#34;
+    for fun in [_identity, sigmoid, my_sigm, squeezed_tanh, np.tanh]:
+        extend_enum(Squeezers, fun.__name__, fun)</code></pre>
+</details>
+</dd>
+<dt id="project.esn.transformer.my_sigm"><code class="name flex">
+<span>def <span class="ident">my_sigm</span></span>(<span>x)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>a sigmoid function which is between 0 and 1 and maps 0.5 -&gt; 0.5 ,1
+-&gt;1 and 0 -&gt; 0</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def my_sigm(x):
+    &#34;&#34;&#34;a sigmoid function which is between 0 and 1 and maps 0.5 -&gt; 0.5 ,1
+-&gt;1 and 0 -&gt; 0
+
+    &#34;&#34;&#34;
+    return enhanced_sigm(x - 0.5, 8)</code></pre>
+</details>
+</dd>
+<dt id="project.esn.transformer.sigmoid"><code class="name flex">
+<span>def <span class="ident">sigmoid</span></span>(<span>x)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>classical sigmoid function</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sigmoid (x):
+    &#34;&#34;&#34;classical sigmoid function&#34;&#34;&#34;
+    return 1 / (1 + np.exp(-x))</code></pre>
+</details>
+</dd>
+<dt id="project.esn.transformer.squeezed_tanh"><code class="name flex">
+<span>def <span class="ident">squeezed_tanh</span></span>(<span>x)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>a squeezed tanh between 0 and 1</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def squeezed_tanh(x):
+    &#34;&#34;&#34;a squeezed tanh between 0 and 1
+
+    &#34;&#34;&#34;
+    return  (np.tanh(x) + 1) / 2</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="project.esn.transformer.Squeezers"><code class="flex name class">
+<span>class <span class="ident">Squeezers</span></span>
+<span>(</span><span>value=&lt;object object&gt;, names=None, module=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>collect all the squeezing function</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Squeezers(Enum):
+    &#34;&#34;&#34;collect all the squeezing function
+
+    &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>aenum.Enum</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="project.esn.transformer.Squeezers.identity"><code class="name">var <span class="ident">identity</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.esn.transformer.Squeezers.my_sigm"><code class="name">var <span class="ident">my_sigm</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.esn.transformer.Squeezers.sigmoid"><code class="name">var <span class="ident">sigmoid</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.esn.transformer.Squeezers.squeezed_tanh"><code class="name">var <span class="ident">squeezed_tanh</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.esn.transformer.Squeezers.tanh"><code class="name">var <span class="ident">tanh</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="project.esn.transformer.Transformer"><code class="flex name class">
+<span>class <span class="ident">Transformer</span></span>
+<span>(</span><span>param: float = 0.0, squeeze_f: <built-in function callable> = &lt;function Transformer.&lt;lambda&gt;&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Transformer class : it transform a probability vector to a 0s and
+1s</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Transformer():
+    &#34;&#34;&#34;Transformer class : it transform a probability vector to a 0s and
+1s
+
+    &#34;&#34;&#34;
+    _transformer: callable = None
+    &#34;&#34;&#34; the function which perform the transformation
+    &#34;&#34;&#34;
+    param: float = 0.0
+    &#34;&#34;&#34;the parameter to the function (it should be used in the decision
+process)
+
+    &#34;&#34;&#34;
+    squeeze_f: callable = lambda x: x
+    &#34;&#34;&#34;the squeezing function which squeeze the input of the transformer
+
+    &#34;&#34;&#34;
+
+    def __call__(self, sig):
+        &#34;&#34;&#34;it trims and squeeze the input signal and then call the
+_transformer function
+
+        &#34;&#34;&#34;
+        sig = u.comp(trim, self.squeeze_f)(sig)
+        if isinstance(self._transformer, np.vectorize):
+            return self._transformer(sig, self.param)
+        else:
+            return np.array([self._transformer(el, self.param) for el in sig])</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="project.esn.transformer.Transformer.param"><code class="name">var <span class="ident">param</span> : float</code></dt>
+<dd>
+<div class="desc"><p>the parameter to the function (it should be used in the decision
+process)</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="project.esn.transformer.Transformer.squeeze_f"><code class="name flex">
+<span>def <span class="ident">squeeze_f</span></span>(<span>x) ‑> <built-in function callable></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">squeeze_f: callable = lambda x: x</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="project.esn.transformer.Transformers"><code class="flex name class">
+<span>class <span class="ident">Transformers</span></span>
+<span>(</span><span>value=&lt;object object&gt;, names=None, module=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>collect all the possibles Transformer</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Transformers(Enum):
+    &#34;&#34;&#34;collect all the possibles Transformer
+
+    &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>aenum.Enum</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="project.esn.transformer.Transformers.identity"><code class="name">var <span class="ident">identity</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.esn.transformer.Transformers.pow_prob"><code class="name">var <span class="ident">pow_prob</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.esn.transformer.Transformers.sig_prob"><code class="name">var <span class="ident">sig_prob</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.esn.transformer.Transformers.threshold"><code class="name">var <span class="ident">threshold</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="project.esn" href="index.html">project.esn</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="project.esn.transformer.add_transformer" href="#project.esn.transformer.add_transformer">add_transformer</a></code></li>
+<li><code><a title="project.esn.transformer.choose_prob" href="#project.esn.transformer.choose_prob">choose_prob</a></code></li>
+<li><code><a title="project.esn.transformer.enhanced_sigm" href="#project.esn.transformer.enhanced_sigm">enhanced_sigm</a></code></li>
+<li><code><a title="project.esn.transformer.fill_squeezer" href="#project.esn.transformer.fill_squeezer">fill_squeezer</a></code></li>
+<li><code><a title="project.esn.transformer.my_sigm" href="#project.esn.transformer.my_sigm">my_sigm</a></code></li>
+<li><code><a title="project.esn.transformer.sigmoid" href="#project.esn.transformer.sigmoid">sigmoid</a></code></li>
+<li><code><a title="project.esn.transformer.squeezed_tanh" href="#project.esn.transformer.squeezed_tanh">squeezed_tanh</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="project.esn.transformer.Squeezers" href="#project.esn.transformer.Squeezers">Squeezers</a></code></h4>
+<ul class="">
+<li><code><a title="project.esn.transformer.Squeezers.identity" href="#project.esn.transformer.Squeezers.identity">identity</a></code></li>
+<li><code><a title="project.esn.transformer.Squeezers.my_sigm" href="#project.esn.transformer.Squeezers.my_sigm">my_sigm</a></code></li>
+<li><code><a title="project.esn.transformer.Squeezers.sigmoid" href="#project.esn.transformer.Squeezers.sigmoid">sigmoid</a></code></li>
+<li><code><a title="project.esn.transformer.Squeezers.squeezed_tanh" href="#project.esn.transformer.Squeezers.squeezed_tanh">squeezed_tanh</a></code></li>
+<li><code><a title="project.esn.transformer.Squeezers.tanh" href="#project.esn.transformer.Squeezers.tanh">tanh</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="project.esn.transformer.Transformer" href="#project.esn.transformer.Transformer">Transformer</a></code></h4>
+<ul class="">
+<li><code><a title="project.esn.transformer.Transformer.param" href="#project.esn.transformer.Transformer.param">param</a></code></li>
+<li><code><a title="project.esn.transformer.Transformer.squeeze_f" href="#project.esn.transformer.Transformer.squeeze_f">squeeze_f</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="project.esn.transformer.Transformers" href="#project.esn.transformer.Transformers">Transformers</a></code></h4>
+<ul class="">
+<li><code><a title="project.esn.transformer.Transformers.identity" href="#project.esn.transformer.Transformers.identity">identity</a></code></li>
+<li><code><a title="project.esn.transformer.Transformers.pow_prob" href="#project.esn.transformer.Transformers.pow_prob">pow_prob</a></code></li>
+<li><code><a title="project.esn.transformer.Transformers.sig_prob" href="#project.esn.transformer.Transformers.sig_prob">sig_prob</a></code></li>
+<li><code><a title="project.esn.transformer.Transformers.threshold" href="#project.esn.transformer.Transformers.threshold">threshold</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>
