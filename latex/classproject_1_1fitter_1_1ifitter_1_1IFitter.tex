@@ -1,0 +1,127 @@
+\hypertarget{classproject_1_1fitter_1_1ifitter_1_1IFitter}{}\doxysection{project.\+fitter.\+ifitter.\+I\+Fitter Class Reference}
+\label{classproject_1_1fitter_1_1ifitter_1_1IFitter}\index{project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}}
+Inheritance diagram for project.\+fitter.\+ifitter.\+I\+Fitter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classproject_1_1fitter_1_1ifitter_1_1IFitter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classproject_1_1fitter_1_1ifitter_1_1IFitter_ad091c76214b492326869a7246040b0d8}{current\+\_\+state}} (self)
+\item 
+def \mbox{\hyperlink{classproject_1_1fitter_1_1ifitter_1_1IFitter_aea761a9687a16bb046c2f962a79467b0}{swap\+\_\+state}} (self, new\+\_\+state)
+\item 
+def \mbox{\hyperlink{classproject_1_1fitter_1_1ifitter_1_1IFitter_ac183dec41c4eaac14a53a7a5e1aaddae}{get\+\_\+candidates}} (self, \mbox{\hyperlink{classproject_1_1fitter_1_1ifitter_1_1IFitter_ad091c76214b492326869a7246040b0d8}{current\+\_\+state}})
+\item 
+def \mbox{\hyperlink{classproject_1_1fitter_1_1ifitter_1_1IFitter_a599917ccf157f1f8feedfeb4506eeb63}{pick\+\_\+canditates}} (self, candidates)
+\item 
+def \mbox{\hyperlink{classproject_1_1fitter_1_1ifitter_1_1IFitter_abb900d815b9ee29de23e69042085aa35}{evaluate\+\_\+results}} (self, results\+\_\+iter)
+\item 
+def \mbox{\hyperlink{classproject_1_1fitter_1_1ifitter_1_1IFitter_aa17192ab09fca048889e80f6033fa0f9}{stop\+\_\+criterion}} (self)
+\item 
+def \mbox{\hyperlink{classproject_1_1fitter_1_1ifitter_1_1IFitter_a16cf699cda217997905060ca93e80c8f}{state\+\_\+to\+\_\+args}} (state)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Pseudo interface for auto fitters.\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classproject_1_1fitter_1_1ifitter_1_1IFitter_ad091c76214b492326869a7246040b0d8}\label{classproject_1_1fitter_1_1ifitter_1_1IFitter_ad091c76214b492326869a7246040b0d8}} 
+\index{project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}!current\_state@{current\_state}}
+\index{current\_state@{current\_state}!project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}}
+\doxysubsubsection{\texorpdfstring{current\_state()}{current\_state()}}
+{\footnotesize\ttfamily def project.\+fitter.\+ifitter.\+I\+Fitter.\+current\+\_\+state (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Should return the current state of the fitter.
+This should be suitable input for `get_candidates`\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classproject_1_1fitter_1_1afilter_1_1DemoFitter_a01167d247a3759317b028deb10560727}{project.\+fitter.\+afilter.\+Demo\+Fitter}}.
+
+\mbox{\Hypertarget{classproject_1_1fitter_1_1ifitter_1_1IFitter_abb900d815b9ee29de23e69042085aa35}\label{classproject_1_1fitter_1_1ifitter_1_1IFitter_abb900d815b9ee29de23e69042085aa35}} 
+\index{project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}!evaluate\_results@{evaluate\_results}}
+\index{evaluate\_results@{evaluate\_results}!project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}}
+\doxysubsubsection{\texorpdfstring{evaluate\_results()}{evaluate\_results()}}
+{\footnotesize\ttfamily def project.\+fitter.\+ifitter.\+I\+Fitter.\+evaluate\+\_\+results (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{results\+\_\+iter }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Should determine what is the new current state given an iterable of
+results, presumably from task batch completion.
+
+Its result should be suitable equivalent to self.current_state()
+as it will be fet to get_candidates unless the stop criterion is met\end{DoxyVerb}
+ \mbox{\Hypertarget{classproject_1_1fitter_1_1ifitter_1_1IFitter_ac183dec41c4eaac14a53a7a5e1aaddae}\label{classproject_1_1fitter_1_1ifitter_1_1IFitter_ac183dec41c4eaac14a53a7a5e1aaddae}} 
+\index{project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}!get\_candidates@{get\_candidates}}
+\index{get\_candidates@{get\_candidates}!project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}}
+\doxysubsubsection{\texorpdfstring{get\_candidates()}{get\_candidates()}}
+{\footnotesize\ttfamily def project.\+fitter.\+ifitter.\+I\+Fitter.\+get\+\_\+candidates (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{current\+\_\+state }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Should implement the neighborghood
+expansion procedure given the current state.
+\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classproject_1_1fitter_1_1afilter_1_1DemoFitter_a64651e7289c09e26fb7b4d31170c01c6}{project.\+fitter.\+afilter.\+Demo\+Fitter}}.
+
+\mbox{\Hypertarget{classproject_1_1fitter_1_1ifitter_1_1IFitter_a599917ccf157f1f8feedfeb4506eeb63}\label{classproject_1_1fitter_1_1ifitter_1_1IFitter_a599917ccf157f1f8feedfeb4506eeb63}} 
+\index{project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}!pick\_canditates@{pick\_canditates}}
+\index{pick\_canditates@{pick\_canditates}!project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}}
+\doxysubsubsection{\texorpdfstring{pick\_canditates()}{pick\_canditates()}}
+{\footnotesize\ttfamily def project.\+fitter.\+ifitter.\+I\+Fitter.\+pick\+\_\+canditates (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{candidates }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Should implement the selection procedure
+that filters the products of `self.get_candidates`
+
+Its product should should be suitable input for mapping with
+type(self).state_to_args static method to produce task
+signature iterables.\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classproject_1_1fitter_1_1afilter_1_1DemoFitter_a86950267bb2b171676b12b8fc089721b}{project.\+fitter.\+afilter.\+Demo\+Fitter}}.
+
+\mbox{\Hypertarget{classproject_1_1fitter_1_1ifitter_1_1IFitter_a16cf699cda217997905060ca93e80c8f}\label{classproject_1_1fitter_1_1ifitter_1_1IFitter_a16cf699cda217997905060ca93e80c8f}} 
+\index{project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}!state\_to\_args@{state\_to\_args}}
+\index{state\_to\_args@{state\_to\_args}!project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}}
+\doxysubsubsection{\texorpdfstring{state\_to\_args()}{state\_to\_args()}}
+{\footnotesize\ttfamily def project.\+fitter.\+ifitter.\+I\+Fitter.\+state\+\_\+to\+\_\+args (\begin{DoxyParamCaption}\item[{}]{state }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Should statically implement the mapping from candidate state to
+task signature for this fitter.  A task signature is any
+iterable that is valid as arguments to task callables when
+spliced. So if the task is f(x,y) this function should for
+example map {'x':0,'y':1} -> [0,1].
+
+Some times this can simply be the idetity function\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classproject_1_1fitter_1_1afilter_1_1DemoFitter_aa8b2ecb2ca904ef813b9ba00dc90d9c3}{project.\+fitter.\+afilter.\+Demo\+Fitter}}.
+
+\mbox{\Hypertarget{classproject_1_1fitter_1_1ifitter_1_1IFitter_aa17192ab09fca048889e80f6033fa0f9}\label{classproject_1_1fitter_1_1ifitter_1_1IFitter_aa17192ab09fca048889e80f6033fa0f9}} 
+\index{project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}!stop\_criterion@{stop\_criterion}}
+\index{stop\_criterion@{stop\_criterion}!project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}}
+\doxysubsubsection{\texorpdfstring{stop\_criterion()}{stop\_criterion()}}
+{\footnotesize\ttfamily def project.\+fitter.\+ifitter.\+I\+Fitter.\+stop\+\_\+criterion (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Should return True when the fitter judges its job is done.\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classproject_1_1fitter_1_1afilter_1_1DemoFitter_a73d0f4826425fab1bdaf3e3823c24343}{project.\+fitter.\+afilter.\+Demo\+Fitter}}.
+
+\mbox{\Hypertarget{classproject_1_1fitter_1_1ifitter_1_1IFitter_aea761a9687a16bb046c2f962a79467b0}\label{classproject_1_1fitter_1_1ifitter_1_1IFitter_aea761a9687a16bb046c2f962a79467b0}} 
+\index{project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}!swap\_state@{swap\_state}}
+\index{swap\_state@{swap\_state}!project.fitter.ifitter.IFitter@{project.fitter.ifitter.IFitter}}
+\doxysubsubsection{\texorpdfstring{swap\_state()}{swap\_state()}}
+{\footnotesize\ttfamily def project.\+fitter.\+ifitter.\+I\+Fitter.\+swap\+\_\+state (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{new\+\_\+state }\end{DoxyParamCaption})}
+
+
+
+Reimplemented in \mbox{\hyperlink{classproject_1_1fitter_1_1afilter_1_1DemoFitter_ae7c8e552126c76f0834c50a9adc286bf}{project.\+fitter.\+afilter.\+Demo\+Fitter}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+project/fitter/\mbox{\hyperlink{ifitter_8py}{ifitter.\+py}}\end{DoxyCompactItemize}
