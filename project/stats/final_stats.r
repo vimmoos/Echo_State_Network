@@ -2,6 +2,7 @@ library(tidyverse)
 library(MASS)
 
 spath = "~/NN/resources/esn_csv/pso"
+spath = "/home/sneha-lodha/Desktop/Year2Block2B/NeuralNetworks/final_final/"
 
 
 cip = function (paths)
@@ -32,7 +33,7 @@ drop_colname <- names(res) %in% c("density","noise","tempo","reg")
 
 res <- res[!drop_colname]
 
-res[is.na(res)]<-0
+res[is.na(res)]<- 0
 
 res <- res %>%
     mutate_if(sapply(res,is.character),as.factor)
@@ -90,6 +91,8 @@ best_zres <- zres %>%
     filter(z.val >=
            quantile(z.val)[4])
 
+
+trial <- res_cor %>% group_by(post_trans) %>% summarise(funs(mean))
 
 
 matrix_cor_plot <- ggplot(best_res_cor,aes(spectral_radius,metric_val,color=squeeze_o))+

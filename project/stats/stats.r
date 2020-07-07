@@ -25,7 +25,7 @@ zscore = function (score)
     (score-mean(score))/sd(score)
 }
 ## test <- as_tibble(read.csv('~/NN/dio_porco.csv'))
-test <- cip(list.files(path = "~/NN/resources/esn_csv", full.names = TRUE, recursive = TRUE))
+test <- cip(list.files(path = "/home/sneha-lodha/Desktop/Year2Block2B/NeuralNetworks/final1/", full.names = TRUE, recursive = TRUE))
 
 test_factor <- test %>%
     mutate_if(sapply(test,is.character),as.factor)

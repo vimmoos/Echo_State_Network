@@ -1,8 +1,11 @@
 import pickle
 from enum import Enum
+from pprint import pprint
+from random import randint
 
 import numpy as np
 
+import project.esn.core as core
 import project.esn.transformer as transf
 import project.PSO.config as c
 import project.esn.core as core
@@ -34,25 +37,32 @@ def res_name(conf: dict) -> list:
     ]
 
 
+def run_net_load_matrix(load_param: c.Res, **kwargs) -> dict:
+    run_dict = core.Run(**{
+        **c.esn_gen,
+        **kwargs
+    }).load((c.path + load_param.value), randint(0, 9)).__enter__()()
+    with open(c.path_esn + "_".join(res_name(run_dict)), "wb") as f:
+        pickle.dump(run_dict, f)
+    return run_dict
+
+
 def run_network(out_transf: transf.Transformer = transf.Transformers.sig_prob,
                 **PSO_kwargs) -> tuple:
     PSO_kwargs = map_params(**PSO_kwargs)
-    net_param = {k: v for k, v in PSO_kwargs.items() if k != "reservoir"}
-    load_param = c.path + PSO_kwargs["reservoir"].value
-    run_dict = core.Run(**{
-        **c.esn_gen,
-        **net_param
-    }).load(load_param, r.randint(0, 9)).__enter__()()
-    with open(c.path_esn + "_".join(res_name(run_dict)), "wb") as f:
-        pickle.dump(run_dict, f)
+    load_param = PSO_kwargs.pop("reservoir") if PSO_kwargs.get(
+        "reservoir", None) else None
+    run_dict = (run_net_load_matrix(load_param, **PSO_kwargs)
+                if load_param else core.Run(**{
+                    **c.esn_gen,
+                    **PSO_kwargs
+                }).__enter__()())
     pprint(f"dumped conf : {PSO_kwargs}")
     return ((raw_out := run_dict["output"]),
             out_transf.value(0.8,
                              transf._identity)(raw_out), run_dict["desired"])
 
 
-# would like to specify call=True by default, but the caller needs to still
-# give it a value or it will be moved to **kwargs
 check_default = lambda obj, default, call, *args, **kwargs: (
     obj if obj is not None else
     (default(*args, **kwargs)

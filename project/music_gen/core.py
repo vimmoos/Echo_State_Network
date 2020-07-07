@@ -63,7 +63,7 @@ def note_sampler(note: gNote):
         for el in x:
             yield el
 
-
+                                                      
 def note_replicator(tempo: Tempo,
                     note: Abs_note,
                     quarters: list,

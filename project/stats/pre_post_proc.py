@@ -26,7 +26,8 @@ path_csv = path_resources + "esn_csv/final_pso/"
 
 path_mar = "/home/pasta/Desktop/uni/secondYear/block-2b/NN/NN/project/fitter/dumps/"
 
-path_s = "/home/sneha-lodha/Desktop/esn/"
+path_s = "/home/sneha-lodha/Desktop/Year2Block2B/NeuralNetworks/pso/"
+path_sneha = "/home/sneha-lodha/Desktop/Year2Block2B/NeuralNetworks/pso_extract/"
 
 def experiment(path):
     """given a path to a directory take all the file in it and returns a generator
@@ -248,7 +249,7 @@ def pre_post_proc(enumeration, cpath, data_len):
 
 
 def partial_fun(enum):
-    return pre_post_proc(enum, path_csv, 6000)
+    return pre_post_proc(enum, path_sneha, 6000)
 
 
 def cpre_post_proc(raw_data, size_group=4, workers=20):
@@ -257,3 +258,6 @@ def cpre_post_proc(raw_data, size_group=4, workers=20):
     """
     multiproc(partial_fun, enumerate(partition_data(raw_data, size_group)),
               workers)
+
+if __name__ == "__main__":
+    cpre_post_proc(get_experiment(path_s), workers = 8)
