@@ -1,7 +1,7 @@
 library(tidyverse)
 library(MASS)
 
-spath = "~/NN/resources/esn_csv/final1"
+spath = "~/NN/resources/esn_csv/pso"
 
 
 cip = function (paths)
@@ -9,6 +9,7 @@ cip = function (paths)
     agg.df <- NULL
     for (path in paths)
     {
+        print(path)
         csv <- read.csv(path)
         if (is.null(agg.df)){
             agg.df <- csv
@@ -46,10 +47,18 @@ zres <- avg_res %>%
     group_by(metric) %>%
     mutate(z.val = zscore(metric_val))
 
+new.zres <- zres %>%
+    mutate(z.val = ifelse(metric == "euclidian_distance" | metric ==
+           "hamming_distance"| metric == "manhattan_distance"|
+           metric == "mse" | metric =="nmse",-z.val,z.val))
+    ## filter() %>%
+    ## mutate(metric_val = -metric_val)
+
+
 ## NOTE: only possible if all metrics have the same gradient
 ## (e.g. bigger m0 means good,bigger m1 means good ..... , bigger mN
 ## means good)
-zcomp <- zres %>%
+zcomp.n <- new.zres %>%
     group_by(reservoir,leaking_rate,spectral_radius,transformer,
              t_param,t_squeeze,squeeze_o,post_trans,post_param,post_squeeze,metric) %>%
     summarise(z.comp = mean(z.val))
@@ -62,15 +71,19 @@ avg_res_cor <- res_cor %>%
     group_by(reservoir,spectral_radius) %>%
     summarise_if(is.numeric,list(~sd(.),~mean(.)))
 
-zcomp_noot <- filter(zcomp, z.comp >=
-                            quantile(zcomp$z.comp)[2])
+zcomp_noot.quantile2 <-quantile(zcomp$z.comp)[2]
+
+zcomp_noot <- filter(zcomp, z.comp >=zcomp_noot.quantile2)
 
 
+res_cor.quantile4 <- quantile(res_cor$metric_val)[4]
 
-best_res_cor <- filter(res_cor, metric_val >=
-                        quantile(res_cor$metric_val)[4])
-best_zcomp <- filter(zcomp, z.comp >=
-                            quantile(res_cor$metric_val)[4])
+best_res_cor <- filter(res_cor, metric_val >=res_cor.quantile4)
+
+zcomp.quantile4<-quantile(zcomp$z.comp)[4]
+
+best_zcomp <- filter(zcomp, z.comp >=zcomp.quantile4)
+
 
 best_zres <- zres %>%
     group_by(metric) %>%
@@ -80,9 +93,11 @@ best_zres <- zres %>%
 
 
 matrix_cor_plot <- ggplot(best_res_cor,aes(spectral_radius,metric_val,color=squeeze_o))+
-    geom_violin()+
+    geom_point()+
     geom_smooth()+
     facet_grid(squeeze_o ~ reservoir)
+
+matrix_cor_plot
 
 matrix_zscores_plot <- ggplot(best_zres,aes(spectral_radius,z.val,color=squeeze_o))+
     geom_violin()+
@@ -94,20 +109,28 @@ matrix_zcomp_plot <- ggplot(best_zcomp,aes(spectral_radius,z.comp,color=squeeze_
     geom_smooth()+
     facet_grid(squeeze_o ~ reservoir)
 
-trans_cor_plot <- ggplot(best_res_cor,aes(transformer,metric_val,color=squeeze_o))+
-    geom_violin()+
-    geom_smooth()+
-    facet_grid(t_param ~ t_squeeze)
+trans_cor_plot <- ggplot(res_cor,aes(t_param,metric_val,color=squeeze_o,shape=as.factor(spectral_radius)))+
+    geom_point()+
+    facet_grid( transformer ~ t_squeeze)
 
-trans_zscores_plot <- ggplot(best_zres,aes(transformer,z.val,color=squeeze_o))+
-    geom_violin()+
-    geom_smooth()+
-    facet_grid(t_param ~ t_squeeze + metric)
+trans_cor_plot
 
-trans_zcomp_plot <- ggplot(best_zcomp,aes(transformer,z.comp,color=squeeze_o))+
+gna <- res %>%
+    filter(metric == "nmse")
+
+
+trans_zscores_plot <- ggplot(new.zres,aes(t_param,metric_val,color=squeeze_o,shape=t_squeeze))+
+    geom_point()+
+    facet_grid( transformer~  metric)
+
+trans_zscores_plot
+
+trans_zcomp_plot <- ggplot(zcomp.n,aes(t_param,z.comp,color=squeeze_o))+
     geom_violin()+
-    geom_smooth()+
-    facet_grid(t_param ~ t_squeeze)
+    facet_grid(transformer ~ t_squeeze)
+
+trans_zcomp_plot
+
 
 
 post_trans_cor_plot <- ggplot(best_res_cor,aes(post_trans,metric_val,color=squeeze_o))+
@@ -125,17 +148,21 @@ post_trans_zcomp_plot <- ggplot(best_zcomp,aes(post_trans,z.comp,color=squeeze_o
     geom_smooth()+
     facet_grid(t_param ~ .)
 
-leaking_cor_plot <- ggplot(best_res_cor,aes(as.factor(leaking_rate),metric_val,color=squeeze_o))+
-    geom_violin()+
-    geom_smooth()+
+leaking_cor_plot <- ggplot(res_cor,aes(leaking_rate,metric_val,color=squeeze_o,group=squeeze_o))+
+    geom_point()+
+    ## geom_smooth()+
     facet_grid(spectral_radius ~ .)
 
-leaking_zscores_plot <- ggplot(best_zres,aes(as.factor(leaking_rate),z.val,color=squeeze_o))+
+gna <- ggplot()
+
+leaking_cor_plot
+
+leaking_zscores_plot <- ggplot(best_zres,aes(leaking_rate,z.val,color=squeeze_o))+
     geom_violin()+
     geom_smooth()+
     facet_grid(spectral_radius ~ metric)
 
-leaking_zcomp_plot <- ggplot(best_zcomp,aes(as.factor(leaking_rate),z.comp,color=squeeze_o))+
+leaking_zcomp_plot <- ggplot(best_zcomp,aes(leaking_rate,z.comp,color=squeeze_o))+
     geom_violin()+
     geom_smooth()+
     facet_grid(spectral_radius ~ .)
@@ -152,7 +179,6 @@ summary(lm.aov)
 
 
 
-leaking_cor_plot
 
 leaking_zscores_plot
 
@@ -171,7 +197,6 @@ trans_zscores_plot
 trans_zcomp_plot
 
 
-matrix_cor_plot
 
 matrix_zscores_plot
 

@@ -22,13 +22,13 @@ class Updator():
     """
 
 
-    _next: callable
+    _next: callable = None
     """ The update function used to calculate the next state """
 
-    weights: m.Esn_matrixs
+    weights: m.Esn_matrixs = None
     """The class which wraps all the matrixs involved in the ESN"""
 
-    state: np.ndarray
+    state: np.ndarray = None
     """The current state of the network (it will be updated at each
 iteration)"""
 
@@ -73,7 +73,13 @@ the input and possibly an output
                               self.squeeze_o)
 
 
-def_updator = lambda fun: lambda *args, **kwargs: Updator(fun, *args, **kwargs)
+def def_updator(fun):
+    """Decorator which define a new updater
+    """
+    def inner(*args, **kwargs):
+        return Updator(fun, *args, **kwargs)
+    return inner
+
 
 
 @def_updator
@@ -85,9 +91,7 @@ def_updator = lambda fun: lambda *args, **kwargs: Updator(fun, *args, **kwargs)
 })
 def vanilla_updator(weights: m.Esn_matrixs, state, tuple):
     """This calculate the next state using the standard update formula
-    \textbf{dio}
-    *dio*
-    * maiale
+    \(1+1 \)
 
     """
     (input, _) = tuple
@@ -102,6 +106,10 @@ def vanilla_updator(weights: m.Esn_matrixs, state, tuple):
     lambda tuple: (u.force_2dim(tuple[0]), u.force_2dim(tuple[1]))
 })
 def feedback_updator(weights: m.Esn_matrixs, state, tuple):
+    """This function calculate the next state given an input and an output
+using the enhanced formula
+
+    """
     (input, output) = tuple
     return ((weights.W_in * input) + (weights.W_res * state) +
             (weights.W_feb * output))
@@ -109,5 +117,8 @@ def feedback_updator(weights: m.Esn_matrixs, state, tuple):
 
 @u.pre_proc_args({"input": u.force_2dim, "state": u.force_2dim})
 def default_output(W_out, state, input, output_f=lambda x: x):
+    """calculate the output using the standard formula
+
+    """
     z_n = m.build_extended_states(input.T, state.T).T
     return output_f(W_out.dot(z_n)).reshape(-1)

@@ -13,6 +13,12 @@ from itertools import product,tee
 
 @mydataclass(init=True, repr=True, check=True)
 class Expander():
+    """Class that performs a cartesian product of the gen_dict and then
+call the _generator function for each configuration the _name_gen if
+called witha configuration should return a valid name/path used to
+dump the file
+
+    """
     _generator: callable
     _name_gen: callable
     gen_dict: lambda x: True
@@ -36,18 +42,26 @@ class Expander():
 
 
 def d_expander(inverter):
+    """decorator that create a new Expander
+
+    """
     inner = lambda fun: lambda gen_dict, *args, **kwargs: Expander(
         fun, inverter, gen_dict, *args, **kwargs)
     return inner
 
 
 def res_name(conf: dict):
+    """ name generator for the reservoir runs
+"""
     return [
         str(v) for k, v in conf.items() if k not in ["result", "repetition"]
     ]
 
 
 def esn_name(conf: dict):
+    """name generator for the esn runs
+
+    """
     return str(
         reduce(lambda x, y: hash(str(hash(str(y))) + str(hash(str(x)))),
                conf.values()))
@@ -58,6 +72,9 @@ def gen_reservoir(spectral_radius=None,
                   density=None,
                   size=None,
                   repetition=None):
+    """perform the reservoir generation
+
+    """
     return [
         m.scale_spectral_smatrix(m.generate_smatrix(size,
                                                     size,
@@ -69,6 +86,9 @@ def gen_reservoir(spectral_radius=None,
 
 @d_expander(esn_name)
 def run_esn(repetition, matrix_path, idx, **kwargs):
+    """run the esn with the current configuration
+
+    """
     return [
         c.Run(**kwargs).load(matrix_path, idx).__enter__()()
         for _ in range(repetition)
@@ -79,6 +99,10 @@ def run_esn(repetition, matrix_path, idx, **kwargs):
 
 @mydataclass(init=True, repr=True, check=False)
 class Pickler():
+    """This class wraps an Expander, when called pickle all the results
+of the expander process
+
+    """
     expander: Expander
     path_to_dir: str
     _dumper: callable = lambda x: x

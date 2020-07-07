@@ -9,6 +9,10 @@ from project.music_gen.data_types import *
 
 @ut.mydataclass(init=True, repr=True)
 class gNote():
+    """gNote class, wraps a note and generate the output matrix for the
+note
+
+    """
     note: Note
     _generator: callable
     tempo: Tempo
@@ -52,6 +56,9 @@ gNote_ = lambda note=None, pattern_len=None, tempo=None: lambda fun: (
 
 
 def note_sampler(note: gNote):
+    """returns line by line the output matrix
+
+    """
     for x in note():
         for el in x:
             yield el
@@ -61,6 +68,9 @@ def note_replicator(tempo: Tempo,
                     note: Abs_note,
                     quarters: list,
                     pattern_len=1):
+    """simply replicate a note for the specified quarters
+
+    """
     return note_zipper.reduce(
         [note_generator(Note(tempo, note, x), pattern_len) for x in quarters])
 
@@ -70,6 +80,9 @@ def note_replicator(tempo: Tempo,
 
 
 def merge_tempos_f(tempo: Tempo):
+    """merge two note with possible different tempos
+
+    """
     @np.vectorize
     def merge_tempos(genNote: gNote):
         def inner():
@@ -88,6 +101,8 @@ def merge_tempos_f(tempo: Tempo):
 
 
 def note_reduce(f: callable, notes: list):
+    """ reducing function for notes
+    """
     return ft.reduce(f, notes)
 
 
@@ -97,6 +112,9 @@ def reducer(fun):
 
 
 def note_map(f: callable, notes: list):
+    """mapping function for notes
+
+    """
     return map(f, notes)
 
 
@@ -106,6 +124,9 @@ def mapper(fun):
 
 
 def note_slice(gnote: gNote, n: int):
+    """possibly reduce the lenght of the pattern
+
+    """
     @gNote_(note="slice", pattern_len=n, tempo=gnote.tempo)
     def gsliced(note: Note, pattern_len: int):
         return it.islice(gnote(), n * len(Quarters), None)
@@ -114,6 +135,9 @@ def note_slice(gnote: gNote, n: int):
 
 
 def note_replic(gnote: gNote, n: int):
+    """multiply the lenght of the pattern
+
+    """
     @gNote_(note="replic",
             pattern_len=gnote.pattern_len * n,
             tempo=gnote.tempo)
@@ -127,6 +151,9 @@ def note_replic(gnote: gNote, n: int):
 
 @gNote_()
 def note_generator(note: Note, pattern_len: int):
+    """generator for notes
+
+    """
     for _ in range(pattern_len):
         for x in Quarters:
             yield np.array([
@@ -139,6 +166,11 @@ def note_generator(note: Note, pattern_len: int):
 
 
 def note_pattern(gnote: gNote, qua_pat: tuple):
+    """modify the pattern of the note given a tuple which consist on a
+tuple of the Quarter in which you want to apply the pattern and the
+patter itself
+
+    """
     quarter, pattern = qua_pat
     if not isinstance(quarter, Quarters):
         quarter = Quarters(quarter)
@@ -158,6 +190,9 @@ def note_pattern(gnote: gNote, qua_pat: tuple):
 @reducer
 @mapper
 def note_concat(gNote_0: gNote, gNote_1: gNote):
+    """concat two notes (one after another)
+
+    """
     max_tempo = max_tempos(gNote_0.tempo, gNote_1.tempo)
     merge_t = merge_tempos_f(max_tempo)
 
@@ -173,6 +208,9 @@ def note_concat(gNote_0: gNote, gNote_1: gNote):
 @reducer
 @mapper
 def note_zipper(gNote_0: gNote, gNote_1: gNote):
+    """zip the notes (play the 2 note in the same measure)
+
+    """
     max_tempo = max_tempos(gNote_0.tempo, gNote_1.tempo)
     merge_t = merge_tempos_f(max_tempo)
 

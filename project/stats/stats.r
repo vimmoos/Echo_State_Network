@@ -9,6 +9,7 @@ cip = function (paths)
     agg.df <- NULL
     for (path in paths)
     {
+        print(path)
         csv <- read.csv(path)
         if (is.null(agg.df)){
             agg.df <- csv

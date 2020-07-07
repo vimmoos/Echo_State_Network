@@ -16,6 +16,9 @@ class IndexName(e.Enum):
 
 @e.unique
 class Tempo(AutoName):
+    """Tempo enum,define all the possible tempo
+
+    """
     QUARTER = e.auto()
     EIGHTH = e.auto()
     SIXTEENTH = e.auto()
@@ -28,6 +31,8 @@ def max_tempos(t0: Tempo, t1: Tempo):
 
 @e.unique
 class Quarters(e.Enum):
+    """ Quarters enum, define all the possible quarter
+    """
     ONE = e.auto()
     TWO = e.auto()
     THREE = e.auto()
@@ -36,6 +41,9 @@ class Quarters(e.Enum):
 
 @e.unique
 class Abs_note(IndexName):
+    """Abs_note enum, define all the possible note
+
+    """
     HI_HAT_CLOSE = e.auto()
     HI_HAT_OPEN = e.auto()
     BASS_DRUM = e.auto()
@@ -49,6 +57,11 @@ class Abs_note(IndexName):
 
 @ut.mydataclass(init=True, repr=True)
 class Note():
+    """Note class, a note is represented as follows : It as a Tempo, a
+    Quarters (in which the note is played), a value which is the
+    intensity of the note, finally the abstract note
+
+    """
     tempo: Tempo
     note: Abs_note
     quarter: Quarters
