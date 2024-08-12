@@ -1,8 +1,13 @@
-# Echo State Network
+
+<p align="center">
+  <img src="resources/Structure-of-an-Echo-State-Network.png"  height="300" title="hover text">
+</p>
+
+# Echo State Network For Percussion music generation
 The project aims to explore the use of Particle Swarm Optimization (PSO) to optimize the performance of Echo State Networks (ESNs) on music generation tasks. The project combines elements of computational optimization, machine learning, and music theory to create a system that can generate novel and coherent musical compositions. It focuses only on drum generation
 
 ## Documentation
-The documentation can be found here [[https://vimmoos.github.io/Echo_State_Network/][docs]]
+The documentation can be found here [doc](https://vimmoos.github.io/Echo_State_Network/)
 
 ## Getting Started
 1. Clone the repository: `git clone https://github.com/vimmoos/Echo_State_Network`
